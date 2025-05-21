@@ -1,0 +1,1 @@
+Neste diretório, a aplicação irá armazenar os arquivos que foram carregados a partir das interfaces do sistema.
