@@ -11,7 +11,7 @@ class UsuarioDAO {
     public function list() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuarios u ORDER BY u.nome_usuario";
+        $sql = "SELECT * FROM Usuario u ORDER BY u.nomeUsuario";
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
@@ -23,8 +23,7 @@ class UsuarioDAO {
     public function findById(int $id) {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuarios u" .
-               " WHERE u.id_usuario = ?";
+        $sql = "SELECT * FROM Usuario u WHERE u.id = ?";
         $stm = $conn->prepare($sql);    
         $stm->execute([$id]);
         $result = $stm->fetchAll();
@@ -41,45 +40,45 @@ class UsuarioDAO {
     }
 
 
-    //Método para buscar um usuário por seu login e senha
-    public function findByLoginSenha(string $login, string $senha) {
+    //Método para buscar um usuário por seu email e senha
+    public function findByEmailSenha(string $email, string $senha) {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuarios u" .
-               " WHERE BINARY u.login = ?";
+        $sql = "SELECT * FROM Usuario u WHERE BINARY u.email = ?";
         $stm = $conn->prepare($sql);    
-        $stm->execute([$login]);
+        $stm->execute([$email]);
         $result = $stm->fetchAll();
 
         $usuarios = $this->mapUsuarios($result);
 
         if(count($usuarios) == 1) {
+            return $usuarios[0];
+            /*
             //Tratamento para senha criptografada
             if(password_verify($senha, $usuarios[0]->getSenha()))
                 return $usuarios[0];
             else
                 return null;
+            */
         } elseif(count($usuarios) == 0)
             return null;
 
-        die("UsuarioDAO.findByLoginSenha()" . 
-            " - Erro: mais de um usuário encontrado.");
+        die("UsuarioDAO.findByEmailSenha() - Erro: mais de um usuário encontrado.");
     }
 
     //Método para inserir um Usuario
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO usuarios (nome_usuario, login, senha, papel)" .
-               " VALUES (:nome, :login, :senha, :papel)";
+        $sql = "INSERT INTO Usuario (nomeUsuario, email, senha, funcao) VALUES (:nome, :email, :senha, :funcao)";
         
         $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
 
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("login", $usuario->getLogin());
+        $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("senha", $senhaCripto);
-        $stm->bindValue("papel", $usuario->getPapel());
+        $stm->bindValue("funcao", $usuario->getFuncao());
         $stm->execute();
     }
 
@@ -87,15 +86,13 @@ class UsuarioDAO {
     public function update(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "UPDATE usuarios SET nome_usuario = :nome, login = :login," . 
-               " senha = :senha, papel = :papel" .   
-               " WHERE id_usuario = :id";
+        $sql = "UPDATE Usuario SET nomeUsuario = :nome, email = :email, senha = :senha, funcao = :funcao WHERE id = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("login", $usuario->getLogin());
+        $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
-        $stm->bindValue("papel", $usuario->getPapel());
+        $stm->bindValue("funcao", $usuario->getFuncao());
         $stm->bindValue("id", $usuario->getId());
         $stm->execute();
     }
@@ -104,7 +101,7 @@ class UsuarioDAO {
     public function deleteById(int $id) {
         $conn = Connection::getConn();
 
-        $sql = "DELETE FROM usuarios WHERE id_usuario = :id";
+        $sql = "DELETE FROM Usuario WHERE id = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("id", $id);
@@ -112,10 +109,10 @@ class UsuarioDAO {
     }
 
      //Método para alterar a foto de perfil de um usuário
-     public function updateFotoPerfil(Usuario $usuario) {
+    public function updateFotoPerfil(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "UPDATE usuarios SET foto_perfil = ? WHERE id_usuario = ?";
+        $sql = "UPDATE Usuario SET foto_perfil = ? WHERE id = ?";
 
         $stm = $conn->prepare($sql);
         $stm->execute(array($usuario->getFotoPerfil(), $usuario->getId()));
@@ -125,7 +122,7 @@ class UsuarioDAO {
     public function quantidadeUsuarios() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT COUNT(*) AS qtd_usuarios FROM usuarios";
+        $sql = "SELECT COUNT(*) AS qtd_usuarios FROM Usuario";
 
         $stm = $conn->prepare($sql);
         $stm->execute();
@@ -139,12 +136,20 @@ class UsuarioDAO {
         $usuarios = array();
         foreach ($result as $reg) {
             $usuario = new Usuario();
-            $usuario->setId($reg['id_usuario']);
-            $usuario->setNome($reg['nome_usuario']);
-            $usuario->setLogin($reg['login']);
+            $usuario->setId($reg['id']);
+            $usuario->setNome($reg['nomeUsuario']);
+            $usuario->setDataNascimento($reg['dataNascimento']);
+            $usuario->setCpf($reg['cpf']);
             $usuario->setSenha($reg['senha']);
-            $usuario->setPapel($reg['papel']);
-            $usuario->setFotoPerfil($reg['foto_perfil']);
+            $usuario->setEmail($reg['email']);
+            $usuario->setTelefone($reg['telefone']);
+            $usuario->setEndereco($reg['endereco']);
+            $usuario->setCodigoMatricula($reg['codigoMatricula']);
+            $usuario->setFuncao($reg['funcao']);
+            $usuario->setHorasValidadas($reg['horasValidadas']);
+            $usuario->setStatus($reg['status']);
+            $usuario->setFotoPerfil($reg['fotoPerfil']);
+            $usuario->setCursoid($reg['Curso_id']);
             array_push($usuarios, $usuario);
         }
 

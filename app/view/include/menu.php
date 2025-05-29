@@ -8,7 +8,7 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
 
 $isAdmin = false;
 if(isset($_SESSION[SESSAO_USUARIO_PAPEL]) 
-        && $_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioPapel::ADMINISTRADOR)
+        && $_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR)
     $isAdmin = true; 
 
 ?>

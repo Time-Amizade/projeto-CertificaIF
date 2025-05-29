@@ -19,9 +19,8 @@ class HomeController extends Controller {
     }
 
     protected function home() {
-
-        $dados["qtdUsuarios"] = $this->usuarioDAO->quantidadeUsuarios(); 
-
+        $dados = array();
+        
         $this->loadView("home/home.php", $dados);
     }
     
