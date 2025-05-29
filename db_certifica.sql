@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `telefone` VARCHAR(15) NULL,
   `endereco` VARCHAR(45) NULL,
   `codigoMatricula` INT NULL,
-  `funcao` ENUM('ADMINSITRADOR', 'COORDENADOR', 'ALUNO') NOT NULL,
+  `funcao` ENUM('ADMINISTRADOR', 'COORDENADOR', 'ALUNO') NOT NULL,
   `horasValidadas` INT NOT NULL,
   `status` ENUM("ATIVO", "INATIVO", "PENDENTE") NOT NULL,
   `Curso_id` INT NOT NULL,
