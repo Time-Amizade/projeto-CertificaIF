@@ -14,7 +14,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nomeUsuario` VARCHAR(45) NOT NULL,
-  `anoNascimento` DATE NOT NULL,
+  `dataNascimento` DATE NOT NULL,
   `cpf` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
