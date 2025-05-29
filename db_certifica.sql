@@ -15,7 +15,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nomeUsuario` VARCHAR(45) NOT NULL,
-  `anoNascimento` DATE NOT NULL,
+  `anoNascimento` DATE NULL,
   `cpf` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `funcao` ENUM('ADMINSITRADOR', 'COORDENADOR', 'ALUNO') NOT NULL,
   `horasValidadas` INT NOT NULL,
   `status` ENUM("ATIVO", "INATIVO", "PENDENTE") NOT NULL,
-  `Curso_id` INT NOT NULL,
+  `Curso_id` INT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_Usuario_Curso`
     FOREIGN KEY (`Curso_id`)
@@ -91,4 +91,3 @@ CREATE TABLE IF NOT EXISTS `Comprovante` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
