@@ -95,6 +95,6 @@ ENGINE = InnoDB;
 
 
 
-INSERT INTO Usuario (nomeUsuario,anoNascimento, cpf, senha, email,telefone,endereco,funcao,status) 
-  VALUES ('admin', '01-07-1980', '000.000.000-00', 'senha123', 'admin@gmail.com','(11) 90000-0000','Rua Exemplo, 123 - Cidade - Estado','ADMINISTRADOR','ATIVO');
+INSERT INTO Usuario (nomeUsuario, cpf, senha, email,telefone,endereco,funcao,status) 
+  VALUES ('admin', '000.000.000-00', 'senha123', 'admin@gmail.com','(11) 90000-0000','Rua Exemplo, 123 - Cidade - Estado','ADMINISTRADOR','ATIVO');
 
