@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `endereco` VARCHAR(45) NULL,
   `codigoMatricula` INT NULL,
   `funcao` ENUM('ADMINSITRADOR', 'COORDENADOR', 'ALUNO') NOT NULL,
-  `horasValidadas` INT NOT NULL,
+  `horasValidadas` INT NULL,
   `status` ENUM("ATIVO", "INATIVO", "PENDENTE") NOT NULL,
   `Curso_id` INT NULL,
   PRIMARY KEY (`id`),
