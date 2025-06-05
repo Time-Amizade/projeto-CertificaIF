@@ -52,14 +52,11 @@ class UsuarioDAO {
         $usuarios = $this->mapUsuarios($result);
 
         if(count($usuarios) == 1) {
-            return $usuarios[0];
-            /*
             //Tratamento para senha criptografada
             if(password_verify($senha, $usuarios[0]->getSenha()))
                 return $usuarios[0];
             else
                 return null;
-            */
         } elseif(count($usuarios) == 0)
             return null;
 

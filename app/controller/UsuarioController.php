@@ -4,7 +4,7 @@ require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
-require_once(__DIR__ . "/../model/enum/UsuarioPapel.php");
+require_once(__DIR__ . "/../model/enum/Usuariofuncao.php");
 
 class UsuarioController extends Controller {
 
@@ -17,7 +17,7 @@ class UsuarioController extends Controller {
             return;
 
         //Restringir o acesso apenas para administradores
-        if(! $this->usuarioLogadoPapelAdmin()) {
+        if(! $this->usuarioLogadoFuncaoAdmin()) {
             echo "Acesso negado!";
             exit;
         }
@@ -36,7 +36,7 @@ class UsuarioController extends Controller {
 
     protected function create() {
         $dados['id'] = 0;
-        $dados['papeis'] = UsuarioPapel::getAllAsArray();
+        $dados['papeis'] = Usuariofuncao::getAllAsArray();
 
         $this->loadView("usuario/form.php", $dados);
     }
@@ -49,7 +49,7 @@ class UsuarioController extends Controller {
             $usuario->setSenha("");
             $dados["usuario"] = $usuario;
 
-            $dados['papeis'] = UsuarioPapel::getAllAsArray();
+            $dados['papeis'] = Usuariofuncao::getAllAsArray();
             
             $this->loadView("usuario/form.php", $dados);
         } else
@@ -60,18 +60,18 @@ class UsuarioController extends Controller {
         //Capturar os dados do formulário
         $id = $_POST['id'];
         $nome = trim($_POST['nome']) != "" ? trim($_POST['nome']) : NULL;
-        $login = trim($_POST['login']) != "" ? trim($_POST['login']) : NULL;
+        $email = trim($_POST['email']) != "" ? trim($_POST['email']) : NULL;
         $senha = trim($_POST['senha']) != "" ? trim($_POST['senha']) : NULL;
         $confSenha = trim($_POST['conf_senha']) != "" ? trim($_POST['conf_senha']) : NULL;
-        $papel = $_POST['papel'];
+        $funcao = $_POST['funcao'];
 
         //Criar o objeto Usuario
         $usuario = new Usuario();
         $usuario->setId($id);
         $usuario->setNome($nome);
-        $usuario->setLogin($login);
+        $usuario->setEmail($email);
         $usuario->setSenha($senha);
-        $usuario->setPapel($papel);
+        $usuario->setFuncao($funcao);
 
         //Validar os dados (camada service)
         $erros = $this->usuarioService->validarDados($usuario, $confSenha);
@@ -94,7 +94,7 @@ class UsuarioController extends Controller {
 
         //Mostrar os erros
         $dados['id'] = $usuario->getId();
-        $dados['papeis'] = UsuarioPapel::getAllAsArray();
+        $dados['papeis'] = UsuarioFuncao::getAllAsArray();
         $dados["usuario"] = $usuario;
         $dados['confSenha'] = $confSenha;
 

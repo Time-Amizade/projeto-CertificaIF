@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `nomeUsuario` VARCHAR(45) NOT NULL,
   `dataNascimento` DATE NULL,
   `cpf` VARCHAR(45) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(255) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `telefone` VARCHAR(15) NULL,
   `endereco` VARCHAR(45) NULL,
@@ -96,5 +96,5 @@ ENGINE = InnoDB;
 
 
 INSERT INTO Usuario (nomeUsuario, cpf, senha, email,telefone,endereco,funcao,status) 
-  VALUES ('admin', '000.000.000-00', 'senha123', 'admin@gmail.com','(11) 90000-0000','Rua Exemplo, 123 - Cidade - Estado','ADMINISTRADOR','ATIVO');
+  VALUES ('admin', '000.000.000-00', '$2y$10$sJttVOC6tNnvOyGt2ctEOeIAwD6wrFXDhDqTWcD6Yn/KiMKJ1rhqq', 'admin@gmail.com','(11) 90000-0000','Rua Exemplo, 123 - Cidade - Estado','ADMINISTRADOR','ATIVO');
 

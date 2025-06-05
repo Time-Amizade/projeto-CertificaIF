@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 //Banco de dados: conexão MySQL
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'db_certifica');
-define('DB_USER', 'root');
+define('DB_USER', 'root');  
 define('DB_PASSWORD', 'bancodedados');
 
 //Caminho para adionar imagens, scripts e chamar páginas no sistema
