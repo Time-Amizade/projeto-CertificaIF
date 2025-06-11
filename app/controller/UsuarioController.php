@@ -13,11 +13,11 @@ class UsuarioController extends Controller {
 
     //Método construtor do controller - será executado a cada requisição a está classe
     public function __construct() {
-        if(! $this->usuarioEstaLogado())
+        if(!$this->usuarioEstaLogado())
             return;
 
         //Restringir o acesso apenas para administradores
-        if(! $this->usuarioLogadoFuncaoAdmin()) {
+        if(!$this->usuarioLogadoFuncaoAdmin()) {
             echo "Acesso negado!";
             exit;
         }

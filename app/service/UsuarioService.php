@@ -12,7 +12,7 @@ class UsuarioService {
         if(! $usuario->getNome())
             array_push($erros, "O campo [Nome] é obrigatório.");
 
-        if(! $usuario->getLogin())
+        if(! $usuario->getEmail())
             array_push($erros, "O campo [Login] é obrigatório.");
 
         if(! $usuario->getSenha())
@@ -21,7 +21,7 @@ class UsuarioService {
         if(! $confSenha)
             array_push($erros, "O campo [Confirmação da senha] é obrigatório.");
 
-        if(! $usuario->getPapel()) 
+        if(! $usuario->getFuncao()) 
             array_push($erros, "O campo [Papel] é obrigatório");
 
 
