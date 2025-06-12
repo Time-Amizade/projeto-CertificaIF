@@ -25,7 +25,7 @@ class CursoController extends Controller{
 
     protected function create() {
         $dados['id'] = 0;
-
+        
         $this->loadView("curso/form.php", $dados);
     }
 }

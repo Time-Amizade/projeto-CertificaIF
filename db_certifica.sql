@@ -2,7 +2,7 @@
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Curso` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nomeCurso` VARCHAR(45) NOT NULL,
+  `nomeCurso` VARCHAR(100) NOT NULL,
   `cargaHorariaAtivComplement` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -39,9 +39,9 @@ ENGINE = InnoDB;
 -- Table `db_certifica`.`TipoAtividade`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `TipoAtividade` (
-  `id` INT NOT NULL,
-  `nomeAtividade` VARCHAR(45) NOT NULL,
-  `descricao` VARCHAR(150) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nomeAtividade` VARCHAR(255) NOT NULL,
+  `descricao` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -98,3 +98,54 @@ ENGINE = InnoDB;
 INSERT INTO Usuario (nomeUsuario, cpf, senha, email,telefone,endereco,funcao,status) 
   VALUES ('admin', '000.000.000-00', '$2y$10$sJttVOC6tNnvOyGt2ctEOeIAwD6wrFXDhDqTWcD6Yn/KiMKJ1rhqq', 'admin@gmail.com','(11) 90000-0000','Rua Exemplo, 123 - Cidade - Estado','ADMINISTRADOR','ATIVO');
 
+INSERT INTO TipoAtividade (nomeAtividade, descricao) VALUES
+('Participação em curso de natureza acadêmica ou profissional', 
+ 'Participação em cursos, oficinas, minicursos ou capacitações na área de informação e comunicação.'),
+
+('Atuação como ministrante de curso, palestra ou oficina', 
+ 'Ministrante em cursos, palestras ou oficinas.'),
+
+('Atividade de monitoria em atividades acadêmicas ou disciplinas', 
+ 'Monitoria em atividades acadêmicas ou disciplinas do Ensino Médio na área do curso.'),
+
+('Participação em iniciação científica ou programas institucionais', 
+ 'Participação em programas de iniciação científica ou outros programas homologados pelo COPE.'),
+
+('Publicação de artigo científico completo', 
+ 'Publicação de artigo completo em canais de evento como autor ou coautor.'),
+
+('Publicação de resumo em evento científico', 
+ 'Publicação de resumo em canais de evento como autor ou coautor.'),
+
+('Exercício de atividade profissional na área de informática', 
+ 'Atividade profissional na área de informática.'),
+
+('Estágio curricular não obrigatório', 
+ 'Estágio não obrigatório realizado no curso, com comprovação formal.'),
+
+('Participação em eventos acadêmicos ou profissionais', 
+ 'Participação em congressos, seminários, simpósios, workshops e outros eventos acadêmicos ou profissionais.'),
+
+('Serviço voluntário de caráter sociocomunitário', 
+ 'Serviço voluntário sociocomunitário em entidades públicas ou privadas sem fins lucrativos.'),
+
+('Apresentação de trabalho em evento', 
+ 'Apresentação de trabalho (inclusive pôster) em evento local, regional, nacional ou internacional.'),
+
+('Participação em reuniões de colegiado de curso', 
+ 'Participação em reuniões de colegiado de curso como representante discente, com ata como comprovação.'),
+
+('Participação em equipe esportiva do IFPR', 
+ 'Participação em equipe esportiva do IFPR.'),
+
+('Participação em comissão organizadora de evento', 
+ 'Participação em comissão organizadora de evento.'),
+
+('Certificação profissional na área do Curso', 
+ 'Certificação profissional relacionada ao curso realizado.'),
+
+('Viagem de estudo e visita técnica', 
+ 'Viagem de estudo ou visita técnica, com declaração do organizador ou coordenador de curso.'),
+
+('Realização de curso de idioma', 
+ 'Realização de curso de idioma.');

@@ -15,8 +15,7 @@ require_once(__DIR__ . "/../include/menu.php");
     <div class="row" style="margin-top: 10px;">
         
         <div class="col-6">
-            <form id="frmUsuario" method="POST" 
-                action="<?= BASEURL ?>/controller/CursoController.php?action=save" >
+            <form id="frmCurso" method="POST" action="<?= BASEURL ?>/controller/CursoController.php?action=save" >
                 <div class="mb-3">
                     <label class="form-label" for="txtNomeCurso">Nome do Curso:</label>
                     <input class="form-control" type="text" id="txtNomeCurso" name="nomeCurso" 
@@ -27,26 +26,12 @@ require_once(__DIR__ . "/../include/menu.php");
                 <div class="mb-3">
                     <label class="form-label" for="txtCargaHoraria">Carga horária mínima:</label>
                     <input class="form-control" type="text" id="txtCargaHoraria" name="CargaHoraria" 
-                        maxlength="15" placeholder="Informe a caraga horaria mínima: "
+                        maxlength="15" placeholder="Informe a carga horaria mínima: "
                         value="<?php echo (isset($dados["curso"]) ? $dados["curso"]->getCargaHorariaAtivComplement() : ''); ?>"/>
                 </div>
   
                 <hr>
                 <hr>
-
-                <div class="mb-3">
-                    <label class="form-label" for="txtSenha">Senha:</label>
-                    <input class="form-control" type="password" id="txtPassword" name="senha" 
-                        maxlength="15" placeholder="Informe a senha"
-                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getSenha() : ''); ?>"/>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label" for="txtConfSenha">Confirmação da senha:</label>
-                    <input class="form-control" type="password" id="txtConfSenha" name="conf_senha" 
-                        maxlength="15" placeholder="Informe a confirmação da senha"
-                        value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '';?>"/>
-                </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="selPapel">Papel:</label>
@@ -55,7 +40,7 @@ require_once(__DIR__ . "/../include/menu.php");
                         <?php foreach($dados["papeis"] as $papel): ?>
                             <option value="<?= $papel ?>" 
                                 <?php 
-                                    if(isset($dados["usuario"]) && $dados["usuario"]->getPapel() == $papel) 
+                                    if(isset($dados["curso"]) && $dados["curso"]->getPapel() == $papel) 
                                         echo "selected";
                                 ?>    
                             >
@@ -82,7 +67,7 @@ require_once(__DIR__ . "/../include/menu.php");
     <div class="row" style="margin-top: 30px;">
         <div class="col-12">
         <a class="btn btn-secondary" 
-                href="<?= BASEURL ?>/controller/UsuarioController.php?action=list">Voltar</a>
+                href="<?= BASEURL ?>/controller/CursoController.php?action=list">Voltar</a>
         </div>
     </div>
 </div>
