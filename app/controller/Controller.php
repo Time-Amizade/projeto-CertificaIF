@@ -48,7 +48,8 @@ class Controller {
     }
 
     protected function usuarioEstaLogado() {
-        session_start();
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
 
         if(! isset($_SESSION[SESSAO_USUARIO_ID])) {
             header("location: " . LOGIN_PAGE);

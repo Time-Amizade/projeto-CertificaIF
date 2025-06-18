@@ -30,7 +30,7 @@ class UsuarioController extends Controller {
 
     protected function list(string $msgErro = "", string $msgSucesso = "") {
         $dados["lista"] = $this->usuarioDao->list();
-
+        
         $this->loadView("usuario/list.php", $dados,  $msgErro, $msgSucesso);
     }
 

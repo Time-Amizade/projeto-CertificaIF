@@ -3,7 +3,11 @@
 #Objetivo: interface para cadastros os cursos do sistema
 
 require_once(__DIR__ . "/../include/header.php");
+require_once(__DIR__."/../../controller/TipoAtivController.php");
 require_once(__DIR__ . "/../include/menu.php");
+
+$tipoAtivController = new TipoAtivController();
+$dados["listaTipo"] =  $tipoAtivController->list();
 ?>
 <h3 class="text-center">
     <?php if($dados['id'] == 0) echo "Inserir"; else echo "Alterar"; ?> 
@@ -25,29 +29,43 @@ require_once(__DIR__ . "/../include/menu.php");
                 
                 <div class="mb-3">
                     <label class="form-label" for="txtCargaHoraria">Carga horária mínima:</label>
-                    <input class="form-control" type="text" id="txtCargaHoraria" name="CargaHoraria" 
+                    <input class="form-control" type="text" id="txtCargaHoraria" name="cargaHoraria" 
                         maxlength="15" placeholder="Informe a carga horaria mínima: "
                         value="<?php echo (isset($dados["curso"]) ? $dados["curso"]->getCargaHorariaAtivComplement() : ''); ?>"/>
                 </div>
-  
+
                 <hr>
                 <hr>
 
                 <div class="mb-3">
-                    <label class="form-label" for="selPapel">Papel:</label>
-                    <select class="form-select" name="papel" id="selPapel">
-                        <option value="">Selecione o papel</option>
-                        <?php foreach($dados["papeis"] as $papel): ?>
-                            <option value="<?= $papel ?>" 
+                    <label class="form-label" for="selTipo">Tipo de atividade:</label>
+                    <select class="form-select" name="tipo" id="selTipo">
+                        <option value="">Selecione o tipo de atividade</option>
+                        <?php foreach($dados["listaTipo"] as $tipo): ?>
+                            <option value="<?= $tipo->getId(); ?>" 
                                 <?php 
-                                    if(isset($dados["curso"]) && $dados["curso"]->getPapel() == $papel) 
+                                    if(isset($dados["listaTipo"]) && $tipo->getNomeAtiv() == $tipo->getNomeAtiv()) 
                                         echo "selected";
                                 ?>    
                             >
-                                <?= $papel ?>
+                                <?= $tipo->getNomeAtiv(); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="txtCargaHorariaAtiv">Carga máxima da atividade:</label>
+                    <input class="form-control" type="text" id="txtCargaHorariaAtiv" name="cargaHorariaAtiv" 
+                        maxlength="70" placeholder="Informe a carga máxima da atividade"
+                        value="<?php echo (isset($dados["curso"]) ? $dados["curso"]->getNomeCurso() : ''); ?>" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="txtEquivalencia">Equivalência da atividade:</label>
+                    <input class="form-control" type="text" id="txtEquivalencia" name="equivalencia" 
+                        maxlength="70" placeholder="Informe a equivalência da atividade"
+                        value="<?php echo (isset($dados["curso"]) ? $dados["curso"]->getNomeCurso() : ''); ?>" />
                 </div>
 
                 <input type="hidden" id="hddId" name="id" 
