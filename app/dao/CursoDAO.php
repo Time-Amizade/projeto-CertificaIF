@@ -13,6 +13,8 @@ class CursoDAO{
         $stm->bindValue("nome", $curso->getNomeCurso());
         $stm->bindValue("cargaHorariaAtivComplement", $curso->getcargaHorariaAtivComplement());
         $stm->execute();
+
+        return $conn->lastInsertId();
     }
 }
 

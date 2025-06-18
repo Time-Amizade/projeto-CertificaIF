@@ -19,15 +19,15 @@ class CursoAtivController extends Controller{
         $this->cursoAtivDao = new CursoAtivDAO();
         $this->cursoService = new CursoService();
 
-        $this->handleAction();
-    }
+        //$this->handleAction();
+    } 
 
-    protected function save($cursoId, $tipoAtivId, $cargaHorariaAtiv, $equivalencia){
+    public function save($cursoId, $tipoAtivId, $cargaHorariaAtiv, $equivalencia){
         $cursoAtiv = new CursoAtiv();
         $cursoAtiv->setTipoAtivId($tipoAtivId);
         $cursoAtiv->setCargaHorariaMax($cargaHorariaAtiv);
         $cursoAtiv->setEquivalencia($equivalencia);
-        
+        $cursoAtiv->setCursoId($cursoId);
 
         $this->cursoAtivDao->insert($cursoAtiv);
     }
