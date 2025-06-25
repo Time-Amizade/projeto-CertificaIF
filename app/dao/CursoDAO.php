@@ -7,15 +7,15 @@ class CursoDAO{
     public function insert(Curso $curso) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO curso (nomeCurso, cargaHorariaAtivComplement) VALUES (:nome, :cargaHorariaAtivComplement)";
+        $sql = "INSERT INTO Curso (nomeCurso, cargaHorariaAtivComplement) VALUES (:nomeCurso, :cargaHorariaAtivComplement)";
 
         $stm = $conn->prepare($sql);
-        $stm->bindValue("nome", $curso->getNomeCurso());
-        $stm->bindValue("cargaHorariaAtivComplement", $curso->getcargaHorariaAtivComplement());
+        $stm->bindValue("nomeCurso", $curso->getNomeCurso());
+        $stm->bindValue("cargaHorariaAtivComplement", $curso->getCargaHorariaAtivComplement());
         $stm->execute();
 
         return $conn->lastInsertId();
     }
 }
 
-?>
+?> 

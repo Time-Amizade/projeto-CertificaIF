@@ -2,6 +2,7 @@
 #Classe controller padrão
 
 require_once(__DIR__ . "/../util/config.php");
+require_once(__DIR__ . "/../model/enum/UsuarioFuncao.php");
 
 class Controller {
 

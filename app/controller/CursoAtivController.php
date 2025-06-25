@@ -23,12 +23,14 @@ class CursoAtivController extends Controller{
     } 
 
     public function save($cursoId, $tipoAtivId, $cargaHorariaAtiv, $equivalencia){
+
         $cursoAtiv = new CursoAtiv();
         $cursoAtiv->setTipoAtivId($tipoAtivId);
         $cursoAtiv->setCargaHorariaMax($cargaHorariaAtiv);
         $cursoAtiv->setEquivalencia($equivalencia);
         $cursoAtiv->setCursoId($cursoId);
 
+        
         $this->cursoAtivDao->insert($cursoAtiv);
     }
 }

@@ -39,15 +39,16 @@ class CursoController extends Controller{
         $cargaHorariaAtiv = trim($_POST['cargaHorariaAtiv']) != "" ? trim($_POST['cargaHorariaAtiv']) : NULL;
         $equivalencia = trim($_POST['equivalencia']) != "" ? trim($_POST['equivalencia']) : NULL;
 
-
         $curso = new Curso();
         $curso->setId($id);
         $curso->setNomeCurso($nome);
         $curso->setCargaHorariaAtivComplement($cargaHoraria);
 
-        
+        $erros = $this->cursoService->validarDados($curso);
+        $cursoId = $curso->getId();
+
         try{
-            if($curso->getId() == 0){
+            if($cursoId == 0){
                 $cursoId = $this->cursoDao->insert($curso);
             }
         }catch(PDOException $e){
@@ -56,6 +57,8 @@ class CursoController extends Controller{
         
         $cursoAtivCont = new CursoAtivController();
         $cursoAtivCont->save($cursoId, $tipo, $cargaHorariaAtiv, $equivalencia);
+        
+        header("location: " . HOME_PAGE);
     }
 }
 

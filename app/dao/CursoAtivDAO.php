@@ -15,6 +15,7 @@ class CursoAtivDAO{
         $stm->bindValue("TipoAtividade_id", $cursoAtiv->getTipoAtivId());
         $stm->bindValue("Curso_id", $cursoAtiv->getCursoId());
         $stm->execute();
+        
     }
 }
 
