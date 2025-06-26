@@ -24,6 +24,12 @@ class CursoController extends Controller{
         $this->handleAction();
     }
 
+    protected function list(string $msgErro = "", string $msgSucesso = ""){
+        $dados["lista"] = $this->cursoDao->list();
+        
+        $this->loadView("curso/list.php", $dados,  $msgErro, $msgSucesso);
+    }
+
     protected function create() {
         $dados['id'] = 0;
         
@@ -55,8 +61,8 @@ class CursoController extends Controller{
             array_push($erros, "Erro ao gravar no banco de dados!");
         }
         
-        $cursoAtivCont = new CursoAtivController();
-        $cursoAtivCont->save($cursoId, $tipo, $cargaHorariaAtiv, $equivalencia);
+        //$cursoAtivCont = new CursoAtivController();
+        //$cursoAtivCont->save($cursoId, $tipo, $cargaHorariaAtiv, $equivalencia);
         
         header("location: " . HOME_PAGE);
     }

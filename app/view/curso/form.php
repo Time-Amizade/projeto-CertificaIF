@@ -85,7 +85,7 @@ $dados["listaTipo"] =  $tipoAtivController->list();
     <div class="row" style="margin-top: 30px;">
         <div class="col-12">
         <a class="btn btn-secondary" 
-                href="<?= BASEURL ?>/controller/CursoController.php?action=list">Voltar</a>
+                href="<?= BASEURL ?>/controller/HomeController.php?action=home">Voltar</a>
         </div>
     </div>
 </div>

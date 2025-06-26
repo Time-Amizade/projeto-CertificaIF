@@ -8,9 +8,11 @@ class CursoAtiv{
     private ?int $id;
     private ?int $cargaHorariaMax;
     private ?string $equivalencia;
-    private ?int $cursoId;
-    private ?int $tipoAtivId;
+    private ?Curso $curso;
+    private ?TipoAtiv $tipoAtiv;
     
+    
+
 
     /**
      * Get the value of id
@@ -67,37 +69,37 @@ class CursoAtiv{
     }
 
     /**
-     * Get the value of cursoId
+     * Get the value of curso
      */
-    public function getCursoId(): ?int
+    public function getCurso(): ?Curso
     {
-        return $this->cursoId;
+        return $this->curso;
     }
 
     /**
-     * Set the value of cursoId
+     * Set the value of curso
      */
-    public function setCursoId(?int $cursoId): self
+    public function setCurso(?Curso $curso): self
     {
-        $this->cursoId = $cursoId;
+        $this->curso = $curso;
 
         return $this;
     }
 
     /**
-     * Get the value of tipoAtivId
+     * Get the value of tipoAtiv
      */
-    public function getTipoAtivId(): ?int
+    public function getTipoAtiv(): ?TipoAtiv
     {
-        return $this->tipoAtivId;
+        return $this->tipoAtiv;
     }
 
     /**
-     * Set the value of tipoAtivId
+     * Set the value of tipoAtiv
      */
-    public function setTipoAtivId(?int $tipoAtivId): self
+    public function setTipoAtiv(?TipoAtiv $tipoAtiv): self
     {
-        $this->tipoAtivId = $tipoAtivId;
+        $this->tipoAtiv = $tipoAtiv;
 
         return $this;
     }

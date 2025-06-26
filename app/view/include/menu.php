@@ -33,7 +33,7 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
                 <div class="dropdown-menu">
                     <?php if($isAdmin): ?>
                         <a class="dropdown-item"
-                            href="<?= BASEURL . '/controller/UsuarioController.php?action=list' ?>">Usuários</a>
+                            href="<?= BASEURL . '/controller/CursoController.php?action=list' ?>">Cursos</a>
                     <?php endif; ?>
                     <a class="dropdown-item" href="#">Outro cadastro</a>
                 </div>
