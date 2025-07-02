@@ -22,7 +22,7 @@ class CursoAtivDAO{
     public function listByCurso(int $idCurso){
         $conn = Connection::getConn();
     
-        $sql = "SELECT * FROM CursoAtividade ca WHERE ca.Curso_id = ?";
+        $sql = "SELECT ca.*, ta.nomeAtividade FROM CursoAtividade ca JOIN TipoAtividade ta ON ca.TipoAtividade_id = ta.id WHERE ca.Curso_id = ?";
         $stm = $conn->prepare($sql);    
         $stm->execute([$idCurso]);
         $result = $stm->fetchAll();
@@ -40,9 +40,12 @@ class CursoAtivDAO{
 
             $tipoAtiv = new TipoAtiv();
             $tipoAtiv->setId($reg['TipoAtividade_id']);
+            $tipoAtiv->setNomeAtiv($reg['nomeAtividade']);
             $ativ->setTipoAtiv($tipoAtiv);
             
-            $ativ->setCurso($reg['Curso_id']);
+            $curso = new Curso();
+            $curso->setId($reg['Curso_id']);
+            $ativ->setCurso($curso);
             array_push($ativs, $ativ);
         }
 

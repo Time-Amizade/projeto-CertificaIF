@@ -9,7 +9,7 @@ require_once(__DIR__ . "/../include/menu.php");
 <h3 class="text-center">Página inicial do sistema</h3>
 
 <a href="<?= BASEURL . '/controller/CursoController.php?action=create'?>">link para</a>
-
+    
 <script src="<?= BASEURL ?>/view/js/home_ajax.js"></script>
 
 <?php  

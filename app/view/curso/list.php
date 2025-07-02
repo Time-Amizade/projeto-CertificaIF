@@ -47,12 +47,13 @@ require_once(__DIR__ . "/../include/menu.php");
                             <td><a class="btn btn-success"
                                 href="<?= BASEURL ?>/controller/CursoAtivController.php?action=list&id=<?= $curso->getId() ?>">
                                 Visualizar</a> 
-                            </td>
+                            </td> 
                             <td><a class="btn btn-danger"
                                 onclick="return confirm('Confirma a exclusão do curso?');"
-                                href="<?= BASEURL ?>/controller/UsuarioController.php?action=delete&id=<?= $curso->getId() ?>">
+                                href="<?= BASEURL ?>/controller/CursoController.php?action=delete&id=<?= $curso->getId() ?>">
                                 Excluir</a> 
                             </td>
+                            
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

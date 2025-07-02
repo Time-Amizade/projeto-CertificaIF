@@ -35,7 +35,7 @@ class CursoAtivController extends Controller{
 
         $dados["lista"] = $this->cursoAtivDao->listByCurso($curso->getId());
 
-        //$this->loadView("atividade/list.php", $dados,  $msgErro, $msgSucesso);
+        $this->loadView("atividade/list.php", $dados,  $msgErro, $msgSucesso);
     }
 
     protected function findCursoById() : ?Curso{
