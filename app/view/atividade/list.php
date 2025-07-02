@@ -9,8 +9,11 @@ require_once(__DIR__ . "/../include/menu.php");
     <div class="row">
         <div class="col-3">
             <a class="btn btn-success" 
-                href="<?= BASEURL ?>/controller/CursoAtivController.php?action=create">
+                href="<?= BASEURL ?>/controller/CursoAtivController.php?action=create&id=<?= $dados['curso']->getId();?>">
                 Inserir</a>
+
+            <a class="btn btn-secondary" 
+                href="<?= BASEURL ?>/controller/CursoController.php?action=list">Voltar</a>
         </div>
 
         <div class="col-9">
@@ -24,10 +27,10 @@ require_once(__DIR__ . "/../include/menu.php");
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome do Curso</th>
-                        <th>Carga Horária Mínima</th>
+                        <th>Nome da atividade</th>
+                        <th>Carga Horária Máxima</th>
+                        <th>Equivalência</th>
                         <th>Alterar</th>
-                        <th>Atividades</th>
                         <th>Excluir</th>
                     </tr>
                 </thead>
@@ -39,16 +42,12 @@ require_once(__DIR__ . "/../include/menu.php");
                             <td><?= $ativ->getCargaHorariaMax(); ?></td>
                             <td><?= $ativ->getEquivalencia(); ?></td>
                             <td><a class="btn btn-primary" 
-                                href="<?= BASEURL ?>/controller/CursoController.php?action=edit&id=<?= $curso->getId() ?>">
+                                href="<?= BASEURL ?>/controller/CursoAtivController.php?action=edit&id=<?= $ativ->getId() ?>">
                                 Alterar</a> 
                             </td>
-                            <td><a class="btn btn-success"
-                                href="<?= BASEURL ?>/controller/CursoAtivController.php?action=list&id=<?= $curso->getId() ?>">
-                                Visualizar</a> 
-                            </td> 
                             <td><a class="btn btn-danger"
                                 onclick="return confirm('Confirma a exclusão do curso?');"
-                                href="<?= BASEURL ?>/controller/CursoController.php?action=delete&id=<?= $curso->getId() ?>">
+                                href="<?= BASEURL ?>/controller/CursoAtivController.php?action=delete&id=<?= $ativ->getId() ?>">
                                 Excluir</a> 
                             </td>
                             
