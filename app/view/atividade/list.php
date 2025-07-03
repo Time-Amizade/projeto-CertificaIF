@@ -26,7 +26,7 @@ require_once(__DIR__ . "/../include/menu.php");
             <table id="tabUsuarios" class='table table-striped table-bordered'>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Código</th>
                         <th>Nome da atividade</th>
                         <th>Carga Horária Máxima</th>
                         <th>Equivalência</th>
@@ -37,7 +37,7 @@ require_once(__DIR__ . "/../include/menu.php");
                 <tbody>
                     <?php foreach($dados['lista'] as $ativ): ?>
                         <tr>
-                            <td><?php echo $ativ->getId(); ?></td>
+                            <td><?php echo $ativ->getCodigo(); ?></td>
                             <td><?php echo $ativ->getTipoAtiv()->getNomeAtiv();?></td> 
                             <td><?= $ativ->getCargaHorariaMax(); ?></td>
                             <td><?= $ativ->getEquivalencia(); ?></td>

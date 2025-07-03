@@ -8,6 +8,7 @@ class CursoAtiv{
     private ?int $id;
     private ?int $cargaHorariaMax;
     private ?string $equivalencia;
+    private ?int $codigo;
     private ?Curso $curso;
     private ?TipoAtiv $tipoAtiv;
     
@@ -31,6 +32,8 @@ class CursoAtiv{
 
         return $this;
     }
+
+    
 
     /**
      * Get the value of cargaHorariaMax
@@ -100,6 +103,24 @@ class CursoAtiv{
     public function setTipoAtiv(?TipoAtiv $tipoAtiv): self
     {
         $this->tipoAtiv = $tipoAtiv;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of codigo
+     */
+    public function getCodigo(): ?int
+    {
+        return $this->codigo;
+    }
+
+    /**
+     * Set the value of codigo
+     */
+    public function setCodigo(?int $codigo): self
+    {
+        $this->codigo = $codigo;
 
         return $this;
     }

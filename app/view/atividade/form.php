@@ -17,20 +17,14 @@ require_once(__DIR__ . "/../include/menu.php");
         
         <div class="col-6">
             <form id="frmCurso" method="POST" action="<?= BASEURL ?>/controller/CursoAtivController.php?action=save" >
-                <div class="mb-3">
-                    <label class="form-label" for="txtCargaHorariaMax">Carga Horária Máxima:</label>
-                    <input class="form-control" type="text" id="txtNomeCurso" name="cargaHorariaMax" 
-                        maxlength="70" placeholder="Informe a carga horária máxima da atividade"
-                        value="<?php echo (isset($dados["ativ"]) ? $dados["ativ"]->getCargaHorariaMax() : ''); ?>" />
-                </div>
                 
                 <div class="mb-3">
-                    <label class="form-label" for="txtEquivalencia">Equivalência:</label>
-                    <input class="form-control" type="text" id="txtEquivalencia" name="equivalencia" 
-                        maxlength="15" placeholder="Informe a equivalência (1hr = 1hr)"
-                        value="<?php echo (isset($dados["ativ"]) ? $dados["ativ"]->getEquivalencia() : ''); ?>"/>
+                    <label class="form-label" for="txtCodigo">Código:</label>
+                    <input class="form-control" type="number" id="txtCodigo" name="codigo" 
+                        maxlength="70" placeholder="Informe o código da atividade"
+                        value="<?php echo (isset($dados["ativ"]) ? $dados["ativ"]->getCodigo() : ''); ?>" />
                 </div>
-
+            
                 <div class="mb-3">
                     <label class="form-label" for="selAtiv">Tipo da atividade:</label>
                     <select class="form-select" name="ativ" id="selAtiv">
@@ -48,14 +42,29 @@ require_once(__DIR__ . "/../include/menu.php");
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="txtCargaHorariaMax">Carga Horária Máxima:</label>
+                    <input class="form-control" type="number" id="txtNomeCurso" name="cargaHorariaMax" 
+                        maxlength="70" placeholder="Informe a carga horária máxima da atividade"
+                        value="<?php echo (isset($dados["ativ"]) ? $dados["ativ"]->getCargaHorariaMax() : ''); ?>" />
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label" for="txtEquivalencia">Equivalência:</label>
+                    <input class="form-control" type="text" id="txtEquivalencia" name="equivalencia" 
+                        maxlength="15" placeholder="Informe a equivalência (1hr = 1hr)"
+                        value="<?php echo (isset($dados["ativ"]) ? $dados["ativ"]->getEquivalencia() : ''); ?>"/>
+                </div>
+
+
 
                 
                 <input type="hidden" id="hddId" name="id" 
                     value="<?= $dados['id']; ?>" />
-
+                <?php if(isset($dados['idCurso'])): ?>
                 <input type="hidden" id="hddId2" name="idCurso" 
                     value="<?= $dados['idCurso']; ?>" />
-
+                <?php endif; ?>
                 <div class="mt-3">
                     <button type="submit" class="btn btn-success">Gravar</button>
                 </div>

@@ -26,7 +26,7 @@ require_once(__DIR__ . "/../include/menu.php");
                 
                 <div class="mb-3">
                     <label class="form-label" for="txtCargaHoraria">Carga horária mínima:</label>
-                    <input class="form-control" type="text" id="txtCargaHoraria" name="cargaHoraria" 
+                    <input class="form-control" type="number" id="txtCargaHoraria" name="cargaHoraria" 
                         maxlength="15" placeholder="Informe a carga horaria mínima: "
                         value="<?php echo (isset($dados["curso"]) ? $dados["curso"]->getCargaHorariaAtivComplement() : ''); ?>"/>
                 </div>

@@ -52,9 +52,26 @@ class CursoAtivController extends Controller{
         return $this->cursoDao->findById($id);
     }
 
+    protected function findById() : ?CursoAtiv{
+        $id = 0;
+        if(isset($_GET["id"]))
+            $id = $_GET["id"];
+
+        //Busca os cursos na base pelo ID    
+        return $this->cursoAtivDao->findById($id);
+    }
+
     protected function create(){
         $dados['id'] = 0; 
         $dados['idCurso'] = $_GET['id'];
+        $dados['listaTipo'] = $this->tipoAtivDao->list();
+        
+        $this->loadView("atividade/form.php", $dados);
+    }
+
+    protected function edit(){
+        $dados['id'] = $_GET['id']; 
+        $dados['ativ'] = $this->findById($_GET['id']);
         $dados['listaTipo'] = $this->tipoAtivDao->list();
         
         $this->loadView("atividade/form.php", $dados);
@@ -65,12 +82,14 @@ class CursoAtivController extends Controller{
         
         $id = $_POST['id'];
         $idCurso = $_POST['idCurso'];
+        $codigo = trim($_POST['codigo']) != "" ? trim($_POST['codigo']) : NULL; 
         $cargaHorariaMax = trim($_POST['cargaHorariaMax']) != "" ? trim($_POST['cargaHorariaMax']) : NULL;
         $equivalencia = trim($_POST['equivalencia']) != "" ? trim($_POST['equivalencia']) : NULL;
         $ativ = trim($_POST['ativ']) != "" ? trim($_POST['ativ']) : NULL;
 
         $cursoAtiv = new CursoAtiv();
         $cursoAtiv->setId($id);
+        $cursoAtiv->setCodigo($codigo);
         $cursoAtiv->setCargaHorariaMax($cargaHorariaMax);
         $cursoAtiv->setEquivalencia($equivalencia);
         
@@ -82,6 +101,16 @@ class CursoAtivController extends Controller{
         
         $cursoAtiv->setCurso($curso);
         $cursoAtiv->setTipoAtiv($tipoAtiv);
+
+        try{
+            if($id == 0){
+                $this->cursoAtivDao->insert($cursoAtiv);
+            }else{
+                $this->cursoAtivDao->update($cursoAtiv);
+            }
+        }catch(PDOException $e){
+            array_push($erros, "Erro ao gravar no banco de dados!");
+        }
 
         $this->cursoAtivDao->insert($cursoAtiv);
 
