@@ -34,6 +34,13 @@ class CursoController extends Controller{
         $this->loadView("curso/form.php", $dados);
     }
 
+    protected function edit(){
+        $dados['curso'] = $this->cursoDao->findById($_GET['id']);
+        $dados['id'] = $_GET['id'];
+
+        $this->loadView("curso/form.php", $dados);
+    }
+
     protected function save(){
 
         $id = $_POST['id'];
@@ -46,11 +53,12 @@ class CursoController extends Controller{
         $curso->setCargaHorariaAtivComplement($cargaHoraria);
 
         $erros = $this->cursoService->validarDados($curso);
-        $cursoId = $curso->getId();
 
         try{
-            if($cursoId == 0){
-                $cursoId = $this->cursoDao->insert($curso);
+            if($id == 0){
+                $this->cursoDao->insert($curso);
+            }else{
+                $this->cursoDao->update($curso);
             }
         }catch(PDOException $e){
             array_push($erros, "Erro ao gravar no banco de dados!");

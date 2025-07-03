@@ -14,7 +14,18 @@ class CursoDAO{
         $stm->bindValue("cargaHorariaAtivComplement", $curso->getCargaHorariaAtivComplement());
         $stm->execute();
 
-        return $conn->lastInsertId();
+    }
+
+    public function update(Curso $curso){
+        $conn = Connection::getConn();
+
+        $sql = "UPDATE Curso SET nomeCurso = :nome, cargaHorariaAtivComplement = :cargaHorariaAtiv WHERE id = :id";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("nome", $curso->getNomeCurso());
+        $stm->bindValue("cargaHorariaAtiv", $curso->getCargaHorariaAtivComplement());
+        $stm->bindValue("id", $curso->getId());
+        $stm->execute();
     }
 
     public function list(){
