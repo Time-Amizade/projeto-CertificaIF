@@ -52,6 +52,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `CursoAtividade` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cargaHorariaMaxima` INT NOT NULL,
+  'codigoAtividade' INT NOT NULL,
   `equivalencia` VARCHAR(45) NOT NULL,
   `TipoAtividade_id` INT NOT NULL,
   `Curso_id` INT NOT NULL,
