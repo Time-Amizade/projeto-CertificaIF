@@ -2,6 +2,7 @@
 #Classe controller para Usuário
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/CursoDAO.php");
+require_once(__DIR__ . "/../dao/CursoAtivDAO.php");
 require_once(__DIR__ . "/../service/CursoService.php");
 require_once(__DIR__ . "/../model/Curso.php");
 
@@ -9,6 +10,7 @@ class CursoController extends Controller{
     
     private CursoDAO $cursoDao;
     private CursoService $cursoService;
+    private CursoAtivDAO $cursoAtivDao;
 
     public function __construct() {
         //Restringir o acesso apenas para administradores
@@ -18,6 +20,7 @@ class CursoController extends Controller{
         }
         
         $this->cursoDao = new CursoDAO();
+        $this->cursoAtivDao = new CursoAtivDAO();
         $this->cursoService = new CursoService();
 
         $this->handleAction();
@@ -39,6 +42,13 @@ class CursoController extends Controller{
         $dados['id'] = $_GET['id'];
 
         $this->loadView("curso/form.php", $dados);
+    }
+
+    protected function delete(){
+        $id = $_GET['id'];
+        $this->cursoAtivDao->deleteByIdCurso($id);
+        $this->cursoDao->deleteById($id);
+        header("location: " . BASEURL . "/controller/CursoController.php?action=list");
     }
 
     protected function save(){

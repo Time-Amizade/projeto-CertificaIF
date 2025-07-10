@@ -23,7 +23,7 @@ class CursoAtivDAO{
     public function update(CursoAtiv $cursoAtiv){
         $conn = Connection::getConn();
 
-        $sql = "UPDATE Curso SET cargaHorariaMaxima = :cargaHorariaMaxima, codigoAtividade = :codigooAtividade, equivalencia = :equivalencia,  TipoAtividade_id = :TipoAtividade_id, Curso_id = :Curso_id WHERE id = :id";
+        $sql = "UPDATE CursoAtividade SET cargaHorariaMaxima = :cargaHorariaMaxima, codigoAtividade = :codigoAtividade, equivalencia = :equivalencia,  TipoAtividade_id = :TipoAtividade_id, Curso_id = :Curso_id WHERE id = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("cargaHorariaMaxima", $cursoAtiv->getCargaHorariaMax());
@@ -50,10 +50,30 @@ class CursoAtivDAO{
         return $cursos[0];
     }
 
+    public function deleteById(int $id) {
+        $conn = Connection::getConn();
+
+        $sql = "DELETE FROM CursoAtividade WHERE id = :id";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("id", $id);
+        $stm->execute();
+    }
+
+    public function deleteByIdCurso(int $id) {
+        $conn = Connection::getConn();
+
+        $sql = "DELETE FROM CursoAtividade WHERE Curso_id = :id";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("id", $id);
+        $stm->execute();
+    }
+
     public function listByCurso(int $idCurso){
         $conn = Connection::getConn();
     
-        $sql = "SELECT ca.*, ta.nomeAtividade FROM CursoAtividade ca JOIN TipoAtividade ta ON ca.TipoAtividade_id = ta.id WHERE ca.Curso_id = ?";
+        $sql = "SELECT ca.*, ta.nomeAtividade FROM CursoAtividade ca JOIN TipoAtividade ta ON ca.TipoAtividade_id = ta.id WHERE ca.Curso_id = ? ORDER BY ca.codigoAtividade";
         $stm = $conn->prepare($sql);    
         $stm->execute([$idCurso]);
         $result = $stm->fetchAll();
@@ -72,7 +92,8 @@ class CursoAtivDAO{
 
             $tipoAtiv = new TipoAtiv();
             $tipoAtiv->setId($reg['TipoAtividade_id']);
-            $tipoAtiv->setNomeAtiv($reg['nomeAtividade']);
+            if(isset($reg['nomeAtividade']))
+                $tipoAtiv->setNomeAtiv($reg['nomeAtividade']);
             $ativ->setTipoAtiv($tipoAtiv);
             
             $curso = new Curso();

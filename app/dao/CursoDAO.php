@@ -54,6 +54,16 @@ class CursoDAO{
         return $cursos[0];
     }
 
+    public function deleteById(int $id) {
+        $conn = Connection::getConn();
+
+        $sql = "DELETE FROM Curso WHERE id = :id";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("id", $id);
+        $stm->execute();
+    }
+
     private function mapCursos($result) {
         $cursos = array();
         foreach ($result as $reg) {

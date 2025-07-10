@@ -46,7 +46,7 @@ require_once(__DIR__ . "/../include/menu.php");
                                 Alterar</a> 
                             </td>
                             <td><a class="btn btn-danger"
-                                onclick="return confirm('Confirma a exclusão do curso?');"
+                                onclick="return confirm('Confirma a exclusão da atividade?');"
                                 href="<?= BASEURL ?>/controller/CursoAtivController.php?action=delete&id=<?= $ativ->getId() ?>">
                                 Excluir</a> 
                             </td>

@@ -71,12 +71,18 @@ class CursoAtivController extends Controller{
 
     protected function edit(){
         $dados['id'] = $_GET['id']; 
-        $dados['ativ'] = $this->findById($_GET['id']);
+        $dados['ativ'] = $this->findById();
+        $dados['idCurso'] = $dados['ativ']->getCurso()->getId();
         $dados['listaTipo'] = $this->tipoAtivDao->list();
         
         $this->loadView("atividade/form.php", $dados);
     }
 
+    protected function delete(){
+        $ativ = $this->findById();
+        $this->cursoAtivDao->deleteById($ativ->getId());
+        header("location: " . BASEURL . "/controller/CursoAtivController.php?action=list&id=".$ativ->getCurso()->getId());
+    }
 
     protected function save(){
         
@@ -102,6 +108,7 @@ class CursoAtivController extends Controller{
         $cursoAtiv->setCurso($curso);
         $cursoAtiv->setTipoAtiv($tipoAtiv);
 
+        $erros = array();
         try{
             if($id == 0){
                 $this->cursoAtivDao->insert($cursoAtiv);
@@ -111,8 +118,6 @@ class CursoAtivController extends Controller{
         }catch(PDOException $e){
             array_push($erros, "Erro ao gravar no banco de dados!");
         }
-
-        $this->cursoAtivDao->insert($cursoAtiv);
 
         header("location: " . BASEURL . "/controller/CursoAtivController.php?action=list&id=".$idCurso);
     }

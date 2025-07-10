@@ -32,7 +32,7 @@ require_once(__DIR__ . "/../include/menu.php");
                         <?php foreach($dados["listaTipo"] as $tipo): ?>
                             <option value="<?= $tipo->getId(); ?>" 
                                 <?php 
-                                    if(isset($dados["ativ"]) && $dados["ativ"]->getTipoAtiv() == $tipo->getId()) 
+                                    if(isset($dados["ativ"]) && $dados["ativ"]->getTipoAtiv()->getId() == $tipo->getId()) 
                                         echo "selected";
                                 ?>    
                             >
@@ -52,7 +52,7 @@ require_once(__DIR__ . "/../include/menu.php");
                 <div class="mb-3">
                     <label class="form-label" for="txtEquivalencia">Equivalência:</label>
                     <input class="form-control" type="text" id="txtEquivalencia" name="equivalencia" 
-                        maxlength="15" placeholder="Informe a equivalência (1hr = 1hr)"
+                        maxlength="45" placeholder="Informe a equivalência (1hr = 1hr)"
                         value="<?php echo (isset($dados["ativ"]) ? $dados["ativ"]->getEquivalencia() : ''); ?>"/>
                 </div>
 
@@ -75,11 +75,10 @@ require_once(__DIR__ . "/../include/menu.php");
             <?php require_once(__DIR__ . "/../include/msg.php"); ?>
         </div>
     </div>
-
+        
     <div class="row" style="margin-top: 30px;">
         <div class="col-12">
-        <a class="btn btn-secondary" 
-                href="<?= BASEURL ?>/controller/HomeController.php?action=home">Voltar</a>
+            <a class="btn btn-secondary" href="<?= BASEURL ?>/controller/CursoAtivController.php?action=list&id=<?=$dados['idCurso']?>">Voltar</a>
         </div>
     </div>
 </div>
