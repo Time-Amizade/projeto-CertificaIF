@@ -5,6 +5,8 @@ require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../model/enum/UsuarioFuncao.php");
+require_once(__DIR__ . "/../model/enum/UsuarioStatus.php");
+
 
 class UsuarioController extends Controller {
 
@@ -13,14 +15,10 @@ class UsuarioController extends Controller {
 
     //Método construtor do controller - será executado a cada requisição a está classe
     public function __construct() {
-        if(!$this->usuarioEstaLogado())
-            return;
+        
 
-        //Restringir o acesso apenas para administradores
-        if(!$this->usuarioLogadoFuncaoAdmin()) {
-            echo "Acesso negado!";
-            exit;
-        }
+        
+        
 
         $this->usuarioDao = new UsuarioDAO();
         $this->usuarioService = new UsuarioService();
@@ -28,17 +26,13 @@ class UsuarioController extends Controller {
         $this->handleAction();
     }
 
-    protected function list(string $msgErro = "", string $msgSucesso = "") {
-        $dados["lista"] = $this->usuarioDao->list();
-        
-        $this->loadView("usuario/list.php", $dados,  $msgErro, $msgSucesso);
-    }
 
     protected function create() {
         $dados['id'] = 0;
         $dados['papeis'] = Usuariofuncao::getAllAsArray();
+        $dados['status'] = UsuarioStatus::getAllAsArray();
 
-        $this->loadView("usuario/form.php", $dados);
+        $this->loadView("cadastro/form.php", $dados);
     }
 
     protected function edit() {

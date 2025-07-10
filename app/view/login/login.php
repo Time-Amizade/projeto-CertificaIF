@@ -37,6 +37,7 @@ require_once(__DIR__ . "/../include/header.php");
             <?php include_once(__DIR__ . "/../include/msg.php") ?>
         </div>
     </div>
+    <button><a href="<?= BASEURL . '/controller/CadastroController.php?action=create'?>">link para</a></button>
 </div>
 
 <?php  
