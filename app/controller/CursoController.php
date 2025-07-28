@@ -52,11 +52,9 @@ class CursoController extends Controller{
     }
 
     protected function save(){
-
         $id = $_POST['id'];
         $nome = trim($_POST['nomeCurso']) != "" ? trim($_POST['nomeCurso']) : NULL;
         $cargaHoraria = trim($_POST['cargaHoraria']) != "" ? trim($_POST['cargaHoraria']) : NULL;
-
         $curso = new Curso();
         $curso->setId($id);
         $curso->setNomeCurso($nome);
@@ -64,17 +62,23 @@ class CursoController extends Controller{
 
         $erros = $this->cursoService->validarDados($curso);
 
-        try{
-            if($id == 0){
-                $this->cursoDao->insert($curso);
-            }else{
-                $this->cursoDao->update($curso);
+        if(!$erros){
+            try{
+                if($id == 0){
+                    $this->cursoDao->insert($curso);
+                }else{
+                    $this->cursoDao->update($curso);
+                }
+            }catch(PDOException $e){
+                array_push($erros, "Erro ao gravar no banco de dados!");
             }
-        }catch(PDOException $e){
-            array_push($erros, "Erro ao gravar no banco de dados!");
+            header('Location: '. CURSO_PAGE);
         }
-        
-        header("location: " . HOME_PAGE);
+        $dados['id'] = $id;
+        $dados['curso'] = $curso;
+        $msgErro = implode("<br>", $erros);
+
+        $this->loadView("curso/form.php", $dados, $msgErro);
     }
 }
 

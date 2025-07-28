@@ -3,8 +3,14 @@ require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
 
-<h3 class="text-center">Atividades do curso: <?= $dados['curso']->getNomeCurso(); ?></h3> 
-
+<h3 class="text-center">Curso: <?= $dados['curso']->getNomeCurso(); ?></h3> 
+<hr><hr>
+<div class="container">
+    <p><b>Nome do curso:</b> <?= $dados['curso']->getNomeCurso() ?></p>
+    <p><b>Carga horária mínima:</b> <?= $dados['curso']->getCargaHorariaAtivComplement()?> horas </p>
+</div>
+<hr><hr>
+<h3 class="text-center">Atividades do curso</h3> 
 <div class="container">
     <div class="row">
         <div class="col-3">

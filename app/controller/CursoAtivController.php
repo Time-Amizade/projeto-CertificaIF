@@ -7,13 +7,14 @@ require_once(__DIR__ . "/../dao/CursoDAO.php");
 require_once(__DIR__ . "/../model/CursoAtiv.php");
 require_once(__DIR__ . "/../model/Curso.php");
 require_once(__DIR__ . "/../model/TipoAtiv.php");
+require_once(__DIR__ . "/../service/CursoAtivService.php");
 
 class CursoAtivController extends Controller{
 
     private CursoAtivDAO $cursoAtivDao;
     private TipoAtivDAO $tipoAtivDao;
     private CursoDAO $cursoDao;
-    //private CursoService $cursoService;
+    private CursoAtivService $cursoAtivService;
 
     public function __construct() {
         //Restringir o acesso apenas para administradores
@@ -25,7 +26,7 @@ class CursoAtivController extends Controller{
         $this->cursoAtivDao = new CursoAtivDAO();
         $this->tipoAtivDao = new TipoAtivDAO();
         $this->cursoDao = new CursoDAO();
-        //$this->cursoService = new CursoService();
+        $this->cursoAtivService = new CursoAtivService();
 
         $this->handleAction();
     } 
@@ -108,18 +109,26 @@ class CursoAtivController extends Controller{
         $cursoAtiv->setCurso($curso);
         $cursoAtiv->setTipoAtiv($tipoAtiv);
 
-        $erros = array();
-        try{
-            if($id == 0){
-                $this->cursoAtivDao->insert($cursoAtiv);
-            }else{
-                $this->cursoAtivDao->update($cursoAtiv);
+        $erros = $this->cursoAtivService->validarDados($cursoAtiv);
+        if(!$erros){
+            try{
+                if($id == 0){
+                    $this->cursoAtivDao->insert($cursoAtiv);
+                }else{
+                    $this->cursoAtivDao->update($cursoAtiv);
+                }
+            }catch(PDOException $e){
+                array_push($erros, "Erro ao gravar no banco de dados!");
             }
-        }catch(PDOException $e){
-            array_push($erros, "Erro ao gravar no banco de dados!");
+            header('Location: '. BASEURL . "/controller/CursoAtivController.php?action=list&id=".$idCurso);
         }
+        $dados['id'] = $id;
+        $dados['idCurso'] = $idCurso;
+        $dados['listaTipo'] = $this->tipoAtivDao->list();
+        $dados['ativ'] = $cursoAtiv;
+        $msgErro = implode("<br>", $erros);
 
-        header("location: " . BASEURL . "/controller/CursoAtivController.php?action=list&id=".$idCurso);
+        $this->loadView("atividade/form.php", $dados, $msgErro);
     }
 
 }

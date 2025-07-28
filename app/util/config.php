@@ -19,6 +19,9 @@ define('BASEURL', '/projeto-CertificaIF/app');
 //Nome do sistema
 define('APP_NAME', 'CertificaIF');
 
+//Página de listagem de cursos do sistema
+define('CURSO_PAGE', BASEURL . '/controller/CursoController.php?action=list');
+
 //Página de logout do sistema
 define('LOGIN_PAGE', BASEURL . '/controller/LoginController.php?action=login');
 
