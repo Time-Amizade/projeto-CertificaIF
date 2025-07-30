@@ -4,6 +4,7 @@
 
 include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Usuario.php");
+include_once(__DIR__ . "/../dao/CursoDAO.php");
 
 class UsuarioDAO {
 
@@ -67,15 +68,20 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO Usuario (nomeUsuario, email, senha, funcao) VALUES (:nome, :email, :senha, :funcao)";
+        $sql = "INSERT INTO Usuario (nomeUsuario, dataNascimento, email, senha, cpf, Curso_id, funcao, codigoMatricula, status) VALUES (:nome, :dataNascimento, :email, :senha, :cpf, :Curso_id, :funcao, :codigoMatricula, :statusUsuario)";
         
         $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
 
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
+        $stm->bindValue("dataNascimento", $usuario->getDataNascimento());
         $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("senha", $senhaCripto);
+        $stm->bindValue("cpf", $usuario->getCpf());
+        $stm->bindValue("Curso_id", $usuario->getCursoid()->getId());
         $stm->bindValue("funcao", $usuario->getFuncao());
+        $stm->bindValue("codigoMatricula", $usuario->getCodigoMatricula());
+        $stm->bindValue("statusUsuario", 'PENDENTE');
         $stm->execute();
     }
 
@@ -146,7 +152,8 @@ class UsuarioDAO {
             $usuario->setHorasValidadas($reg['horasValidadas']);
             $usuario->setStatus($reg['status']);
             $usuario->setFotoPerfil($reg['fotoPerfil']);
-            $usuario->setCursoid($reg['Curso_id']);
+            $cursoDao = new CursoDAO();
+            $usuario->setCursoid($cursoDao->findById($reg['Curso_id']));
             array_push($usuarios, $usuario);
         }
 

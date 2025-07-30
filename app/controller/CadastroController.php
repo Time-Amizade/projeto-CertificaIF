@@ -2,6 +2,7 @@
 #Classe controller para Usuário
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
+require_once(__DIR__ . "/../dao/CursoDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../model/enum/UsuarioFuncao.php");
@@ -11,16 +12,13 @@ require_once(__DIR__ . "/../model/enum/UsuarioStatus.php");
 class UsuarioController extends Controller {
 
     private UsuarioDAO $usuarioDao;
+    private CursoDAO $cursoDao;
     private UsuarioService $usuarioService;
 
     //Método construtor do controller - será executado a cada requisição a está classe
     public function __construct() {
-        
-
-        
-        
-
         $this->usuarioDao = new UsuarioDAO();
+        $this->cursoDao = new CursoDAO();
         $this->usuarioService = new UsuarioService();
 
         $this->handleAction();
@@ -31,6 +29,7 @@ class UsuarioController extends Controller {
         $dados['id'] = 0;
         $dados['papeis'] = Usuariofuncao::getAllAsArray();
         $dados['status'] = UsuarioStatus::getAllAsArray();
+        $dados['cursos'] = $this->cursoDao->list();
 
         $this->loadView("cadastro/form.php", $dados);
     }
@@ -54,22 +53,34 @@ class UsuarioController extends Controller {
         //Capturar os dados do formulário
         $id = $_POST['id'];
         $nome = trim($_POST['nome']) != "" ? trim($_POST['nome']) : NULL;
+        $dataNascimento = isset($_POST['dataNascimento']) && trim($_POST['dataNascimento']) !== "" ? trim($_POST['dataNascimento']) : NULL;
         $email = trim($_POST['email']) != "" ? trim($_POST['email']) : NULL;
         $senha = trim($_POST['senha']) != "" ? trim($_POST['senha']) : NULL;
         $confSenha = trim($_POST['conf_senha']) != "" ? trim($_POST['conf_senha']) : NULL;
+        $cpf = trim($_POST['cpf']) != "" ? trim($_POST['cpf']) : NULL;
+        $cursoId = $_POST['curso'];
         $funcao = $_POST['funcao'];
+        $codMatricula = trim($_POST['cod_matricula']) != "" ? trim($_POST['cod_matricula']) : NULL;
 
         //Criar o objeto Usuario
         $usuario = new Usuario();
         $usuario->setId($id);
         $usuario->setNome($nome);
+        $usuario->setDataNascimento($dataNascimento);
         $usuario->setEmail($email);
         $usuario->setSenha($senha);
+        $usuario->setCpf($cpf);
+
+        $curso = new Curso();
+        $curso = $this->cursoDao->findById($cursoId);
+
+        $usuario->setCursoid($curso);
         $usuario->setFuncao($funcao);
+        $usuario->setCodigoMatricula($codMatricula);
 
         //Validar os dados (camada service)
         $erros = $this->usuarioService->validarDados($usuario, $confSenha);
-        if(! $erros) {
+        if(!$erros) {
             //Inserir no Base de Dados
             try {
                 if($usuario->getId() == 0)
@@ -77,7 +88,7 @@ class UsuarioController extends Controller {
                 else
                     $this->usuarioDao->update($usuario);
                 
-                header("location: " . BASEURL . "/controller/UsuarioController.php?action=list");
+                header("location: " . BASEURL . "/controller/HomeController.php?action=home");
                 exit;
             } catch(PDOException $e) {
                 //Iserir erro no array
@@ -89,12 +100,13 @@ class UsuarioController extends Controller {
         //Mostrar os erros
         $dados['id'] = $usuario->getId();
         $dados['papeis'] = UsuarioFuncao::getAllAsArray();
+        $dados['cursos'] = $this->cursoDao->list();
         $dados["usuario"] = $usuario;
         $dados['confSenha'] = $confSenha;
 
         $msgErro = implode("<br>", $erros);
 
-        $this->loadView("usuario/form.php", $dados, $msgErro);
+        $this->loadView("cadastro/form.php", $dados, $msgErro);
     }
 
     protected function delete() {
