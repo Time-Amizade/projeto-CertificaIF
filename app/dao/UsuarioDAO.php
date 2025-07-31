@@ -188,5 +188,4 @@ class UsuarioDAO {
 
         return $usuarios;
     }
-
 }
