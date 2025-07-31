@@ -1,0 +1,6 @@
+body.login {
+background-image: url('../img/ImagemBG.png');
+  background-size: cover; /* Faz a imagem cobrir todo o fundo */
+ 
+  background-repeat: no-repeat; /* Não repete a imagem */
+}
