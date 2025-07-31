@@ -30,7 +30,9 @@ class LoginController extends Controller {
         $erros = $this->loginService->validarCampos($email, $senha);
         if(empty($erros)) {
             //Valida o login a partir do banco de dados
+            
             $usuario = $this->usuarioDao->findByEmailSenha($email, $senha);
+            
             if($usuario) {
                 //Se encontrou o usuário, salva a sessão e redireciona para a HOME do sistema
                 $this->loginService->salvarUsuarioSessao($usuario);

@@ -7,9 +7,10 @@ require_once(__DIR__ . "/../include/menu.php");
 <link rel="stylesheet" href="<?= BASEURL ?>/view/css/home.css">
 
 <h3 class="text-center">Página inicial do sistema</h3>
-
-
-
+<?php foreach($dados['usuarios'] as $usuario): ?>
+    <p><?= $usuario->getNome() ." ". $usuario->getCodigoMatricula() ?> </p>
+    <br>
+<?php endforeach; ?>
 <a href="<?= BASEURL . '/controller/CursoController.php?action=create'?>">link para</a>
     
 <script src="<?= BASEURL ?>/view/js/home_ajax.js"></script>

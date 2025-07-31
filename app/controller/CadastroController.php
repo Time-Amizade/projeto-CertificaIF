@@ -61,7 +61,6 @@ class UsuarioController extends Controller {
         $cursoId = $_POST['curso'];
         $funcao = $_POST['funcao'];
         $codMatricula = trim($_POST['cod_matricula']) != "" ? trim($_POST['cod_matricula']) : NULL;
-
         //Criar o objeto Usuario
         $usuario = new Usuario();
         $usuario->setId($id);
@@ -70,10 +69,10 @@ class UsuarioController extends Controller {
         $usuario->setEmail($email);
         $usuario->setSenha($senha);
         $usuario->setCpf($cpf);
-
+        
         $curso = new Curso();
         $curso = $this->cursoDao->findById($cursoId);
-
+        
         $usuario->setCursoid($curso);
         $usuario->setFuncao($funcao);
         $usuario->setCodigoMatricula($codMatricula);

@@ -33,21 +33,21 @@ require_once(__DIR__ . "/../include/menu.php");
                 <div class="mb-3">
                     <label class="form-label" for="txtEmail">Email:</label>
                     <input class="form-control" type="text" id="txtEmail" name="email" 
-                        maxlength="15" placeholder="Informe o Email"
+                        maxlength="45" placeholder="Informe o Email"
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEmail() : ''); ?>"/>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="txtPassword">Senha:</label>
                     <input class="form-control" type="password" id="txtPassword" name="senha" 
-                        maxlength="15" placeholder="Informe a senha"
+                        maxlength="45" placeholder="Informe a senha"
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getSenha() : ''); ?>"/>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="txtConfSenha">Confirmação da senha:</label>
                     <input class="form-control" type="password" id="txtConfSenha" name="conf_senha" 
-                        maxlength="15" placeholder="Informe a confirmação da senha"
+                        maxlength="45" placeholder="Informe a confirmação da senha"
                         value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '';?>"/>
                 </div>
 

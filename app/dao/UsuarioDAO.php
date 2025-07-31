@@ -40,6 +40,36 @@ class UsuarioDAO {
             " - Erro: mais de um usuário encontrado.");
     }
 
+    public function findByFilters($status = null, $cursoId = null, $funcao = null){
+        $conn = Connection::getConn();
+
+        $sql = "SELECT * FROM Usuario u WHERE ";
+        $params = [];
+
+        if (!is_null($status)) {
+            $sql .= " u.status = ?";
+            $params[] = $status;
+        }
+
+        if (!is_null($funcao)) {
+            $sql .= " AND u.funcao = ?";
+            $params[] = $funcao;
+        }
+
+        if (!is_null($cursoId)) {
+            $sql .= " AND u.Curso_id = ?";
+            $params[] = $cursoId;
+        }
+
+        $stm = $conn->prepare($sql);    
+        $stm->execute($params);
+        $result = $stm->fetchAll();
+
+        $usuarios = $this->mapUsuarios($result);
+
+        return $usuarios;
+    }
+
 
     //Método para buscar um usuário por seu email e senha
     public function findByEmailSenha(string $email, string $senha) {
@@ -71,7 +101,6 @@ class UsuarioDAO {
         $sql = "INSERT INTO Usuario (nomeUsuario, dataNascimento, email, senha, cpf, Curso_id, funcao, codigoMatricula, status) VALUES (:nome, :dataNascimento, :email, :senha, :cpf, :Curso_id, :funcao, :codigoMatricula, :statusUsuario)";
         
         $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
-
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("dataNascimento", $usuario->getDataNascimento());
@@ -81,7 +110,7 @@ class UsuarioDAO {
         $stm->bindValue("Curso_id", $usuario->getCursoid()->getId());
         $stm->bindValue("funcao", $usuario->getFuncao());
         $stm->bindValue("codigoMatricula", $usuario->getCodigoMatricula());
-        $stm->bindValue("statusUsuario", 'PENDENTE');
+        $stm->bindValue("statusUsuario", 'PENDENTE');   
         $stm->execute();
     }
 

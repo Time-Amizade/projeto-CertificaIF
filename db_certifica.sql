@@ -2,7 +2,7 @@
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Curso` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nomeCurso` VARCHAR(100) NOT NULL,
+  `nomeCurso` VARCHAR(255) NOT NULL,
   `cargaHorariaAtivComplement` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -17,10 +17,10 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `dataNascimento` DATE NULL,
   `cpf` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   `telefone` VARCHAR(15) NULL,
   `endereco` VARCHAR(45) NULL,
-  `codigoMatricula` INT NULL,
+  `codigoMatricula` VARCHAR(11) NULL,
   `funcao` ENUM('ADMINISTRADOR', 'COORDENADOR', 'ALUNO') NOT NULL,
   `horasValidadas` INT NULL,
   `status` ENUM("ATIVO", "INATIVO", "PENDENTE") NOT NULL,

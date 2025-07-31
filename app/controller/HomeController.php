@@ -20,7 +20,13 @@ class HomeController extends Controller {
 
     protected function home() {
         $dados = array();
-        
+        if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
+            if ($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR) {
+                $dados['usuarios'] = $this->usuarioDAO->findByFilters('PENDENTE', null, 'COORDENADOR');
+            } else if ($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::COORDENADOR) {
+                $dados['usuarios'] = $this->usuarioDAO->findByFilters('PENDENTE', $_SESSION[SESSAO_USUARIO_CURSO], 'ALUNO');
+            }
+        }
         $this->loadView("home/home.php", $dados);
     }
     
