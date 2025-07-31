@@ -1,12 +1,13 @@
 <?php
 #Nome do arquivo: login/login.php
 #Objetivo: interface para logar no sistema
+$pagina = 'login';
 
 require_once(__DIR__ . "/../include/header.php");
 ?>
 
 <div class="container">
-    <div class="row" style="margin-top: 20px;">
+    <div class="row" style="margin-top: 20px; ">
         <div class="col-6">
             <div class="alert alert-info">
                 <h4>Informe os dados para logar:</h4>
@@ -28,7 +29,8 @@ require_once(__DIR__ . "/../include/header.php");
                             value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
                     </div>
 
-                    <button type="submit" class="btn btn-success mt-3">Logar</button>
+                    <button type="submit" class="btn btn-success mt-3">Acessar</button>
+                    <button  class="btn btn-succes mt-3"><a href="<?= BASEURL . '/controller/CadastroController.php?action=create'?>">Cadastrar</a></button>
                 </form>
             </div>
         </div>
@@ -37,7 +39,6 @@ require_once(__DIR__ . "/../include/header.php");
             <?php include_once(__DIR__ . "/../include/msg.php") ?>
         </div>
     </div>
-    <button><a href="<?= BASEURL . '/controller/CadastroController.php?action=create'?>">Cadastrar</a></button>
 </div>
 
 <?php  
