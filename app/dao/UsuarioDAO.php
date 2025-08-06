@@ -70,7 +70,6 @@ class UsuarioDAO {
         return $usuarios;
     }
 
-
     //Método para buscar um usuário por seu email e senha
     public function findByEmailSenha(string $email, string $senha) {
         $conn = Connection::getConn();
@@ -111,6 +110,15 @@ class UsuarioDAO {
         $stm->bindValue("funcao", $usuario->getFuncao());
         $stm->bindValue("codigoMatricula", $usuario->getCodigoMatricula());
         $stm->bindValue("statusUsuario", 'PENDENTE');   
+        $stm->execute();
+    }
+
+    public function confirmSignUp($id){
+        $conn = Connection::getConn();
+
+        $sql = "UPDATE Usuario SET status = :status WHERE id = :id";
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("status", $id);
         $stm->execute();
     }
 

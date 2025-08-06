@@ -34,6 +34,11 @@ class UsuarioController extends Controller {
         $this->loadView("cadastro/form.php", $dados);
     }
 
+    protected function confirm(){
+        $id = $_GET['id'];
+        $this->usuarioDao->confirmSignUp($id);
+    }
+
     protected function edit() {
         //Busca o usuário na base pelo ID    
         $usuario = $this->findUsuarioById();

@@ -120,11 +120,15 @@ class UsuarioController extends Controller {
 
     protected function listJson() {
         //Retornar uma lista de usuários em forma JSON
-        $usuarios = $this->usuarioDao->list();
-        $json = json_encode($usuarios);
-        
-        echo $json;
+        $dados = [];
 
+        if ($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR) {
+                $dados = $this->usuarioDao->findByFilters('PENDENTE', null, 'COORDENADOR');
+        } else if ($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::COORDENADOR) {
+                $dados = $this->usuarioDao->findByFilters('PENDENTE', $_SESSION[SESSAO_USUARIO_CURSO], 'ALUNO');
+        }
+        $json = json_encode($dados);
+        echo $json;
         //[{},{},{}]
     }
 
