@@ -64,9 +64,9 @@ class UsuarioDAO {
         $stm = $conn->prepare($sql);    
         $stm->execute($params);
         $result = $stm->fetchAll();
-
+            
         $usuarios = $this->mapUsuarios($result);
-
+        
         return $usuarios;
     }
 

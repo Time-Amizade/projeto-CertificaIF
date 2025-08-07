@@ -5,7 +5,7 @@
 require_once(__DIR__ . "/enum/UsuarioFuncao.php");
 require_once(__DIR__.'/Curso.php');
 
-class Usuario{
+class Usuario implements JsonSerializable{
 
     private ?int $id;
     private ?string $nome;
@@ -22,7 +22,7 @@ class Usuario{
     private ?Curso $Cursoid;
     private ?string $fotoPerfil;
 
-    /*public function jsonSerialize(): array
+    public function jsonSerialize(): array
     {
         return array(
             "id" => $this->id,
@@ -41,7 +41,7 @@ class Usuario{
             "fotoPerfil" => $this->fotoPerfil
         );
     }
-    */
+    
  
     
 
