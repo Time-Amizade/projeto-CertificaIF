@@ -11,8 +11,8 @@ require_once(__DIR__ . "/../include/menu.php");
 <div class='container' id='listaDados'>
 
 </div>
-    
- <script src="<?= BASEURL ?>/view/js/home_ajax.js"> </script> 
+
+<script src="<?= BASEURL ?>/view/js/home_ajax.js"> const tipoUsuario = "<?php echo $_SESSION[SESSAO_USUARIO_PAPEL]; ?>"; </script> 
 
 <?php  
 require_once(__DIR__ . "/../include/footer.php");

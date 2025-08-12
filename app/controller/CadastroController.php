@@ -20,6 +20,7 @@ class UsuarioController extends Controller {
         $this->usuarioDao = new UsuarioDAO();
         $this->cursoDao = new CursoDAO();
         $this->usuarioService = new UsuarioService();
+        session_start();
 
         $this->handleAction();
     }
@@ -129,13 +130,26 @@ class UsuarioController extends Controller {
     }
 
     protected function listJson() {
-        //Retornar uma lista de usuários em forma JSON
-        $usuarios = $this->usuarioDao->list();
-        $json = json_encode($usuarios);
+        $dados = [];
+        $usuarioFunc = null;
         
-        echo $json;
+        if (isset($_SESSION['usuarioLogadoPapel'])) {
+            $usuarioFunc = $_SESSION['usuarioLogadoPapel'];
+            
+            if ($usuarioFunc == UsuarioFuncao::ADMINISTRADOR) {
+                
+                $dados = $this->usuarioDao->findByFilters('PENDENTE', null, 'COORDENADOR');
+            
+            } else if ($usuarioFunc == UsuarioFuncao::COORDENADOR) {
+                $dados = $this->usuarioDao->findByFilters('PENDENTE', $_SESSION['usuarioLogadoCurso'], 'ALUNO');
+            }
+        }
 
-        //[{},{},{}]
+        $json = json_encode([
+            'tipo' => $usuarioFunc,
+            'dados' => array_map(fn($usuario) => $usuario->jsonSerialize(), $dados)
+        ], JSON_PRETTY_PRINT);
+        echo $json;    
     }
 
     private function findUsuarioById() {

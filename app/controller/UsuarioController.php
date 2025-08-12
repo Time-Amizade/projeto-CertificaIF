@@ -120,18 +120,24 @@ class UsuarioController extends Controller {
 
     protected function listJson() {
         $dados = [];
+        $usuarioFunc = null;
 
         if (isset($_SESSION['usuarioLogadoPapel'])) {
-            if ($_SESSION['usuarioLogadoPapel'] == UsuarioFuncao::ADMINISTRADOR) {
+            $usuarioFunc = $_SESSION['usuarioLogadoPapel'];
+
+            if ($usuarioFunc == UsuarioFuncao::ADMINISTRADOR) {
                 
                 $dados = $this->usuarioDao->findByFilters('PENDENTE', null, 'COORDENADOR');
             
-            } else if ($_SESSION['usuarioLogadoPapel'] == UsuarioFuncao::COORDENADOR) {
+            } else if ($usuarioFunc == UsuarioFuncao::COORDENADOR) {
                 $dados = $this->usuarioDao->findByFilters('PENDENTE', $_SESSION['usuarioLogadoCurso'], 'ALUNO');
             }
         }
 
-        $json = json_encode(array_map(fn($usuario) => $usuario->jsonSerialize(), $dados), JSON_PRETTY_PRINT);
+        $json = json_encode([
+            'tipo' => $usuarioFunc,
+            'dados' => array_map(fn($usuario) => $usuario->jsonSerialize(), $dados)
+        ], JSON_PRETTY_PRINT);
         echo $json;    
     }
 

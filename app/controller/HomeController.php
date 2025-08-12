@@ -23,9 +23,7 @@ class HomeController extends Controller {
 
         if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
             if ($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR) {
-                
                 $dados['usuarios'] = $this->usuarioDao->findByFilters('PENDENTE', null, 'COORDENADOR');
-            
             } else if ($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::COORDENADOR) {
                 $dados['usuarios'] = $this->usuarioDao->findByFilters('PENDENTE', $_SESSION[SESSAO_USUARIO_CURSO], 'ALUNO');
             }

@@ -37,12 +37,12 @@ class Usuario implements JsonSerializable{
             "funcao" => $this->funcao,
             "horasValidadas" => $this->horasValidadas,
             "status" => $this->status,
-            "Cursoid" => $this->Cursoid,
+            "Cursoid" =>  $this->Cursoid ? ['id' => $this->Cursoid->getId(), 'nome' => $this->Cursoid->getNomeCurso()] : null,
             "fotoPerfil" => $this->fotoPerfil
         );
     }
     
- 
+
     
 
     /**

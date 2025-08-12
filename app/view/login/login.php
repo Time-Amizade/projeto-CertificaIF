@@ -9,7 +9,7 @@ require_once(__DIR__ . "/../include/header.php");
     <div class="row w-100" style="max-width: 800px;">
         <!-- CARD DO FORMULÁRIO -->
         <div class="col-md-6">
-           <div class="card shadow p-1 rounded-lg" style="width: 700px; height: 750px; background-color: rgba(255, 255, 255, 0.33); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
+            <div class="card shadow p-1 rounded-lg" style="width: 700px; height: 750px; background-color: rgba(255, 255, 255, 0.33); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
                 <img src="<?= BASEURL . '/view/img/anexo.png'?>" style="display: block; margin: 0 auto 10px auto; max-width: 500px%; height: 300px;">
 
                 <h3 class="mb-3"  style="text-align: center;"><B>LOGIN</B></h3>
@@ -21,15 +21,15 @@ require_once(__DIR__ . "/../include/header.php");
                     <div class="mb-3" style="max-width: 600px; padding-left: 85px ;" >
                         <!--<label class="form-label" for="txtEmail">Login:</label>-->
                         <input type="text" class="form-control" name="email" id="txtEmail"
-                               maxlength="15" placeholder="Email"
-                               value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
+                            maxlength="255" placeholder="Email"
+                            value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
                     </div>
 
                     <div class="mb-3" style="max-width: 600px; padding-left: 85px ;">
                         <!--<label class="form-label" for="txtSenha">Senha:</label>-->
                         <input type="password" class="form-control" name="senha" id="txtSenha"
-                               maxlength="15" placeholder="Senha"
-                               value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
+                            maxlength="255" placeholder="Senha"
+                            value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
                     </div>
                     
                     <div class="mb-3" style="padding-left: 85px;">
