@@ -84,9 +84,15 @@ class UsuarioDAO {
         if(count($usuarios) == 1) {
             //Tratamento para senha criptografada
             if(password_verify($senha, $usuarios[0]->getSenha()))
+            {
+                if($usuarios[0]->getStatus() === 'PENDENTE'){
+                    return "PENDENTE";
+                }
                 return $usuarios[0];
+            }
             else
                 return null;
+
         } elseif(count($usuarios) == 0)
             return null;
 

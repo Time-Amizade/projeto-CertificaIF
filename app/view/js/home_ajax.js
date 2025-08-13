@@ -31,8 +31,6 @@ function carregarUsuarios(BASEURL) {
                             </div>
                         </div>
                     `;
-                    // <button class="btn btn-success btn-sm" onclick="aceitarUsuario('${user.id}')">Aceitar</button>
-                    // <button class="btn btn-danger btn-sm" onclick="recusarUsuario('${user.id}')">Recusar</button>
                     listaDados.innerHTML += card;
                 });
                 
@@ -43,10 +41,10 @@ function carregarUsuarios(BASEURL) {
                             <div class="card shadow-sm border-0">
                                 <div class="card-body">
                                     <h5 class="card-title">${user.nome}</h5>
-                                    <p><strong>CPF:</strong> ${user.cpf}</p>
+                                    <p><strong>Código de Matrícula:</strong> ${user.codigoMatricula}</p>
                                     <p><strong>Email:</strong> ${user.email}</p>
                                     <p><strong>Status:</strong> ${user.status}</p>
-                                    <p><strong>Curso:</strong> ${user.Cursoid.nome}</p>
+                                    <p><strong>CPF:</strong> ${user.cpf}</p>
                                     <div class="d-flex justify-content-between">
                                         <a href="` + BASEURL + `/controller/CadastroController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
                                         <a href="` + BASEURL + `/controller/CadastroController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>

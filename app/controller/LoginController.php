@@ -32,13 +32,15 @@ class LoginController extends Controller {
             //Valida o login a partir do banco de dados
             
             $usuario = $this->usuarioDao->findByEmailSenha($email, $senha);
-            
-            if($usuario) {
+
+            if(is_object($usuario)) {
                 //Se encontrou o usuário, salva a sessão e redireciona para a HOME do sistema
                 $this->loginService->salvarUsuarioSessao($usuario);
 
                 header("location: " . HOME_PAGE);
                 exit;
+            } else if($usuario === 'PENDENTE'){
+                array_push($erros, 'O usuário ainda não foi aceito');
             } else {
                 $erros = ["Email ou senha informados são inválidos!"];
             }
