@@ -9,14 +9,20 @@ require_once(__DIR__ . "/../include/header.php");
 
 
 <div class="container  d-flex justify-content-center" >
-    <div class="row w-200" style="margin-top: 20px;">
+    <div class="row w-200" style="margin-top: 20px; margin-bottom:20px">
         
         <!-- card do formulario-->
-        <div class="card shadow p-2 rounded-lg " style=" width: 800px; height: auto; background-color: rgba(255,255,255,0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
+        <div class="card shadow p-1 rounded-lg " style=" width: 800px; height: auto; background-color: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
             <h3 class="text-center">
                 <img src="<?= BASEURL . '/view/img/anexo.png'?>" style="display: block; margin: 0 auto 10px auto; max-width: 500px; height: 300px;">
             </h3>
-            <div class=>
+            
+            <div class="mb-3 " style="text-align: center; width: 600px; padding-left: 200px;">
+                <?php require_once(__DIR__ . "/../include/msg.php"); ?>
+            </div>
+
+
+            <div  style="width: 700px; padding-left: 90px;">
                 <form id="frmUsuario" method="POST" 
                     action="<?= BASEURL ?>/controller/CadastroController.php?action=save" >
                     <div class="mb-3">
@@ -26,7 +32,7 @@ require_once(__DIR__ . "/../include/header.php");
                             value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getNome() : ''); ?>" />
                     </div>
                     
-                    <div class="mb-3">
+                    <div class="mb-3" >
                         <label class="form-label" for="txtData">Data de Nascimento:</label>
                         <input class="form-control" type="date" id="txtData" name="dataNascimento" 
                             value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getDataNascimento() : ''); ?>">
@@ -81,19 +87,22 @@ require_once(__DIR__ . "/../include/header.php");
                     
                     <div class="mb-3">
                         <label class="form-label" for="selfuncao">Função:</label>
-                        <select class="form-select" name="funcao" id="selfuncao">
+                       <select class="form-select" name="funcao" id="selfuncao">
                             <option value="">Selecione sua função</option>
-                            <?php foreach($dados["papeis"] as $funcao): ?>
-                                <option value="<?= $funcao ?>" 
-                                <?php 
-                                        if(isset($dados["usuario"]) && $dados["usuario"]->getFuncao() == $funcao) 
-                                            echo "selected";
-                                        ?>    
-                                >
-                                <?= $funcao ?>
-                            </option>
+                            <?php foreach ($dados["papeis"] as $funcao): ?>
+                                <?php if ($funcao !== "ADMINISTRADOR"): ?>
+                                    <option value="<?= $funcao ?>" 
+                                        <?php 
+                                            if (isset($dados["usuario"]) && $dados["usuario"]->getFuncao() == $funcao) {
+                                                echo "selected";
+                                            }
+                                        ?>>
+                                        <?= $funcao ?>
+                                    </option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
+
                     </div>
                     
                     <div class="mb-3" id="matricula-group" style="display: none;">
@@ -106,12 +115,9 @@ require_once(__DIR__ . "/../include/header.php");
                     <input type="hidden" id="hddId" name="id" 
                         value="<?= $dados['id']; ?>" />
 
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-success">Gravar</button>
-                         
-                        <a href="<?= LOGIN_PAGE ?>" class="btn btn-primary mt-3">Cadastrar</a>
-                        
-
+                    <div class="mt-3 d-flex  gap-2">
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                        <a href="<?= LOGIN_PAGE ?>" class="btn btn-primary">Voltar</a>
                     </div>
                 </form>            
             </div>
@@ -120,9 +126,6 @@ require_once(__DIR__ . "/../include/header.php");
         </div>
 </div>
         
-            <!-- <div class="col-6">
-                <?php require_once(__DIR__ . "/../include/msg.php"); ?>
-            </div> -->
 <script>
     const selectFuncao = document.getElementById('selfuncao');
     const matriculaGroup = document.getElementById('matricula-group');
