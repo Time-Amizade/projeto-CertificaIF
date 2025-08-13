@@ -24,8 +24,32 @@ function carregarUsuarios(BASEURL) {
                                     <p><strong>Status:</strong> ${user.status}</p>
                                     <p><strong>Curso:</strong> ${user.Cursoid.nome}</p>
                                     <div class="d-flex justify-content-between">
-                                        <button class="btn btn-success btn-sm" onclick="aceitarUsuario('${user.id}')">Aceitar</button>
-                                        <button class="btn btn-danger btn-sm" onclick="recusarUsuario('${user.id}')">Recusar</button>
+                                        <a href="` + BASEURL + `/controller/CadastroController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
+                                        <a href="` + BASEURL + `/controller/CadastroController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    // <button class="btn btn-success btn-sm" onclick="aceitarUsuario('${user.id}')">Aceitar</button>
+                    // <button class="btn btn-danger btn-sm" onclick="recusarUsuario('${user.id}')">Recusar</button>
+                    listaDados.innerHTML += card;
+                });
+                
+            }else if(tipoUser === 'COORDENADOR'){
+                dados.forEach(function (user) {
+                    let card = `
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-body">
+                                    <h5 class="card-title">${user.nome}</h5>
+                                    <p><strong>CPF:</strong> ${user.cpf}</p>
+                                    <p><strong>Email:</strong> ${user.email}</p>
+                                    <p><strong>Status:</strong> ${user.status}</p>
+                                    <p><strong>Curso:</strong> ${user.Cursoid.nome}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="` + BASEURL + `/controller/CadastroController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
+                                        <a href="` + BASEURL + `/controller/CadastroController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
                                     </div>
                                 </div>
                             </div>
@@ -33,9 +57,6 @@ function carregarUsuarios(BASEURL) {
                     `;
                     listaDados.innerHTML += card;
                 });
-            }else if(tipoUser === 'COORDENADOR'){
-                listaDados.innerHTML += 'WHO';
-                listaDados.innerHTML += 'Dados: ' + dados;
             }else{
                 
             }
@@ -46,6 +67,10 @@ function carregarUsuarios(BASEURL) {
     }
 
     xhttp.send();
+}
+
+function aceitarUsuario(id){
+
 }
 
 carregarUsuarios('/projeto-CertificaIF/app');

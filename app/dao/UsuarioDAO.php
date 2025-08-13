@@ -118,7 +118,8 @@ class UsuarioDAO {
 
         $sql = "UPDATE Usuario SET status = :status WHERE id = :id";
         $stm = $conn->prepare($sql);
-        $stm->bindValue("status", $id);
+        $stm->bindValue("status", 'ATIVO');
+        $stm->bindValue("id", $id);
         $stm->execute();
     }
 

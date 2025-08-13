@@ -38,6 +38,15 @@ class UsuarioController extends Controller {
     protected function confirm(){
         $id = $_GET['id'];
         $this->usuarioDao->confirmSignUp($id);
+
+        header("location: " . BASEURL . "/controller/HomeController.php?action=home");
+    }
+
+    protected function refuse(){
+        $id = $_GET['id'];
+        $this->usuarioDao->deleteById($id);
+
+        header("location: " . BASEURL . "/controller/HomeController.php?action=home");
     }
 
     protected function edit() {

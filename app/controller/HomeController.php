@@ -30,7 +30,6 @@ class HomeController extends Controller {
         }
 
         $this->loadView("home/home.php", $dados);
-
     }
     
 }
