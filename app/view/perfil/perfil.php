@@ -4,6 +4,15 @@
 
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
+$papel;
+if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
+    $papel = "adimin";
+} else if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::COORDENADOR){
+    $papel = "coordenador";
+}else if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ALUNO){
+    $papel = "aluno";
+}
+        
 ?>
 
 <h3 class="text-center">
@@ -19,14 +28,60 @@ require_once(__DIR__ . "/../include/menu.php");
         </div>
 
         <div class="col-12 mb-2">
-            <span class="fw-bold">Login:</span>
-            <span><?= $dados['usuario']->getLogin() ?></span>
+            <span class="fw-bold">Email:</span>
+            <span><?= $dados['usuario']->getEmail() ?></span>
         </div>
 
         <div class="col-12 mb-2">
-            <span class="fw-bold">Papel:</span>
-            <span><?= $dados['usuario']->getPapel() ?></span>
+            <span class="fw-bold">Data de Nascimento:</span>
+            <span><?= $dados['usuario']->getDataNascimento() ?></span>
         </div>
+
+        <div class="col-12 mb-2">
+            <span class="fw-bold">CPF:</span>
+            <span><?= $dados['usuario']->getCPF() ?></span>
+        </div>
+
+        <div class="col-12 mb-2">
+            <span class="fw-bold">Telefone:</span>
+            <span><?= $dados['usuario']->getTelefone() ?></span>
+        </div>
+
+        <div class="col-12 mb-2">
+            <span class="fw-bold">Endereço:</span>
+            <span><?= $dados['usuario']->getEndereco() ?></span>
+        </div>
+
+        <div class="col-12 mb-2">
+            <span class="fw-bold">Data de Nascimento:</span>
+            <span><?= $dados['usuario']->getDataNascimento() ?></span>
+        </div>
+
+        <div class="col-12 mb-2">
+            <span class="fw-bold">Função:</span>
+            <span><?= $dados['usuario']->getFuncao() ?></span>
+        </div>
+
+        <div class="col-12 mb-2">
+            <span class="fw-bold">Curso:</span>
+            <span><?= $dados['usuario']->getCursoId()->getNomeCurso() ?></span>
+        </div>
+
+        <?php if($papel == "aluno"): ?>
+            <div class="col-12 mb-2">
+                <span class="fw-bold">Horas Validadas:</span>
+               <span><?= $dados['usuario']->getHorasValidadas() ?? 0 ?></span>
+    
+            </div>
+        <?php endif; ?>
+
+        <?php if($papel == "aluno"): ?>         
+            <div class="col-12 mb-2">
+                <span class="fw-bold">Código de Matricula:</span>
+                <span><?= $dados['usuario']->getCodigoMatricula() ?></span>
+            </div>
+        <?php endif; ?>   
+
 
         <div class="col-12 mb-2">
             <div class="fw-bold">Foto:</div>
