@@ -35,6 +35,10 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
                         <a class="dropdown-item"
                             href="<?= BASEURL . '/controller/CursoController.php?action=list' ?>">Cursos</a>
                     <?php endif; ?>
+                    <?php if($_SESSION[SESSAO_USUARIO_PAPEL] === 'ALUNO'): ?>
+                        <a class="dropdown-item"
+                            href="<?= BASEURL . '/controller/ComprovanteController.php?action=create' ?>">Comprovantes</a>
+                    <?php endif; ?>
                     <a class="dropdown-item" href="#">Outro cadastro</a>
                 </div>
             </li>

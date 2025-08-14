@@ -5,6 +5,7 @@
 include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Usuario.php");
 include_once(__DIR__ . "/../dao/CursoDAO.php");
+include_once(__DIR__.'/../model/enum/UsuarioStatus.php');
 
 class UsuarioDAO {
 
@@ -85,8 +86,8 @@ class UsuarioDAO {
             //Tratamento para senha criptografada
             if(password_verify($senha, $usuarios[0]->getSenha()))
             {
-                if($usuarios[0]->getStatus() === 'PENDENTE'){
-                    return "PENDENTE";
+                if($usuarios[0]->getStatus() === UsuarioStatus::PENDENTE){
+                    return UsuarioStatus::PENDENTE;
                 }
                 return $usuarios[0];
             }
@@ -115,7 +116,7 @@ class UsuarioDAO {
         $stm->bindValue("Curso_id", $usuario->getCursoid()->getId());
         $stm->bindValue("funcao", $usuario->getFuncao());
         $stm->bindValue("codigoMatricula", $usuario->getCodigoMatricula());
-        $stm->bindValue("statusUsuario", 'PENDENTE');   
+        $stm->bindValue("statusUsuario", UsuarioStatus::PENDENTE);   
         $stm->execute();
     }
 
@@ -124,7 +125,7 @@ class UsuarioDAO {
 
         $sql = "UPDATE Usuario SET status = :status WHERE id = :id";
         $stm = $conn->prepare($sql);
-        $stm->bindValue("status", 'ATIVO');
+        $stm->bindValue("status", UsuarioStatus::ATIVO);
         $stm->bindValue("id", $id);
         $stm->execute();
     }

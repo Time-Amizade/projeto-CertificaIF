@@ -29,7 +29,6 @@ class UsuarioController extends Controller {
     protected function create() {
         $dados['id'] = 0;
         $dados['papeis'] = Usuariofuncao::getAllAsArray();
-        $dados['status'] = UsuarioStatus::getAllAsArray();
         $dados['cursos'] = $this->cursoDao->list();
 
         $this->loadView("cadastro/form.php", $dados);
