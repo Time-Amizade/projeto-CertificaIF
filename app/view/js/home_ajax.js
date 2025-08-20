@@ -24,8 +24,8 @@ function carregarUsuarios(BASEURL) {
                                     <p><strong>Status:</strong> ${user.status}</p>
                                     <p><strong>Curso:</strong> ${user.Cursoid.nome}</p>
                                     <div class="d-flex justify-content-between">
-                                        <a href="` + BASEURL + `/controller/CadastroController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
-                                        <a href="` + BASEURL + `/controller/CadastroController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
+                                        <a href="` + BASEURL + `/controller/UsuarioController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
+                                        <a href="` + BASEURL + `/controller/UsuarioController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
                                     </div>
                                 </div>
                             </div>
@@ -46,8 +46,8 @@ function carregarUsuarios(BASEURL) {
                                     <p><strong>Status:</strong> ${user.status}</p>
                                     <p><strong>CPF:</strong> ${user.cpf}</p>
                                     <div class="d-flex justify-content-between">
-                                        <a href="` + BASEURL + `/controller/CadastroController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
-                                        <a href="` + BASEURL + `/controller/CadastroController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
+                                        <a href="` + BASEURL + `/controller/UsuarioController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
+                                        <a href="` + BASEURL + `/controller/UsuarioController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
                                     </div>
                                 </div>
                             </div>

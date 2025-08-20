@@ -80,5 +80,13 @@ class Controller {
         return false;
     }
 
+    protected function usuarioLogadoFuncaoCoord() {
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+        
+        if(isset($_SESSION[SESSAO_USUARIO_PAPEL]))
+            return $_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR || $_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::COORDENADOR;
 
+        return false;
+    }
 }

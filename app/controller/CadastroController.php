@@ -34,34 +34,20 @@ class UsuarioController extends Controller {
         $this->loadView("cadastro/form.php", $dados);
     }
 
-    protected function confirm(){
-        $id = $_GET['id'];
-        $this->usuarioDao->confirmSignUp($id);
+    // protected function edit() {
+    //     //Busca o usuário na base pelo ID    
+    //     $usuario = $this->findUsuarioById();
+    //     if($usuario) {
+    //         $dados['id'] = $usuario->getId();
+    //         $usuario->setSenha("");
+    //         $dados["usuario"] = $usuario;
 
-        header("location: " . BASEURL . "/controller/HomeController.php?action=home");
-    }
-
-    protected function refuse(){
-        $id = $_GET['id'];
-        $this->usuarioDao->deleteById($id);
-
-        header("location: " . BASEURL . "/controller/HomeController.php?action=home");
-    }
-
-    protected function edit() {
-        //Busca o usuário na base pelo ID    
-        $usuario = $this->findUsuarioById();
-        if($usuario) {
-            $dados['id'] = $usuario->getId();
-            $usuario->setSenha("");
-            $dados["usuario"] = $usuario;
-
-            $dados['papeis'] = Usuariofuncao::getAllAsArray();
+    //         $dados['papeis'] = Usuariofuncao::getAllAsArray();
             
-            $this->loadView("usuario/form.php", $dados);
-        } else
-            $this->list("Usuário não encontrado!");
-    }
+    //         $this->loadView("usuario/form.php", $dados);
+    //     } else
+    //         $this->list("Usuário não encontrado!");
+    // }
 
     protected function save() {
         //Capturar os dados do formulário
@@ -122,21 +108,6 @@ class UsuarioController extends Controller {
         $this->loadView("cadastro/form.php", $dados, $msgErro);
     }
 
-    protected function delete() {
-        //Busca o usuário na base pelo ID    
-        $usuario = $this->findUsuarioById();
-        
-        if($usuario) {
-            //Excluir
-            $this->usuarioDao->deleteById($usuario->getId());
-
-            header("location: " . BASEURL . "/controller/UsuarioController.php?action=list");
-            exit;
-        } else {
-            $this->list("Usuário não encontrado!");
-        }
-    }
-
     protected function listJson() {
         $dados = [];
         $usuarioFunc = null;
@@ -159,20 +130,7 @@ class UsuarioController extends Controller {
         ], JSON_PRETTY_PRINT);
         echo $json;    
     }
-
-    private function findUsuarioById() {
-        $id = 0;
-        if(isset($_GET["id"]))
-            $id = $_GET["id"];
-
-        //Busca o usuário na base pelo ID    
-        return $this->usuarioDao->findById($id);
-    }
-
-    
-
 }
-
 
 #Criar objeto da classe para assim executar o construtor
 new UsuarioController();

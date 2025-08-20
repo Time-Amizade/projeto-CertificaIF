@@ -24,8 +24,8 @@ class ComprovanteController extends Controller{
     }
 
     protected function create(){
-        $dados['cursoAtivs'] = $this->cursoAtivDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
         $dados['idComp'] = 0;
+        $dados['cursoAtivs'] = $this->cursoAtivDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
         $this->loadView("comprovante/form.php", $dados);
     }
 
