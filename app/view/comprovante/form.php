@@ -8,7 +8,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
 <h3 class="text-center">
     <?php if($dados['idComp'] == 0) echo "Inserir"; else echo "Alterar"; ?> 
-    Curso
+    Comprovante
 </h3>
 
 <div class="container">
@@ -25,15 +25,37 @@ require_once(__DIR__ . "/../include/menu.php");
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label" for="txtCargaHoraria">Carga horária mínima:</label>
-                    <input class="form-control" type="number" id="txtCargaHoraria" name="cargaHoraria" 
-                        maxlength="15" placeholder="Informe a carga horaria mínima: "
-                        value="<?php echo (isset($dados["comprovante"]) ? $dados["comprovante"]->getCargaHorariaAtivComplement() : ''); ?>"/>
+                    <label class="form-label" for="txtHoras">Quantidade de horas: </label>
+                    <input class="form-control" type="number" id="txtHoras" name="horas" 
+                        maxlength="15" placeholder="Informe a quantidade de horas que o certificado valida"
+                        value="<?php echo (isset($dados["comprovante"]) ? $dados["comprovante"]->getHoras() : ''); ?>"/>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="selAtiv">Tipo da atividade:</label>
+                    <select class="form-select" name="ativ" id="selAtiv">
+                        <option value="">Selecione o tipo</option>
+                        <?php foreach($dados["cursoAtivs"] as $tipo): ?>
+                            <option value="<?= $tipo->getId(); ?>" 
+                                <?php 
+                                    if(isset($dados["comprovante"]) && $dados["comprovante"]->getCursoAtiv()->getId() == $tipo->getId()) 
+                                        echo "selected";
+                                ?>    
+                            >
+                                <?= $tipo->getTipoAtiv()->getNomeAtiv(); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="txtArq">Arquivo do comprovante: </label>
+                    <input class="form-control" type="file" id="txtArq" name="arquivo" 
+                        value="<?php echo (isset($dados["comprovante"]) ? $dados["comprovante"]->getArquivo() : ''); ?>"/>
+                </div>
                 
                 <input type="hidden" id="hddId" name="id" 
-                    value="<?= $dados['idComp']; ?>" />
+                    value="<?= $dados['idComp'] ?>" />
 
                 <div class="mt-3">
                     <button type="submit" class="btn btn-success">Gravar</button>
@@ -48,7 +70,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
     <div class="row" style="margin-top: 30px;">
         <div class="col-12">
-        <a class="btn btn-secondary" href="<?= BASEURL ?>/controller/CursoController.php?action=list">Voltar</a>
+        <a class="btn btn-secondary" href="<?= BASEURL ?>/controller/HomeController.php?action=home">Voltar</a>
         </div>
     </div>
 </div>
