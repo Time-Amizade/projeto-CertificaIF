@@ -39,7 +39,7 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
                         <a class="dropdown-item"
                             href="<?= BASEURL . '/controller/ComprovanteController.php?action=create' ?>">Comprovantes</a>
                     <?php endif; ?>
-                    <a class="dropdown-item" href="#">Outro cadastro</a>
+                
                 </div>
             </li>
 
