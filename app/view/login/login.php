@@ -10,9 +10,9 @@ require_once(__DIR__ . "/../include/header.php");
         <!-- CARD DO FORMULÁRIO -->
         <div class="col-md-6">
             <div class="card shadow p-1 rounded-lg" style="width: 700px; height: 750px; background-color: rgba(255, 255, 255, 0.33); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
-                <img src="<?= BASEURL . '/view/img/anexo.png'?>" style="display: block; margin: 0 auto 10px auto; max-width: 500px%; height: 300px;">
+                <img src="<?= BASEURL . '/view/img/Logo.png'?>" style="display: block; margin: 0 auto 10px auto; height: 400px; width: 400px;">
 
-                <h3 class="mb-3"  style="text-align: center;"><B>LOGIN</B></h3>
+                <h3 class="mb-3"  style="text-align: center;" ><B>LOGIN</B></h3>
                 <!-- MENSAGENS DE ERRO AO LADO -->
                 <div class=" align-items-center" style="max-width: 600px; padding-left: 85px ;">
                     <h11  style="text-align: center;"><?php include_once(__DIR__ . "/../include/msg.php") ?></h11>

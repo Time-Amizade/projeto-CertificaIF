@@ -34,25 +34,30 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
         <div class="mb-3">
             <label class="form-label">Foto de perfil: </label>
             <div class="col-12 mb-2 text-center">
-                
-                <?php if($dados['usuario']->getFotoPerfil()): ?>
-                    <!-- Imagem clicável que abre o input file -->
-                    <label for="txtFoto" >
-                        <img src="<?= BASEURL_ARQUIVOS . '/' . $dados['usuario']->getFotoPerfil() ?>"height="300" alt="Foto de perfil">
-                    </label>
-                <?php endif; ?>
-                
+                <!-- Imagem clicável que abre o input file -->
+                <label for="txtFoto" style="cursor: pointer;">
+                    <?php if($dados['usuario']->getFotoPerfil()): ?>
+                        <img src="<?= BASEURL_ARQUIVOS . '/' . $dados['usuario']->getFotoPerfil() ?>"
+                            height="300" alt="Foto de perfil">
+                    <?php else: ?>
+                        <img src="<?= BASEURL ?>/../arquivos/padrao.png"
+                            height="300" alt="Foto padrão">
+                    <?php endif; ?>
+                </label>
             </div>
 
-            <!-- Input file escondido, mas ainda funcional -->
+            <!-- Input file escondido -->
             <input class="form-control d-none" type="file" id="txtFoto" name="foto" />
         </div>
+
 
         <input type="hidden" name="fotoAnterior" value="<?= $dados['usuario']->getFotoPerfil() ?>">
 
         <div class="mt-3">
             <button type="submit" class="btn btn-success">Gravar</button>
         </div>
+
+        
 
     </form>            
 </div>
@@ -131,12 +136,14 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
         </div>
         
 
-        <div class="row" style="margin-top: 30px;">
-            <div class="col-12">
-            <a class="btn btn-secondary" 
-                    href="<?= HOME_PAGE ?>">Voltar</a>
+       <div class="row" style="margin-top: 30px;">
+            <div class="col-12 d-flex gap-2">
+                <a class="btn btn-secondary" href="<?= HOME_PAGE ?>">Voltar</a>
+                <a class="btn btn-success" href="<?= BASEURL ?>/controller/PerfilController.php?action=edit&id=<?= $dados['usuario']->getId() ?>">Editar</a>
             </div>
         </div>
+
+
 </div>
 
 <?php  

@@ -104,7 +104,7 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO Usuario (nomeUsuario, dataNascimento, email, senha, cpf, Curso_id, funcao, codigoMatricula, fotoPerfil, status) VALUES (:nome, :dataNascimento, :email, :senha, :cpf, :Curso_id, :funcao, :codigoMatricula, :fotoPerfil, :statusUsuario)";
+        $sql = "INSERT INTO Usuario (nomeUsuario, dataNascimento, email, senha, cpf, Curso_id, funcao, codigoMatricula, status) VALUES (:nome, :dataNascimento, :email, :senha, :cpf, :Curso_id, :funcao, :codigoMatricula, :statusUsuario)";
         
         $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
         $stm = $conn->prepare($sql);
@@ -116,7 +116,6 @@ class UsuarioDAO {
         $stm->bindValue("Curso_id", $usuario->getCursoid()->getId());
         $stm->bindValue("funcao", $usuario->getFuncao());
         $stm->bindValue("codigoMatricula", $usuario->getCodigoMatricula());
-        $stm->bindValue("fotoPerfil", "padrao.png");
         $stm->bindValue("statusUsuario", UsuarioStatus::PENDENTE);   
         $stm->execute();
     }
