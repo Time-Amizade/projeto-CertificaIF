@@ -161,7 +161,7 @@ class UsuarioDAO {
     public function updateFotoPerfil(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "UPDATE Usuario SET foto_perfil = ? WHERE id = ?";
+        $sql = "UPDATE Usuario SET fotoPerfil = ? WHERE id = ?";
 
         $stm = $conn->prepare($sql);
         $stm->execute(array($usuario->getFotoPerfil(), $usuario->getId()));
