@@ -10,7 +10,7 @@ class Comprovante implements JsonSerializable{
     private ?int $horas;
     private ?string $status;
     private ?string $comentario;
-    private ?string $arquivo;
+    private ?string $arquivo = '';
     private ?Usuario $usuario;
     private ?CursoAtiv $cursoAtiv;
 

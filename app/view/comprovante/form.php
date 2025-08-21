@@ -16,7 +16,8 @@ require_once(__DIR__ . "/../include/menu.php");
     <div class="row" style="margin-top: 10px;">
         
         <div class="col-6">
-            <form id="frmComp" method="POST" action="<?= BASEURL ?>/controller/ComprovanteController.php?action=save" >
+            <form id="frmComp" method="POST" action="<?= BASEURL ?>/controller/ComprovanteController.php?action=save" 
+            enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label" for="txtTitulo">Título:</label>
                     <input class="form-control" type="text" id="txtTitulo" name="titulo" 
@@ -33,7 +34,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
                 <div class="mb-3">
                     <label class="form-label" for="selAtiv">Tipo da atividade:</label>
-                    <select class="form-select" name="ativ" id="selAtiv">
+                    <select class="form-select" name="selAtiv" id="selAtiv">
                         <option value="">Selecione o tipo</option>
                         <?php foreach($dados["cursoAtivs"] as $tipo): ?>
                             <option value="<?= $tipo->getId(); ?>" 

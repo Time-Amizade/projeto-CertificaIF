@@ -58,13 +58,37 @@ class ComprovanteController extends Controller{
 
         $usuario = new Usuario();
         $usuario = $this->usuarioDao->findById($this->getIdUsuarioLogado());
-
         $comprovante->setUsuario($usuario);
 
         $cursoAtiv = new CursoAtiv();
         $cursoAtiv = $this->cursoAtivDao->findById($cursoAtivId);
-
         $comprovante->setCursoAtiv($cursoAtiv);
+
+        $erros = $this->compService->validarDados($comprovante);
+        if(!$erros){
+            try{
+                if($comprovante->getId() == 0)
+                    $this->compDao->insert($comprovante);
+                else
+                    $this->compDao->update($comprovante);
+                
+                header("location: " . BASEURL . "/controller/HomeController.php?action=home");
+                exit;
+            } catch(PDOException $e) {
+                //Iserir erro no array
+                array_push($erros, "Erro ao gravar no banco de dados!");
+                array_push($erros, $e->getMessage());
+            }
+        }
+        //Mostrar os erros
+        $dados['idComp'] = 0;
+        $dados['cursoAtivs'] = $this->cursoAtivDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
+        $dados["comprovante"] = $comprovante;
+
+        $msgErro = implode("<br>", $erros);
+
+        $this->loadView("comprovante/form.php", $dados, $msgErro);
+
     }
 
 }

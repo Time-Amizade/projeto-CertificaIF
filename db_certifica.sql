@@ -74,7 +74,7 @@ ENGINE = InnoDB;
 -- Table `db_certifica`.`Comprovante`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Comprovante` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(150) NOT NULL, 
   `horas` INT NOT NULL,
   `status` ENUM('PENDENTE', 'APROVADO', 'RECUSADO') NOT NULL,
