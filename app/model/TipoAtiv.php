@@ -6,8 +6,6 @@ class TipoAtiv{
     private ?string $nomeAtiv;
     private ?string $descAtiv;
 
-    
-
     /**
      * Get the value of id
      */

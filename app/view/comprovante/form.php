@@ -12,7 +12,6 @@ require_once(__DIR__ . "/../include/menu.php");
 </h3>
 
 <div class="container">
-    
     <div class="row" style="margin-top: 10px;">
         
         <div class="col-6">

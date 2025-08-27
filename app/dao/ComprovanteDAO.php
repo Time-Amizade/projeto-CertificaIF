@@ -1,12 +1,34 @@
 <?php
 
-include_once(__DIR__ . "/../connection/Connection.php");
-include_once(__DIR__ . "/../model/Comprovante.php");
-include_once(__DIR__.'/../model/CursoAtiv.php');
-include_once(__DIR__.'/../model/enum/ComprovanteStatus.php');
-include_once(__DIR__ . "/../dao/ComprovanteDAO.php");
+include_once(__DIR__. "/../connection/Connection.php");
+include_once(__DIR__. "/../model/Comprovante.php");
+include_once(__DIR__. '/../model/enum/ComprovanteStatus.php');
+include_once(__DIR__. "/../dao/CursoAtivDAO.php");
+include_once(__DIR__. "/../dao/UsuarioDAO.php");
 
 class ComprovanteDAO{
+
+    public function listByUserId($id){
+        $conn = Connection::getConn();
+
+        $sql = "SELECT * FROM Comprovante c WHERE c.Usuario_id = ? ORDER BY c.id ";
+        $stm = $conn->prepare($sql);    
+        $stm->execute([$id]);
+        $result = $stm->fetchAll();
+        
+        return $this->mapComp($result);
+    }
+
+    public function listByCurso($idCurso){
+        $conn = Connection::getConn();
+
+        $sql = "SELECT c.* FROM Comprovante c JOIN CursoAtividade ca ON c.CursoAtividade_id = ca.id WHERE ca.Curso_id = ?; ";
+        $stm = $conn->prepare($sql);    
+        $stm->execute([$idCurso]);
+        $result = $stm->fetchAll();
+        
+        return $this->mapComp($result);
+    }
     
     //Método para inserir um comprovante
     public function insert(Comprovante $comprovante) {
@@ -27,6 +49,29 @@ class ComprovanteDAO{
 
     public function update(Comprovante $comprovante){
         exit;
+    }
+
+    private function mapComp($result) {
+        $comprovantes = array();
+        foreach ($result as $reg) {
+            $comprovante = new Comprovante();
+            $comprovante->setId($reg['id']);
+            $comprovante->setTitulo($reg['titulo']);
+            $comprovante->setHoras($reg['horas']);
+            $comprovante->setStatus($reg['status']);
+            $comprovante->setComentario($reg['comentario']);
+            $comprovante->setArquivo($reg['arquivo']);
+
+            $usuarioDao = new UsuarioDAO();
+            $comprovante->setUsuario($usuarioDao->findById($reg['Usuario_id']));
+
+            $cursoAtivDao = new CursoAtivDAO();
+            $comprovante->setCursoAtiv($cursoAtivDao->findById($reg['CursoAtividade_id']));
+            
+            array_push($comprovantes, $comprovante);
+        }
+
+        return $comprovantes;
     }
 }
 

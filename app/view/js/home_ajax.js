@@ -1,4 +1,4 @@
-function carregarUsuarios(BASEURL) {
+function carregarDados(BASEURL) {
     //Requisição AJAX para buscar os usuários 
     // cadastrados em formato JSON
     var xhttp = new XMLHttpRequest();
@@ -13,6 +13,7 @@ function carregarUsuarios(BASEURL) {
             var tipoUser = resultado.tipo
             var dados = resultado.dados
             if(tipoUser === 'ADMINISTRADOR'){
+                var dados = resultado.dados
                 dados.forEach(function (user) {
                     let card = `
                         <div class="col-md-4 mb-3">
@@ -35,6 +36,7 @@ function carregarUsuarios(BASEURL) {
                 });
                 
             }else if(tipoUser === 'COORDENADOR'){
+                var dados = resultado.dados
                 dados.forEach(function (user) {
                     let card = `
                         <div class="col-md-4 mb-3">
@@ -55,10 +57,48 @@ function carregarUsuarios(BASEURL) {
                     `;
                     listaDados.innerHTML += card;
                 });
-            }else{
-                
-            }
-            
+                if (resultado.comprovantes){
+                    dados = resultado.comprovantes
+                    dados.forEach(function(dado) {
+                        let card = `
+                            <div class="col-md-3 mb-3">
+                                <div class="card shadow-sm border-0">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${dado.comprovante.titulo}</h5>
+                                        <p><strong>Horas validadas:</strong> ${dado.comprovante.horas} horas</p>
+                                        <p><strong>Status:</strong> ${dado.comprovante.status}</p>
+                                        <p><strong>Código da atividade:</strong> ${dado.cursoAtiv.codigo}</p>
+                                        <a href="` + BASEURL + `/../arquivos/${dado.comprovante.arquivo}" target="_blank">
+                                            Visualizar arquivo
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        listaDados.innerHTML += card;
+                    });
+                }
+            }else if(tipoUser === 'ALUNO'){
+                var dados = resultado.comprovantes
+                dados.forEach(function(dado) {
+                    let card = `
+                        <div class="col-md-3 mb-3">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-body">
+                                    <h5 class="card-title">${dado.comprovante.titulo}</h5>
+                                    <p><strong>Horas validadas:</strong> ${dado.comprovante.horas} horas</p>
+                                    <p><strong>Status:</strong> ${dado.comprovante.status}</p>
+                                    <p><strong>Código da atividade:</strong> ${dado.cursoAtiv.codigo}</p>
+                                    <a href="` + BASEURL + `/../arquivos/${dado.comprovante.arquivo}" target="_blank">
+                                        Visualizar arquivo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    listaDados.innerHTML += card;
+                });
+            }         
         }else{
             console.error("Erro ao carregar os usuários:", xhttp.status);
         }
@@ -67,8 +107,4 @@ function carregarUsuarios(BASEURL) {
     xhttp.send();
 }
 
-function aceitarUsuario(id){
-
-}
-
-carregarUsuarios('/projeto-CertificaIF/app');
+carregarDados('/projeto-CertificaIF/app');

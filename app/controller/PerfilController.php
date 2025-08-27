@@ -75,7 +75,7 @@ class PerfilController extends Controller {
     protected function edit($id) {
         //Busca o usuário na base pelo ID    
         $usuario = $this->findUsuarioById($id);
-       
+
         if($usuario) {
             $dados['id'] = $usuario->getId();
             $usuario->setSenha("");
@@ -85,10 +85,11 @@ class PerfilController extends Controller {
             
             $this->loadView("usuario/form.php", $dados);
         } else
-            $this->list("Usuário não encontrado!");
+            exit;
+            //$this->list("Usuário não encontrado!");
     }
 
-     private function findUsuarioById() {
+    private function findUsuarioById() {
         $id = 0;
         if(isset($_GET["id"]))
             $id = $_GET["id"];

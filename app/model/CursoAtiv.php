@@ -3,7 +3,7 @@
 require_once(__DIR__.'/Curso.php');
 require_once(__DIR__.'/TipoAtiv.php');
 
-class CursoAtiv{
+class CursoAtiv implements JsonSerializable {
     
     private ?int $id;
     private ?int $cargaHorariaMax;
@@ -13,7 +13,17 @@ class CursoAtiv{
     private ?TipoAtiv $tipoAtiv;
     
     
-
+    public function jsonSerialize(): array {
+        return [
+            'id' => $this->id,
+            'cargaHorariaMax' => $this->cargaHorariaMax,
+            'equivalencia' => $this->equivalencia,
+            'codigo' => $this->codigo,
+            'curso' => $this->curso,
+            'tipoAtiv' => $this->tipoAtiv,
+        ];
+    }
+    
 
     /**
      * Get the value of id

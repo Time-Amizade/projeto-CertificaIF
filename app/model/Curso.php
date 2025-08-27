@@ -1,18 +1,11 @@
 <?php  
 
 
-class Curso implements JsonSerializable{
+class Curso{
     private ?int $id;
     private ?string $nomeCurso;
     private ?int $cargaHorariaAtivComplement;
 
-    public function jsonSerialize(): array {
-        return [
-            'id' => $this->id,
-            'nomeCurso' => $this->nomeCurso,
-            'cargaHorariaAtivComplement' => $this->cargaHorariaAtivComplement,
-        ];
-    }
 
     /**
      * Get the value of id

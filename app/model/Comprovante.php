@@ -24,7 +24,7 @@ class Comprovante implements JsonSerializable{
             "comentario" => $this->comentario,
             "arquivo" => $this->arquivo,
             "usuario" =>  $this->usuario,
-            "cursoAtiv" =>  $this->cursoAtiv,
+            "cursoAtiv" =>  $this->cursoAtiv?->jsonSerialize(),
         );
     }
 

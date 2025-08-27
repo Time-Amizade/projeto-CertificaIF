@@ -9,7 +9,6 @@ require_once(__DIR__ . "/../include/menu.php");
 <h3 class="text-center">Página inicial do sistema</h3>
 
 <div class='container' id='listaDados'>
-
 </div>
 
 <script src="<?= BASEURL ?>/view/js/home_ajax.js"> const tipoUsuario = "<?php echo $_SESSION[SESSAO_USUARIO_PAPEL]; ?>"; </script> 
