@@ -72,18 +72,19 @@ class PerfilController extends Controller {
         $this->loadView("perfil/perfil.php", $dados, $msgErro); 
     }
 
-    protected function edit($id) {
+    protected function edit() {
         //Busca o usuário na base pelo ID    
+        $id = $_GET["id"];
         $usuario = $this->findUsuarioById($id);
 
         if($usuario) {
             $dados['id'] = $usuario->getId();
-            $usuario->setSenha("");
+            // $usuario->setSenha("");
             $dados["usuario"] = $usuario;
 
             $dados['papeis'] = Usuariofuncao::getAllAsArray();
             
-            $this->loadView("usuario/form.php", $dados);
+            $this->loadView("perfil/editar.php", $dados);
         } else
             exit;
             //$this->list("Usuário não encontrado!");
