@@ -28,7 +28,7 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
                 
                <div class="col-6">
     <form id="frmUsuario" method="POST" 
-          action="<?= BASEURL ?>/controller/PerfilController.php?action=save"
+          action="<?= BASEURL ?>/controller/PerfilController.php?action=update"
           enctype="multipart/form-data" >
 
         <div class="mb-3">

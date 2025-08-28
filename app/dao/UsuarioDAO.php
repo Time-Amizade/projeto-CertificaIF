@@ -204,4 +204,22 @@ class UsuarioDAO {
 
         return $usuarios;
     }
+
+    public function updatePerfil(Usuario $usuario) {
+    $conn = Connection::getConn();
+
+    $sql = "UPDATE Usuario SET nomeUsuario = :nome, email = :email, dataNascimento = :dataNascimento, cpf = :cpf, telefone = :telefone, endereco = :endereco WHERE id = :id";
+    
+    $stm = $conn->prepare($sql);
+    $stm->bindValue("nome", $usuario->getNome());
+    $stm->bindValue("email", $usuario->getEmail());
+    $stm->bindValue("dataNascimento", $usuario->getDataNascimento());
+    $stm->bindValue("cpf", $usuario->getCpf());
+    $stm->bindValue("telefone", $usuario->getTelefone());
+    $stm->bindValue("endereco", $usuario->getEndereco());
+    $stm->bindValue("id", $usuario->getId());
+
+    $stm->execute();
+}
+
 }

@@ -30,7 +30,7 @@ class PerfilController extends Controller {
         $this->loadView("perfil/perfil.php", $dados);    
     }
 
-    protected function save() {
+    protected function update() {
         $foto = $_FILES["foto"];
         $fotoAnterior = $_POST['fotoAnterior'];
         
@@ -52,8 +52,8 @@ class PerfilController extends Controller {
                     //3- Excluir o arquivo
                     $this->arquivoService->removerArquivo($fotoAnterior);
                     
-                    header("location: " . BASEURL . "/controller/PerfilController.php?action=view");
-                    exit;
+                    // header("location: " . BASEURL . "/controller/PerfilController.php?action=view");
+                    // exit;
                 } catch(PDOException $e) {
                     array_push($erros, "Não foi possível salvar a imagem na base de dados!");
                     array_push($erros, $e->getMessage());
@@ -62,14 +62,35 @@ class PerfilController extends Controller {
                 array_push($erros, "Não foi possível salvar o arquivo da imagem!");
             }
         }
+        $id = $_POST['id'];
+        $nome = trim($_POST['nome']) != "" ? trim($_POST['nome']) : NULL;
+        $dataNascimento = trim($_POST['dataNascimento']) != "" ? trim($_POST['dataNascimento']) : NULL;
+        $cpf = trim($_POST['cpf']) != "" ? trim($_POST['cpf']) : NULL;
+        $email = trim($_POST['email']) != "" ? trim($_POST['email']) : NULL;
+        $telefone = trim($_POST['telefone']) != "" ? trim($_POST['telefone']) : NULL;
+        $Endereco = trim($_POST['endereco']) != "" ? trim($_POST['endereco']) : NULL;
+        $usuario = new Usuario();
+        $usuario->setId($id);
+        $usuario->setNome($nome);
+        $usuario->setDataNascimento($dataNascimento);
+        $usuario->setCpf($cpf);
+        $usuario->setEmail($email);
+        $usuario->setTelefone($telefone);
+        $usuario->setEndereco($endereco);
 
-        $idUsuarioLogado = $this->getIdUsuarioLogado();
-        $usuario = $this->usuarioDao->findById($idUsuarioLogado);
-        $dados['usuario'] = $usuario;
 
-        $msgErro = implode("<br>", $erros);
+        // $erros = $this->cursoService->validarDados($curso);
+        
 
-        $this->loadView("perfil/perfil.php", $dados, $msgErro); 
+        // $idUsuarioLogado = $this->getIdUsuarioLogado();
+        // $usuario = $this->usuarioDao->findById($idUsuarioLogado);
+        // $dados['usuario'] = $usuario;
+
+        // $msgErro = implode("<br>", $erros);
+        $this->usuarioDao->updatePerfil($usuario);
+
+        header("location: " . BASEURL . "/controller/PerfilController.php?action=view"); 
+     
     }
 
     protected function edit() {

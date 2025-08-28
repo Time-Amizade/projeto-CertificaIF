@@ -3,12 +3,9 @@
 #Objetivo: interface para listagem dos usuários do sistema
 $pagina = 'cadastro';
 require_once(__DIR__ . "/../include/header.php");
-// require_once(__DIR__ . "/../include/menu.php");
-
 ?>
 
-
-<div class="container  d-flex justify-content-center" >
+<div class="container  d-flex justify-content-center">
     <div class="row w-200" style="margin-top: 20px; margin-bottom:20px">
         
         <!-- card do formulario-->
@@ -21,119 +18,96 @@ require_once(__DIR__ . "/../include/header.php");
                 <?php require_once(__DIR__ . "/../include/msg.php"); ?>
             </div>
 
+            <!-- Formulario único -->
+            <form id="frmUsuario" method="POST" 
+                  action="<?= BASEURL ?>/controller/PerfilController.php?action=update"
+                  enctype="multipart/form-data" >
 
-            <div  style="width: 700px; padding-left: 90px;">
-                <form id="frmUsuario" method="POST" 
-                    action="<?= BASEURL ?>/controller/CadastroController.php?action=save" >
-                    <div class="mb-3">
-                        <label class="form-label" for="txtNome">Nome Completo:</label>
-                        <input class="form-control" type="text" id="txtNome" name="nome" 
-                            maxlength="70" placeholder="Informe o nome"
-                            value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getNome() : ''); ?>" />
+                <!-- Foto de perfil -->
+                <div class="mb-3 text-center">
+                    <label class="form-label">Foto de perfil: </label>
+                    <div class="col-12 mb-2 text-center">
+                        <label for="txtFoto" style="cursor: pointer;">
+                            <?php if($dados['usuario']->getFotoPerfil()): ?>
+                                <img src="<?= BASEURL_ARQUIVOS . '/' . $dados['usuario']->getFotoPerfil() ?>"
+                                    height="300" alt="Foto de perfil">
+                            <?php else: ?>
+                                <img src="<?= BASEURL ?>/../arquivos/padrao.png"
+                                    height="300" alt="Foto padrão">
+                            <?php endif; ?>
+                        </label>
                     </div>
-                    
-                    <div class="mb-3" >
-                        <label class="form-label" for="txtData">Data de Nascimento:</label>
-                        <input class="form-control" type="date" id="txtData" name="dataNascimento" 
-                            value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getDataNascimento() : ''); ?>">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label  class="form-label" for="cpf">CPF:</label>
-                        <input class="form-control" type="number" id="cpf" name="cpf" 
-                            maxlength="14" placeholder="Informe número de cpf"
-                            value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getCpf() : ''); ?>">
-                    </div>
+                    <input class="form-control d-none" type="file" id="txtFoto" name="foto" />
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="txtEmail">Email:</label>
-                        <input class="form-control" type="text" id="txtEmail" name="email" 
-                            maxlength="45" placeholder="Informe o Email"
-                            value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEmail() : ''); ?>"/>
-                    </div>
+                <input type="hidden" name="fotoAnterior" value="<?= $dados['usuario']->getFotoPerfil() ?>">
 
-                    <div class="mb-3">
-                        <label class="form-label" for="txtPassword">Senha:</label>
-                        <input class="form-control" type="password" id="txtPassword" name="senha" 
-                            maxlength="45" placeholder="Informe a senha"
-                            value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getSenha() : ''); ?>"/>
-                    </div>
+                <!-- Campos de edição do perfil -->
+                <div class="mb-3">
+                    <label class="form-label" for="txtNome">Nome Completo:</label>
+                    <input class="form-control" type="text" id="txtNome" name="nome" 
+                        maxlength="70" placeholder="Informe o nome"
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getNome() : ''); ?>" />
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="txtConfSenha">Confirmação da senha:</label>
-                        <input class="form-control" type="password" id="txtConfSenha" name="conf_senha" 
-                            maxlength="45" placeholder="Informe a confirmação da senha"
-                            value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '';?>"/>
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label" for="txtData">Data de Nascimento:</label>
+                    <input class="form-control" type="date" id="txtData" name="dataNascimento" 
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getDataNascimento() : ''); ?>">
+                </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="cpf">CPF:</label>
+                    <input class="form-control" type="number" id="cpf" name="cpf" 
+                        maxlength="14" placeholder="Informe número de cpf"
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getCpf() : ''); ?>">
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="selCurso">Curso:</label>
-                        <select class="form-select" name="curso" id="selCurso">
-                            <option value="">Selecione seu curso</option>
-                            <?php foreach($dados["cursos"] as $curso): ?>
-                                <option value="<?= $curso->getId() ?>" 
-                                <?php 
-                                        if(isset($dados["usuario"]) && $dados["usuario"]->getCursoId() == $curso) 
-                                            echo "selected";
-                                        ?>    
-                                >
-                                <?= $curso->getNomeCurso() ?>
-                            </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label" for="txtEmail">Email:</label>
+                    <input class="form-control" type="text" id="txtEmail" name="email" 
+                        maxlength="45" placeholder="Informe o Email"
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEmail() : ''); ?>"/>
+                </div>
 
-                    
-                    <div class="mb-3">
-                        <label class="form-label" for="selfuncao">Função:</label>
-                       <select class="form-select" name="funcao" id="selfuncao">
-                            <option value="">Selecione sua função</option>
-                            <?php foreach ($dados["papeis"] as $funcao): ?>
-                                <?php if ($funcao !== "ADMINISTRADOR"): ?>
-                                    <option value="<?= $funcao ?>" 
-                                        <?php 
-                                            if (isset($dados["usuario"]) && $dados["usuario"]->getFuncao() == $funcao) {
-                                                echo "selected";
-                                            }
-                                        ?>>
-                                        <?= $funcao ?>
-                                    </option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </select>
+                <div class="mb-3">
+                    <label class="form-label" for="txtTelefone">Telefone:</label>
+                    <input class="form-control" type="number" id="txtTelefone" name="telefone" 
+                        maxlength="45" placeholder="Informe o Telefone"
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getTelefone() : ''); ?>"/>
+                </div>
 
-                    </div>
-                    
-                    <div class="mb-3" id="matricula-group" style="display: none;">
-                        <label class="form-label" for="cod_matricula">Código de Matricula</label>
-                        <input class="form-control" type="number" id="cod_matricula" name="cod_matricula" 
-                            placeholder="informe o código de sua matricula"
-                            value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getCodigoMatricula() : ''); ?>">
-                    </div>
+                 <div class="mb-3">
+                    <label class="form-label" for="txtTelefone">Endereço:</label>
+                    <input class="form-control" type="text" id="txtTelefone" name="endereco" 
+                        maxlength="45" placeholder="Informe o Endereço"
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEndereco() : ''); ?>"/>
+                </div>
 
-                    <input type="hidden" id="hddId" name="id" 
-                        value="<?= $dados['id']; ?>" />
+                <!-- Campos comentados permanecem comentados -->
 
-                    <div class="mt-3 d-flex  gap-2">
-                        <button type="submit" class="btn btn-success">Cadastrar</button>
-                        <a href="<?= BASEURL .'/controller/PerfilController.php?action=view' ?>" class="btn btn-primary">Voltar</a>
-                    </div>
-                </form>            
-            </div>
+                <input type="hidden" id="hddId" name="id" 
+                    value="<?= $dados['id']; ?>" />
 
-            
+                <div class="mt-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                    <a href="<?= BASEURL .'/controller/PerfilController.php?action=view' ?>" class="btn btn-primary">Voltar</a>
+                </div>
+
+            </form>            
+
         </div>
+    </div>
 </div>
-        
+
 <script>
     const selectFuncao = document.getElementById('selfuncao');
     const matriculaGroup = document.getElementById('matricula-group');
 
     function toggleMatriculaField() {
-        if (selectFuncao.value.toLowerCase() === 'aluno') {
+        if (selectFuncao && selectFuncao.value.toLowerCase() === 'aluno') {
             matriculaGroup.style.display = 'block';
-        } else {
+        } else if(matriculaGroup) {
             matriculaGroup.style.display = 'none';
         }
     }
@@ -141,7 +115,7 @@ require_once(__DIR__ . "/../include/header.php");
     // Executa ao carregar a página (útil ao editar)
     window.addEventListener('DOMContentLoaded', toggleMatriculaField);
     // Executa ao mudar a seleção
-    selectFuncao.addEventListener('change', toggleMatriculaField);
+    if(selectFuncao) selectFuncao.addEventListener('change', toggleMatriculaField);
 </script>
 
 <?php  
