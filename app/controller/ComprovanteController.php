@@ -91,6 +91,13 @@ class ComprovanteController extends Controller{
 
     }
 
+
+    protected function cancel(){
+        $id = $_GET['id'];
+        $this->compDao->cancelById($id);
+
+        header("location: " . BASEURL . "/controller/HomeController.php?action=home");
+    }
 }
 
 new ComprovanteController();

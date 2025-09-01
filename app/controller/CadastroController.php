@@ -116,13 +116,13 @@ class UsuarioController extends Controller {
         $comprovantes = [];
         $usuarioFunc = null;
         
-        if (isset($_SESSION['usuarioLogadoPapel'])) {
-            $usuarioFunc = $_SESSION['usuarioLogadoPapel'];
+        if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
+            $usuarioFunc = $_SESSION[SESSAO_USUARIO_PAPEL];
             
             if ($usuarioFunc == UsuarioFuncao::ADMINISTRADOR) {
-                $dados = $this->usuarioDao->findByFilters('PENDENTE', null, 'COORDENADOR');
+                $dados = $this->usuarioDao->findByFilters(UsuarioStatus::PENDENTE, null, UsuarioFuncao::COORDENADOR);
             } else if ($usuarioFunc == UsuarioFuncao::COORDENADOR) {
-                $dados = $this->usuarioDao->findByFilters('PENDENTE', $_SESSION['usuarioLogadoCurso'], 'ALUNO');
+                $dados = $this->usuarioDao->findByFilters(UsuarioStatus::PENDENTE, $_SESSION[SESSAO_USUARIO_CURSO], UsuarioFuncao::ALUNO);
                 $comprovantes = $this->comprovanteDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
             }else{
                 $comprovantes = $this->comprovanteDao->listByUserId($_SESSION[SESSAO_USUARIO_ID]);
@@ -135,7 +135,8 @@ class UsuarioController extends Controller {
             'comprovantes' => array_map(function($comprovante) {
                 return [
                     'comprovante' => $comprovante->jsonSerialize(),
-                    'cursoAtiv' => $comprovante->getCursoAtiv()->jsonSerialize()
+                    'cursoAtiv' => $comprovante->getCursoAtiv()->jsonSerialize(),
+                    'aluno' => $comprovante->getUsuario()->jsonSerialize()
                 ];
             }, $comprovantes)
         ], JSON_PRETTY_PRINT);

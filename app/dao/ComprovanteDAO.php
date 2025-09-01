@@ -22,9 +22,9 @@ class ComprovanteDAO{
     public function listByCurso($idCurso){
         $conn = Connection::getConn();
 
-        $sql = "SELECT c.* FROM Comprovante c JOIN CursoAtividade ca ON c.CursoAtividade_id = ca.id WHERE ca.Curso_id = ?; ";
+        $sql = "SELECT c.* FROM Comprovante c JOIN CursoAtividade ca ON c.CursoAtividade_id = ca.id WHERE ca.Curso_id = ? AND c.status = ?; ";
         $stm = $conn->prepare($sql);    
-        $stm->execute([$idCurso]);
+        $stm->execute([$idCurso, ComprovanteStatus::PENDENTE]);
         $result = $stm->fetchAll();
         
         return $this->mapComp($result);
@@ -44,6 +44,16 @@ class ComprovanteDAO{
         $stm->bindValue("arquivo", $comprovante->getArquivo());
         $stm->bindValue("Usuario_id", $comprovante->getUsuario()->getId());
         $stm->bindValue("CursoAtividade_id", $comprovante->getCursoAtiv()->getId());
+        $stm->execute();
+    }
+
+    public function cancelById($id){
+        $conn = Connection::getConn();
+
+        $sql = "DELETE FROM Comprovante WHERE id = :id";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("id", $id);
         $stm->execute();
     }
 

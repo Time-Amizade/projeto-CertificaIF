@@ -23,7 +23,7 @@ class Comprovante implements JsonSerializable{
             "status" => $this->status,
             "comentario" => $this->comentario,
             "arquivo" => $this->arquivo,
-            "usuario" =>  $this->usuario,
+            "usuario" =>  $this->usuario?->jsonSerialize(),
             "cursoAtiv" =>  $this->cursoAtiv?->jsonSerialize(),
         );
     }

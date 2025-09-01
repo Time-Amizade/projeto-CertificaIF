@@ -11,7 +11,6 @@ function carregarDados(BASEURL) {
             listaDados.innerHTML = "";
             var resultado = JSON.parse(xhttp.responseText);
             var tipoUser = resultado.tipo
-            var dados = resultado.dados
             if(tipoUser === 'ADMINISTRADOR'){
                 var dados = resultado.dados
                 dados.forEach(function (user) {
@@ -36,9 +35,20 @@ function carregarDados(BASEURL) {
                 });
                 
             }else if(tipoUser === 'COORDENADOR'){
-                var dados = resultado.dados
-                dados.forEach(function (user) {
-                    let card = `
+                var dados = resultado.dados;
+                var containerAlunos = document.createElement("div");
+                containerAlunos.id = "containerAlunos";
+                containerAlunos.classList.add("row");
+
+                var containerComprovantes = document.createElement("div");
+                containerComprovantes.id = "containerComprovantes";
+                containerComprovantes.classList.add("row");
+
+                listaDados.innerHTML += "<h3>Alunos</h3>";
+                // Renderizar alunos
+                if(resultado.dados.length > 0){
+                    dados.forEach(function (user) {
+                        let cardAluno = `
                         <div class="col-md-4 mb-3">
                             <div class="card shadow-sm border-0">
                                 <div class="card-body">
@@ -54,17 +64,26 @@ function carregarDados(BASEURL) {
                                 </div>
                             </div>
                         </div>
-                    `;
-                    listaDados.innerHTML += card;
-                });
-                if (resultado.comprovantes){
-                    dados = resultado.comprovantes
-                    dados.forEach(function(dado) {
-                        let card = `
+                        `;
+                        containerAlunos.innerHTML += cardAluno;
+                        listaDados.appendChild(containerAlunos);
+                    });
+                }else{
+                    containerAlunos.innerHTML += '<h5><p>Não há nenhuma solicitação de cadastro no momento!</p></h5>';
+                    listaDados.appendChild(containerAlunos);
+                }
+                
+                listaDados.innerHTML += "<h3>Comprovantes</h3>";
+                // Renderizar comprovantes (se existirem)
+                if (resultado.comprovantes.length > 0){
+                    var dados2 = resultado.comprovantes;
+                    dados2.forEach(function(dado) {
+                        let cardComp = `
                             <div class="col-md-3 mb-3">
                                 <div class="card shadow-sm border-0">
                                     <div class="card-body">
                                         <h5 class="card-title">${dado.comprovante.titulo}</h5>
+                                        <p><strong>Aluno:</strong> ${dado.aluno.nome}</p>
                                         <p><strong>Horas validadas:</strong> ${dado.comprovante.horas} horas</p>
                                         <p><strong>Status:</strong> ${dado.comprovante.status}</p>
                                         <p><strong>Código da atividade:</strong> ${dado.cursoAtiv.codigo}</p>
@@ -75,8 +94,12 @@ function carregarDados(BASEURL) {
                                 </div>
                             </div>
                         `;
-                        listaDados.innerHTML += card;
+                        containerComprovantes.innerHTML += cardComp;
+                        listaDados.appendChild(containerComprovantes);
                     });
+                }else{
+                    containerComprovantes.innerHTML += '<h5><p>Não há nenhum certificado para avaliação no momento!</p></h5>';
+                    listaDados.appendChild(containerComprovantes);
                 }
             }else if(tipoUser === 'ALUNO'){
                 var dados = resultado.comprovantes
@@ -92,6 +115,14 @@ function carregarDados(BASEURL) {
                                     <a href="` + BASEURL + `/../arquivos/${dado.comprovante.arquivo}" target="_blank">
                                         Visualizar arquivo
                                     </a>
+                                    `; 
+                                    if(dado.comprovante.status == 'PENDENTE'){
+                                        card += `<a href="` + BASEURL + `/controller/ComprovanteController.php?action=cancel&id=${dado.comprovante.id}" class=" btn btn-danger">
+                                            Cancelar envio
+                                        </a>`
+                                        
+                                    }
+                                    card += `
                                 </div>
                             </div>
                         </div>
