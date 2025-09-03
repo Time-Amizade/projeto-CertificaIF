@@ -80,16 +80,15 @@ function carregarDados(BASEURL) {
                     dados2.forEach(function(dado) {
                         let cardComp = `
                             <div class="col-md-3 mb-3">
-                                <div class="card shadow-sm border-0">
+                                <div class="card shadow border-0 rounded-3">
                                     <div class="card-body">
                                         <h5 class="card-title">${dado.comprovante.titulo}</h5>
                                         <p><strong>Aluno:</strong> ${dado.aluno.nome}</p>
                                         <p><strong>Horas validadas:</strong> ${dado.comprovante.horas} horas</p>
-                                        <p><strong>Status:</strong> ${dado.comprovante.status}</p>
-                                        <p><strong>Código da atividade:</strong> ${dado.cursoAtiv.codigo}</p>
-                                        <a href="` + BASEURL + `/../arquivos/${dado.comprovante.arquivo}" target="_blank">
-                                            Visualizar arquivo
-                                        </a>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="` + BASEURL + `/controller/ComprovanteController.php?action=evaluate&id=${dado.comprovante.id}" class="btn btn-primary">Avaliar</a>
+                                            <a href="` + BASEURL + `/controller/ComprovanteController.php?action=refuse&id=${dado.comprovante.id}" class="btn btn-danger">Recusar</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

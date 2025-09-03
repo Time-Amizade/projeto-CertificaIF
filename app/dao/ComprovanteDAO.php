@@ -29,8 +29,22 @@ class ComprovanteDAO{
         
         return $this->mapComp($result);
     }
+
+    public function findById($id){
+        $conn = Connection::getConn();
+
+        $sql = "SELECT * FROM Comprovante c WHERE c.id = ? ";
+        $stm = $conn->prepare($sql);    
+        $stm->execute([$id]);
+        $result = $stm->fetchAll();
+        
+        $comprovantes = $this->mapComp($result);
+        if(count($comprovantes) > 0)
+            return $comprovantes[0];
+        
+        return null;
+    }
     
-    //Método para inserir um comprovante
     public function insert(Comprovante $comprovante) {
         $conn = Connection::getConn();
 

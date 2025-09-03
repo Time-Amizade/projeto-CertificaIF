@@ -91,12 +91,21 @@ class ComprovanteController extends Controller{
 
     }
 
-
     protected function cancel(){
         $id = $_GET['id'];
         $this->compDao->cancelById($id);
 
         header("location: " . BASEURL . "/controller/HomeController.php?action=home");
+    }
+
+    protected function evaluate(){
+        $id = $_GET['id'];
+        $dados['comprovante'] = $this->compDao->findById($id);
+        $dados['aluno'] = $this->usuarioDao->findById($dados['comprovante']->getUsuario()->getId());
+        $dados['cursoAtiv'] = $this->cursoAtivDao->findById($dados['comprovante']->getCursoAtiv()->getId());
+        $dados['ativs'] = $this->cursoAtivDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
+
+        $this->loadView("comprovante/avaliar.php", $dados);
     }
 }
 

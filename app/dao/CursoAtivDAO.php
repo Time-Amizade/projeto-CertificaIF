@@ -38,7 +38,7 @@ class CursoAtivDAO{
     public function findById($id) : ?CursoAtiv{
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM CursoAtividade ca WHERE ca.id = ?";
+        $sql = "SELECT ca.*, ta.nomeAtividade FROM CursoAtividade ca JOIN TipoAtividade ta ON ca.TipoAtividade_id = ta.id WHERE ca.id = ? ORDER BY ca.codigoAtividade";
         $stm = $conn->prepare($sql);    
         $stm->execute([$id]);
         $result = $stm->fetchAll();
