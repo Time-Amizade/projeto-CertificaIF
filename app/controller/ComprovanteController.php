@@ -70,7 +70,8 @@ class ComprovanteController extends Controller{
                 if($comprovante->getId() == 0)
                     $this->compDao->insert($comprovante);
                 else
-                    $this->compDao->update($comprovante);
+                    exit;
+                    //$this->compDao->update($comprovante);
                 
                 header("location: " . BASEURL . "/controller/HomeController.php?action=home");
                 exit;
@@ -91,6 +92,14 @@ class ComprovanteController extends Controller{
 
     }
 
+    protected function updateCampo(){
+        $id = $_POST['id'];
+        $campo = $_POST['campo'];
+        $valor = $_POST['valor'];
+
+        $this->compDao->updateCampo($id, $campo, $valor);
+    }
+
     protected function cancel(){
         $id = $_GET['id'];
         $this->compDao->cancelById($id);
@@ -106,6 +115,20 @@ class ComprovanteController extends Controller{
         $dados['ativs'] = $this->cursoAtivDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
 
         $this->loadView("comprovante/avaliar.php", $dados);
+    }
+
+    protected function approve(){
+        $id = $_GET['id'];
+        $this->compDao->approveById($id);
+
+        header("location: " . BASEURL . "/controller/HomeController.php?action=home");
+    }
+
+    protected function refuse(){
+        $id = $_GET['id'];
+        $this->compDao->refuseById($id);
+
+        header("location: " . BASEURL . "/controller/HomeController.php?action=home");
     }
 }
 

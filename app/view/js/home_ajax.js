@@ -110,6 +110,11 @@ function carregarDados(BASEURL) {
                                     <h5 class="card-title">${dado.comprovante.titulo}</h5>
                                     <p><strong>Horas validadas:</strong> ${dado.comprovante.horas} horas</p>
                                     <p><strong>Status:</strong> ${dado.comprovante.status}</p>
+                                    `; 
+                                    if(dado.comprovante.comentario != null){
+                                        card += `<p><strong>Comentário:</strong> ${dado.comprovante.comentario}</p>`
+                                    }
+                                    card += `
                                     <p><strong>Código da atividade:</strong> ${dado.cursoAtiv.codigo}</p>
                                     <a href="` + BASEURL + `/../arquivos/${dado.comprovante.arquivo}" target="_blank">
                                         Visualizar arquivo

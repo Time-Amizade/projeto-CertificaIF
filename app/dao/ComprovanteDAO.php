@@ -71,8 +71,35 @@ class ComprovanteDAO{
         $stm->execute();
     }
 
-    public function update(Comprovante $comprovante){
-        exit;
+    public function refuseById($id, $comentario = null) {
+
+        if($_GET['comentario']){
+            $comentario = $_GET['comentario'];
+            if (empty(trim($comentario))) {
+                throw new Exception("Comentário obrigatório para recusar o comprovante.");
+            }
+        }
+
+        $conn = Connection::getConn();
+        $sql = "UPDATE Comprovante SET status = ?, comentario = ? WHERE id = ?";
+        $stm = $conn->prepare($sql);
+        $stm->execute([ComprovanteStatus::RECUSADO, $comentario, $id]);
+    }
+
+    public function approveById($id){
+        $conn = Connection::getConn();
+
+        $sql = "UPDATE Comprovante SET status = ? WHERE id = ?";
+
+        $stm = $conn->prepare($sql);
+        $stm->execute(array(ComprovanteStatus::APROVADO, $id));
+    }
+
+    public function updateCampo($id, $campo, $valor){
+        $conn = Connection::getConn();
+        $sql = "UPDATE Comprovante SET $campo = ? WHERE id = ?";
+        $stm = $conn->prepare($sql);
+        $stm->execute([$valor, $id]);
     }
 
     private function mapComp($result) {
