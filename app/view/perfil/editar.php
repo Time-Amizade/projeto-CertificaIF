@@ -10,9 +10,7 @@ require_once(__DIR__ . "/../include/header.php");
         
         <!-- card do formulario-->
         <div class="card shadow p-1 rounded-lg " style=" width: 800px; height: auto; background-color: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
-            <h3 class="text-center">
-                <img src="<?= BASEURL . '/view/img/anexo.png'?>" style="display: block; margin: 0 auto 10px auto; max-width: 500px; height: 300px;">
-            </h3>
+            
             
             <div class="mb-3 " style="text-align: center; width: 600px; padding-left: 200px;">
                 <?php require_once(__DIR__ . "/../include/msg.php"); ?>
@@ -43,6 +41,9 @@ require_once(__DIR__ . "/../include/header.php");
                 <input type="hidden" name="fotoAnterior" value="<?= $dados['usuario']->getFotoPerfil() ?>">
 
                 <!-- Campos de edição do perfil -->
+                  <div class=" align-items-center" style="max-width: 600px; padding-left: 85px ;">
+                    <h11  style="text-align: center;"><?php include_once(__DIR__ . "/../include/msg.php") ?></h11>
+                </div>
                 <div class="mb-3">
                     <label class="form-label" for="txtNome">Nome Completo:</label>
                     <input class="form-control" type="text" id="txtNome" name="nome" 
@@ -84,10 +85,25 @@ require_once(__DIR__ . "/../include/header.php");
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEndereco() : ''); ?>"/>
                 </div>
 
-                <!-- Campos comentados permanecem comentados -->
+                <div>
+                     <div class="mb-3">
+                    <label class="form-label" for="senha">Senha:</label>
+                    <input class="form-control" type="text" id="senha" name="senha" 
+                    maxlength="45" placeholder="Informe a Senha"
+                    />
+                </div>
+                
+                <div>
+                    <div class="mb-3">
+                    <label class="form-label" for="txtTelefone"> Confira a Senha:</label>
+                    <input class="form-control" type="text" id="confSenha" name="confSenha" 
+                    maxlength="45" placeholder="confira a Senha"
+                    />
+                </div>
 
-                <input type="hidden" id="hddId" name="id" 
-                    value="<?= $dados['id']; ?>" />
+              
+               <input type="hidden" id="hddId" name="id" value="<?= isset($dados['id']) ? $dados['id'] : ($dados['usuario']->getId() ?? ''); ?>">
+
 
                 <div class="mt-3 d-flex gap-2">
                     <button type="submit" class="btn btn-success">Salvar</button>

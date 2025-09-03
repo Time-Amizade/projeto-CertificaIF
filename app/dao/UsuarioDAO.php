@@ -205,12 +205,28 @@ class UsuarioDAO {
         return $usuarios;
     }
 
-    public function updatePerfil(Usuario $usuario) {
+public function updatePerfil(Usuario $usuario) {
     $conn = Connection::getConn();
 
-    $sql = "UPDATE Usuario SET nomeUsuario = :nome, email = :email, dataNascimento = :dataNascimento, cpf = :cpf, telefone = :telefone, endereco = :endereco WHERE id = :id";
-    
+    // SQL base
+    $sql = "UPDATE Usuario SET 
+                nomeUsuario = :nome, 
+                email = :email, 
+                dataNascimento = :dataNascimento, 
+                cpf = :cpf, 
+                telefone = :telefone, 
+                endereco = :endereco";
+
+    // Se o objeto tiver senha, adiciona no SQL
+    if ($usuario->getSenha()) {
+        $sql .= ", senha = :senha";
+    }
+
+    $sql .= " WHERE id = :id";
+
     $stm = $conn->prepare($sql);
+
+    // Bind comum
     $stm->bindValue("nome", $usuario->getNome());
     $stm->bindValue("email", $usuario->getEmail());
     $stm->bindValue("dataNascimento", $usuario->getDataNascimento());
@@ -218,6 +234,11 @@ class UsuarioDAO {
     $stm->bindValue("telefone", $usuario->getTelefone());
     $stm->bindValue("endereco", $usuario->getEndereco());
     $stm->bindValue("id", $usuario->getId());
+
+    // Só faz o bind da senha se ela existir
+    if ($usuario->getSenha()) {
+        $stm->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
+    }
 
     $stm->execute();
 }

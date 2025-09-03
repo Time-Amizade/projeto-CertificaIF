@@ -53,4 +53,24 @@ class UsuarioService {
         return $erros;
     }
 
+    public function ValidarEdicao( Usuario $usuario, ?string $confSenha, ?string $senha){
+        $erros = array();
+        if (! $usuario->getNome())
+            array_push($erros, "O campo [Nome] é obrigatório.");
+
+        if (! $usuario->getEmail())
+            array_push($erros, "O campo [Email] é obrigatório.");
+
+    
+
+        if($senha){
+            if($usuario->getSenha() && $confSenha && $usuario->getSenha() != $confSenha)
+                        array_push($erros, "O campo [Senha] deve ser igual ao [Confirmação da senha].");
+        }
+        
+
+        return $erros;
+
+    }
+
 }

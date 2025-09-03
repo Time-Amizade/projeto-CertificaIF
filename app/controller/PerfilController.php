@@ -68,7 +68,10 @@ class PerfilController extends Controller {
         $cpf = trim($_POST['cpf']) != "" ? trim($_POST['cpf']) : NULL;
         $email = trim($_POST['email']) != "" ? trim($_POST['email']) : NULL;
         $telefone = trim($_POST['telefone']) != "" ? trim($_POST['telefone']) : NULL;
-        $Endereco = trim($_POST['endereco']) != "" ? trim($_POST['endereco']) : NULL;
+        $endereco = trim($_POST['endereco']) != "" ? trim($_POST['endereco']) : NULL;
+        $senha = trim($_POST['senha'] ?? '') ?: null;
+        $confSenha = trim($_POST['confSenha'] ?? '') ?: null;
+
         $usuario = new Usuario();
         $usuario->setId($id);
         $usuario->setNome($nome);
@@ -77,16 +80,24 @@ class PerfilController extends Controller {
         $usuario->setEmail($email);
         $usuario->setTelefone($telefone);
         $usuario->setEndereco($endereco);
+        if($senha){
+        $usuario->setSenha($senha);
+        }
 
 
-        // $erros = $this->cursoService->validarDados($curso);
+         $erros = $this->usuarioService->ValidarEdicao($usuario, $confSenha, $senha); 
         
 
-        // $idUsuarioLogado = $this->getIdUsuarioLogado();
-        // $usuario = $this->usuarioDao->findById($idUsuarioLogado);
-        // $dados['usuario'] = $usuario;
+        if($erros){
+            $msg = implode("<br>", $erros);
+            $usu = $this->usuarioDao->findById($usuario->getId());
+            $usuario->setFotoPerfil($usu->getFotoPerfil());
+            // $usuario->setId($usu->getId());
+            $dados["usuario"] = $usuario;
+            $this->loadView("perfil/editar.php", $dados,$msg);
+            exit;
+        }
 
-        // $msgErro = implode("<br>", $erros);
         $this->usuarioDao->updatePerfil($usuario);
 
         header("location: " . BASEURL . "/controller/PerfilController.php?action=view"); 
