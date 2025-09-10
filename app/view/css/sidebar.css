@@ -1,8 +1,17 @@
 .expand-button-box {
   position: fixed;
   top: 20%;
-  right: 0;
   z-index: 999;
+}
+
+/* Lado direito */
+.expand-button-box.right-box {
+  right: 0;
+}
+
+/* Lado esquerdo */
+.expand-button-box.left-box {
+  left: 0;
 }
 
 .expand-button-content {
@@ -11,26 +20,31 @@
   overflow: hidden;
   background-color: #0dcaf0;
   color: white;
-  border-radius: 8px 0 0 8px;
+  border-radius: 0 8px 8px 0; /* padrão para o lado esquerdo */
   cursor: pointer;
-  transition: width 0.4s ease 0.5s; /* começa a expandir DEPOIS da tabela */
+  transition: width 0.4s ease 0.5s;
   box-shadow: 0 0 8px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Quando o wrapper é hoverado, expande a barra */
+/* Bordas específicas para cada lado */
+.right-box .expand-button-content {
+  border-radius: 8px 0 0 8px;
+}
+
+.left-box .expand-button-content {
+  border-radius: 0 8px 8px 0;
+}
+
+/* Expansão da caixa */
 .expand-button-box:hover .expand-button-content {
   width: 600px;
-  transition: width 0.4s ease 0s; /* sem delay ao expandir */
+  transition: width 0.4s ease 0s;
 }
 
-/* Quando o wrapper perde o hover, barra recolhe com delay (espera a tabela fechar) */
-.expand-button-content {
-  transition: width 0.4s ease 0.5s; /* delay ao contrair */
-}
-
+/* Rótulo vertical */
 .expand-label {
   writing-mode: vertical-lr;
   text-align: center;
@@ -39,19 +53,18 @@
   font-size: 20px;
 }
 
-/* Detalhes da tabela */
+/* Detalhes expansíveis */
 .expand-details {
   width: 100%;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease; /* SEM DELAY, fecha imediatamente */
+  transition: max-height 0.5s ease;
   padding: 0 10px;
 }
 
-/* Ao hoverar a parte interna, expande a tabela */
 .expand-button-content:hover .expand-details {
   max-height: 500px;
-  transition: max-height 0.5s ease 0.4s; /* delay para começar após barra expandir */
+  transition: max-height 0.5s ease 0.4s;
 }
 
 /* Tabela */
@@ -69,4 +82,39 @@
 .table thead {
   background-color: #343a40;
   color: white;
+}
+
+.left-box .green-panel {
+  background-color: #198754; /* Bootstrap green */
+  color: white;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Estilo das informações do comprovante */
+.comprovante-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.comprovante-card:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.comprovante-info p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+/* Botão */
+.comprovante-card .btn {
+  background-color: #f8f9fa;
+  color: #212529;
+  border: none;
+}
+
+.comprovante-card .btn:hover {
+  background-color: #e2e6ea;
 }

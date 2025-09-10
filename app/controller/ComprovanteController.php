@@ -111,6 +111,7 @@ class ComprovanteController extends Controller{
         $id = $_GET['id'];
         $dados['comprovante'] = $this->compDao->findById($id);
         $dados['aluno'] = $this->usuarioDao->findById($dados['comprovante']->getUsuario()->getId());
+        $dados['comps'] = $this->compDao->listByIdFilter($dados['aluno']->getId(), ComprovanteStatus::APROVADO);
         $dados['cursoAtiv'] = $this->cursoAtivDao->findById($dados['comprovante']->getCursoAtiv()->getId());
         $dados['ativs'] = $this->cursoAtivDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
 

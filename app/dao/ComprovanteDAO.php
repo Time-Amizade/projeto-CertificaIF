@@ -19,6 +19,18 @@ class ComprovanteDAO{
         return $this->mapComp($result);
     }
 
+    public function listByIdFilter($id, $status){
+        $conn = Connection::getConn();
+
+        $sql = "SELECT * FROM Comprovante WHERE Usuario_id = :usuario_id AND status = :status";
+        $stm = $conn->prepare($sql);
+        $stm->bindValue(":usuario_id", $id);
+        $stm->bindValue(":status", $status);
+        $stm->execute();
+
+        return $this->mapComp($stm->fetchAll());
+    }
+
     public function listByCurso($idCurso){
         $conn = Connection::getConn();
 
