@@ -88,7 +88,7 @@ require_once(__DIR__ . "/../include/header.php");
                 <div>
                      <div class="mb-3">
                     <label class="form-label" for="senha">Senha:</label>
-                    <input class="form-control" type="text" id="senha" name="senha" 
+                    <input class="form-control" type="password" id="senha" name="senha" 
                     maxlength="45" placeholder="Informe a Senha"
                     />
                 </div>
@@ -96,7 +96,7 @@ require_once(__DIR__ . "/../include/header.php");
                 <div>
                     <div class="mb-3">
                     <label class="form-label" for="txtTelefone"> Confira a Senha:</label>
-                    <input class="form-control" type="text" id="confSenha" name="confSenha" 
+                    <input class="form-control" type="password" id="confSenha" name="confSenha" 
                     maxlength="45" placeholder="confira a Senha"
                     />
                 </div>
