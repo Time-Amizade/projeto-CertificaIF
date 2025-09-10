@@ -53,24 +53,26 @@ class UsuarioService {
         return $erros;
     }
 
-    public function ValidarEdicao( Usuario $usuario, ?string $confSenha, ?string $senha){
-        $erros = array();
-        if (! $usuario->getNome())
-            array_push($erros, "O campo [Nome] é obrigatório.");
+    public function ValidarEdicao(Usuario $usuario, ?string $confSenha, ?string $senha) {
+    $erros = array();
 
-        if (! $usuario->getEmail())
-            array_push($erros, "O campo [Email] é obrigatório.");
+    if (!$usuario->getNome())
+        array_push($erros, "O campo [Nome] é obrigatório.");
 
-    
+    if (!$usuario->getEmail())
+        array_push($erros, "O campo [Email] é obrigatório.");
 
-        if($senha){
-            if($usuario->getSenha() && $confSenha && $usuario->getSenha() != $confSenha)
-                        array_push($erros, "O campo [Senha] deve ser igual ao [Confirmação da senha].");
+    // Verifica se os campos de senha estão preenchidos
+    if ($senha && $confSenha) {
+        if ($usuario->getSenha() != $confSenha) {
+            array_push($erros, "O campo [Senha] deve ser igual ao [Confirmação da senha].");
         }
-        
-
-        return $erros;
-
+    } elseif ($senha || $confSenha) {
+        // Um dos campos está preenchido, mas o outro não
+        array_push($erros, "Ambos os campos [Senha] e [Confirmação da senha] devem ser preenchidos.");
     }
+
+    return $erros;
+}
 
 }
