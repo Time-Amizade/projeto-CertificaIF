@@ -6,7 +6,7 @@ background-image: url('../img/ImagemBG.png');
 }
 
 body.cadastro {
-  background-image: url('../img/cadastro.png');
+  background-image: url('../img/ImagemBG.png');
   background-repeat: no-repeat;
   background-size: cover; /* ou 'contain', se quiser mostrar toda a imagem */
   background-position: center center;
