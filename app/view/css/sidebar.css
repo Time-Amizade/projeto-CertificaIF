@@ -85,7 +85,7 @@
 }
 
 .left-box .green-panel {
-  background-color: #198754; /* Bootstrap green */
+  background-color: #198754; 
   color: white;
   border-radius: 0 8px 8px 0;
 }
@@ -117,4 +117,38 @@
 
 .comprovante-card .btn:hover {
   background-color: #e2e6ea;
+}
+
+.scroll-container {
+  padding-right: 10px;
+  height: 350px;
+  overflow-y: scroll;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 8px;
+  height: 10px; 
+  padding: 10px;
+}
+
+/* Personalizando a parte da barra de rolagem que é arrastada (thumb) */
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #3f6d51;
+  border-radius: 10px; 
+  
+}
+
+/* Personalizando o trilho da barra de rolagem */
+.scroll-container::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Personalizando a parte do trilho que fica ao redor da "thumb" */
+.scroll-container::-webkit-scrollbar-track-piece {
+  background: #198754;
+}
+
+/* Personalizando o canto da barra de rolagem, onde a rolagem se encontra com a borda do contêiner */
+.scroll-container::-webkit-scrollbar-corner {
+  background: #ccc;
 }

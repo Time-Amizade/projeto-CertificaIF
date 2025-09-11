@@ -53,26 +53,29 @@ if(isset($dados['comprovante'])) {
         <div class="expand-label">🛈</div>
         <div class="expand-details">
             <h6 class="text-center mb-3 text-white">Comprovantes Enviados Anteriormente</h6>
+            <div class="scroll-container">
 
-            <?php if (!empty($comps)): ?>
-                <?php foreach ($comps as $comp): ?>
-                    <div class="comprovante-card mb-3">
-                        <div class="comprovante-info">
-                            <p><i class="bi bi-code-slash"></i> <strong>Código da Atividade:</strong> <?= $comp->getCursoAtiv()->getCodigo(); ?></p>
-                            <p><i class="bi bi-file-earmark-text"></i> <strong>Título:</strong> <?= $comp->getTitulo() ?? 'Sem nome'; ?></p>
-                            <p><i class="bi bi-file-earmark-text"></i> <strong>Status:</strong> <?= $comp->getStatus() ?? 'Sem nome'; ?></p>
-                            <?php if ($comp->getComentario()): ?>
-                                <p><i class="bi bi-file-earmark-text"></i> <strong>Comentário:</strong> <?= $comp->getComentario(); ?></p>
-                            <?php endif; ?>
+                <?php if (!empty($comps)): ?>
+                    <?php foreach ($comps as $comp): ?>
+                        <div class="comprovante-card mb-3">
+                            <div class="comprovante-info">
+                                <p><i class="bi bi-code-slash"></i> <strong>Código da Atividade:</strong> <?= $comp->getCursoAtiv()->getCodigo(); ?></p>
+                                <p><i class="bi bi-file-earmark-text"></i> <strong>Título:</strong> <?= $comp->getTitulo() ?? 'Sem nome'; ?></p>
+                                <p><i class="bi bi-file-earmark-text"></i> <strong>Status:</strong> <?= $comp->getStatus() ?? 'Sem nome'; ?></p>
+                                <?php if ($comp->getComentario()): ?>
+                                    <p><i class="bi bi-file-earmark-text"></i> <strong>Comentário:</strong> <?= $comp->getComentario(); ?></p>
+                                <?php endif; ?>
+                            </div>
+                            <a href="<?= BASEURL_ARQUIVOS ?>/<?= $comp->getArquivo(); ?>" target="_blank" class="btn btn-light btn-sm mt-2">
+                                <i class="bi bi-box-arrow-up-right"></i> Ver Arquivo
+                            </a>
                         </div>
-                        <a href="<?= BASEURL_ARQUIVOS ?>/<?= $comp->getArquivo(); ?>" target="_blank" class="btn btn-light btn-sm mt-2">
-                            <i class="bi bi-box-arrow-up-right"></i> Ver Arquivo
-                        </a>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="text-white text-center">Nenhum comprovante enviado anteriormente.</p>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-white text-center">Nenhum comprovante enviado anteriormente.</p>
+                <?php endif; ?>
+            </div>
+            
         </div>
     </div>
 </div>
