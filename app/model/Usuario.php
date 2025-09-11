@@ -11,7 +11,7 @@ class Usuario implements JsonSerializable{
     private ?string $nome;
     private ?string $dataNascimento;
     private ?string $cpf;
-    private ?string $senha;
+    private ?string $senha = null;
     private ?string $email;
     private ?string $telefone;
     private ?string $endereco;

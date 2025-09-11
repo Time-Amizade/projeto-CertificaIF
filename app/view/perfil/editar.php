@@ -3,6 +3,7 @@
 #Objetivo: interface para listagem dos usuários do sistema
 $pagina = 'cadastro';
 require_once(__DIR__ . "/../include/header.php");
+require_once(__DIR__."/../include/menu.php");
 ?>
 
 <div class="container  d-flex justify-content-center">
