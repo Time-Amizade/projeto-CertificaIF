@@ -1,10 +1,18 @@
 <?php
 
-class TipoAtiv{
+class TipoAtiv implements JsonSerializable{
 
     private ?int $id;
     private ?string $nomeAtiv;
     private ?string $descAtiv;
+
+    public function jsonSerialize(): array {
+        return [
+            'id' => $this->id,
+            'nomeAtiv' => $this->nomeAtiv,
+            'descAtiv' => $this->descAtiv
+        ];
+    }
 
     /**
      * Get the value of id

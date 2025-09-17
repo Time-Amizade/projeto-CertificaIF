@@ -24,7 +24,7 @@ require_once(__DIR__ . "/../include/header.php");
 
             <div  style="width: 700px; padding-left: 90px;">
                 <form id="frmUsuario" method="POST" 
-                    action="<?= BASEURL ?>/controller/CadastroController.php?action=save" >
+                    action="<?= BASEURL ?>/controller/CadUserController.php?action=save" >
                     <div class="mb-3">
                         <label class="form-label" for="txtNome">Nome Completo:</label>
                         <input class="form-control" type="text" id="txtNome" name="nome" 

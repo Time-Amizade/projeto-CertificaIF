@@ -91,7 +91,13 @@ if(isset($dados['comprovante'])) {
                 <span id="horas" data-id=<?= $comprovante->getId(); ?> data-campo="horas" onclick="ativarEdicao(this)"><?= $comprovante->getHoras();?> horas</span>
             </p>
 
-            <p class="card-text"><strong>Artigo PPC: <?= $cursoAtiv->getCodigo() . ')';?> </strong> <?= $cursoAtiv->getTipoAtiv()->getNomeAtiv();?></p>
+            <p class="card-text">
+                <strong>Artigo PPC: <?= $cursoAtiv->getCodigo() . ')';?> </strong> 
+                <span id="artigo" data-id="<?= $comprovante->getId(); ?>" data-campo="artigo" onclick="ativarEdicaoArtigo(this)">
+                    <?= $cursoAtiv->getTipoAtiv()->getNomeAtiv(); ?>
+                </span>
+            </p>
+            
             <?php if ($comprovante->getComentario()): ?>
                 <p class="card-text"><strong>Comentário:</strong> <?= $comprovante->getComentario(); ?></p>
             <?php endif; ?>
@@ -105,38 +111,92 @@ if(isset($dados['comprovante'])) {
     </div>
 </div>
 
+
 <script>
+    <?php 
+    $ativsSimplificado = array_map(function($ativ) {
+        return [
+            'nomeAtiv' => $ativ->getTipoAtiv()->getNomeAtiv(),
+            'codigo' => $ativ->getCodigo(),
+        ];
+    }, $dados['ativs']);
+    ?>
     const BASEURL = "<?= BASEURL ?>";
+    
+
+    const ativs = <?= json_encode($ativsSimplificado) ?>;
+
+
     function ativarEdicao(span) {
-        let valorAtual = span.innerText.replace(" horas", "").trim();   
+        let valorAtual = span.innerText.trim();   
+        let campo = span.getAttribute("data-campo"); // "horas" ou "artigo"
+        
+        if (campo === "horas") {
+            ativarEdicaoHoras(span, valorAtual);
+        } else if (campo === "artigo") {
+            ativarEdicaoArtigo(span, valorAtual);
+        }
+    }
+
+    function ativarEdicaoHoras(span, valorAtual) {
         let input = document.createElement("input");
         input.type = "number";
-        input.value = valorAtual;
+        input.value = valorAtual.replace(" horas", "").trim();
         input.style.width = "100px";
 
         span.replaceWith(input);
         input.focus();
 
         input.addEventListener("blur", function() {
-            salvarEdicao(input, span, valorAtual);
+            salvarEdicao(input, span, valorAtual, "horas");
         });
 
         input.addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
-            salvarEdicao(input, span, valorAtual);
+                salvarEdicao(input, span, valorAtual, "horas");
             }
         });
     }
 
-    function salvarEdicao(input, spanOriginal, valorAtual) {
-        let novoValor = input.value.trim(); // remove espaços extras
-        let id = spanOriginal.getAttribute("data-id");
-        let campo = spanOriginal.getAttribute("data-campo");
+    function ativarEdicaoArtigo(span, valorAtual) {
+        let select = document.createElement("select");
+        ativs.forEach((artigo) => {
+            let option = document.createElement("option");
+            option.value = artigo.nomeAtiv;
+            option.textContent = artigo.nomeAtiv;
+            select.appendChild(option);
+            
+        });
 
+        span.replaceWith(select);
+        select.focus();
+
+        select.addEventListener("blur", function() {
+            salvarEdicao(select, span, valorAtual, "artigo");
+        });
+
+        select.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                salvarEdicao(select, span, valorAtual, "artigo");
+            }
+        });
+    }
+
+    function salvarEdicao(input, spanOriginal, valorAtual, campo) {
+        let novoValor = input.value.trim(); // Para select ou input
+        let id = spanOriginal.getAttribute("data-id");
+
+        // Validação do novo valor
         if (novoValor === "") {
-            novoValor = valorAtual;
+            novoValor = valorAtual; // Se o novo valor estiver vazio, mantém o valor atual
         }
 
+        // Se o campo for "horas", adicionar " horas" no final
+        if (campo === "horas") {
+            novoValor += " horas";
+        }
+
+        // Enviar a atualização para o servidor
         var xhttp = new XMLHttpRequest();
         var url = BASEURL + "/controller/ComprovanteController.php?action=updateCampo";
         xhttp.open("POST", url, true);
@@ -144,11 +204,10 @@ if(isset($dados['comprovante'])) {
 
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState === 4 && xhttp.status === 200) {
-
                 let novoSpan = spanOriginal.cloneNode();
                 novoSpan.setAttribute("data-id", id);
                 novoSpan.setAttribute("data-campo", campo);
-                novoSpan.innerText = novoValor + " horas";
+                novoSpan.innerText = novoValor;
                 novoSpan.onclick = function() { ativarEdicao(novoSpan); };
 
                 input.replaceWith(novoSpan);

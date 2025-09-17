@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../dao/CursoDAO.php");
-require_once(__DIR__ . "/../dao/ComprovanteDAO.php");
+// require_once(__DIR__ . "/../dao/ComprovanteDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../model/enum/UsuarioFuncao.php");
@@ -14,14 +14,13 @@ class UsuarioController extends Controller {
 
     private UsuarioDAO $usuarioDao;
     private CursoDAO $cursoDao;
-    private ComprovanteDAO $comprovanteDao;
+    // private ComprovanteDAO $comprovanteDao;
     private UsuarioService $usuarioService;
 
-    //Método construtor do controller - será executado a cada requisição a está classe
     public function __construct() {
         $this->usuarioDao = new UsuarioDAO();
         $this->cursoDao = new CursoDAO();
-        $this->comprovanteDao = new   ComprovanteDAO();
+        // $this->comprovanteDao = new   ComprovanteDAO();
         $this->usuarioService = new UsuarioService();
         session_start();
 
@@ -34,7 +33,7 @@ class UsuarioController extends Controller {
         $dados['papeis'] = Usuariofuncao::getAllAsArray();
         $dados['cursos'] = $this->cursoDao->list();
 
-        $this->loadView("cadastro/form.php", $dados);
+        $this->loadView("cadastroUser/form.php", $dados);
     }
 
     // protected function edit() {
@@ -108,45 +107,7 @@ class UsuarioController extends Controller {
 
         $msgErro = implode("<br>", $erros);
 
-        $this->loadView("cadastro/form.php", $dados, $msgErro);
-    }
-
-    protected function listJson() {
-        $dados = [];
-        $comprovantes = [];
-        $usuarioFunc = null;
-        
-        if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
-            $usuarioFunc = $_SESSION[SESSAO_USUARIO_PAPEL];
-            
-            if ($usuarioFunc == UsuarioFuncao::ADMINISTRADOR) {
-                $dados = $this->usuarioDao->findByFilters(UsuarioStatus::PENDENTE, null, UsuarioFuncao::COORDENADOR);
-            } else if ($usuarioFunc == UsuarioFuncao::COORDENADOR) {
-                $dados = $this->usuarioDao->findByFilters(UsuarioStatus::PENDENTE, $_SESSION[SESSAO_USUARIO_CURSO], UsuarioFuncao::ALUNO);
-                $comprovantes = $this->comprovanteDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
-            }else{
-                $comprovantes = $this->comprovanteDao->listByUserId($_SESSION[SESSAO_USUARIO_ID]);
-            }
-        }
-
-        $json = json_encode([
-            'tipo' => $usuarioFunc,
-            'dados' => array_map(fn($usuario) => $usuario->jsonSerialize(), $dados),
-            'comprovantes' => array_map(function($comprovante) {
-                return [
-                    'comprovante' => $comprovante->jsonSerialize(),
-                    'cursoAtiv' => $comprovante->getCursoAtiv()->jsonSerialize(),
-                    'aluno' => $comprovante->getUsuario()->jsonSerialize()
-                ];
-            }, $comprovantes)
-        ], JSON_PRETTY_PRINT);
-
-        if ($json === false) {
-            echo "Erro ao gerar JSON: " . json_last_error_msg();
-            return;
-        }
-        
-        echo $json;    
+        $this->loadView("cadastroUser/form.php", $dados, $msgErro);
     }
 }
 

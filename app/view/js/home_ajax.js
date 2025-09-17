@@ -3,7 +3,7 @@ function carregarDados(BASEURL) {
     // cadastrados em formato JSON
     var xhttp = new XMLHttpRequest();
 
-    var url = BASEURL + "/controller/CadastroController.php?action=listJson";
+    var url = BASEURL + "/controller/HomeController.php?action=listJson";
     xhttp.open('GET', url, true);
     xhttp.onload = function() {
         if(xhttp.status === 200){
@@ -87,7 +87,7 @@ function carregarDados(BASEURL) {
                                         <p><strong>Horas validadas:</strong> ${dado.comprovante.horas} horas</p>
                                         <div class="d-flex justify-content-between">
                                             <a href="` + BASEURL + `/controller/ComprovanteController.php?action=evaluate&id=${dado.comprovante.id}" class="btn btn-primary">Avaliar</a>
-                                            <a href="` + BASEURL + `/controller/ComprovanteController.php?action=refuse&id=${dado.comprovante.id}" class="btn btn-danger">Recusar</a>
+                                            <a href="#" onclick="recusarComprovante(${dado.comprovante.id})" class="btn btn-danger">Recusar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -138,8 +138,18 @@ function carregarDados(BASEURL) {
             console.error("Erro ao carregar os usuários:", xhttp.status);
         }
     }
-
     xhttp.send();
+}
+
+function recusarComprovante(id) {
+    let comentario = prompt("Digite o motivo da recusa:");
+
+    if (comentario === null || comentario.trim() === "") {
+        alert("É obrigatório informar um comentário para recusar.");
+        return;
+    }
+
+    window.location.href = BASEURL + "/controller/ComprovanteController.php?action=refuse&id=" + id + "&comentario=" + encodeURIComponent(comentario);
 }
 
 carregarDados('/projeto-CertificaIF/app');

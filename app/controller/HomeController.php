@@ -37,6 +37,44 @@ class HomeController extends Controller {
     */
         $this->loadView("home/home.php", $dados);
     }
+
+    protected function listJson() {
+        $dados = [];
+        $comprovantes = [];
+        $usuarioFunc = null;
+        
+        if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
+            $usuarioFunc = $_SESSION[SESSAO_USUARIO_PAPEL];
+            
+            if ($usuarioFunc == UsuarioFuncao::ADMINISTRADOR) {
+                $dados = $this->usuarioDao->findByFilters(UsuarioStatus::PENDENTE, null, UsuarioFuncao::COORDENADOR);
+            } else if ($usuarioFunc == UsuarioFuncao::COORDENADOR) {
+                $dados = $this->usuarioDao->findByFilters(UsuarioStatus::PENDENTE, $_SESSION[SESSAO_USUARIO_CURSO], UsuarioFuncao::ALUNO);
+                $comprovantes = $this->comprovanteDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
+            }else{
+                $comprovantes = $this->comprovanteDao->listByUserId($_SESSION[SESSAO_USUARIO_ID]);
+            }
+        }
+
+        $json = json_encode([
+            'tipo' => $usuarioFunc,
+            'dados' => array_map(fn($usuario) => $usuario->jsonSerialize(), $dados),
+            'comprovantes' => array_map(function($comprovante) {
+                return [
+                    'comprovante' => $comprovante->jsonSerialize(),
+                    'cursoAtiv' => $comprovante->getCursoAtiv()->jsonSerialize(),
+                    'aluno' => $comprovante->getUsuario()->jsonSerialize()
+                ];
+            }, $comprovantes)
+        ], JSON_PRETTY_PRINT);
+
+        if ($json === false) {
+            echo "Erro ao gerar JSON: " . json_last_error_msg();
+            return;
+        }
+        
+        echo $json;    
+    }
     
 }
 

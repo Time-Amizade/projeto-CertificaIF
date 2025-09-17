@@ -35,7 +35,7 @@ require_once(__DIR__ . "/../include/header.php");
                     <div class="mb-3" style="padding-left: 85px;">
 
                         <button type="submit" class="btn btn-success mt-3">Acessar</button>
-                        <a href="<?= BASEURL . '/controller/CadastroController.php?action=create' ?>" class="btn btn-primary mt-3">Cadastrar</a>
+                        <a href="<?= BASEURL . '/controller/CadUserController.php?action=create' ?>" class="btn btn-primary mt-3">Cadastrar</a>
                         </div>
                         
                     <h6 class="mb-4" style="padding-left: 85px; padding-top: 30px">Bora construi um futuro melhor 💪🎓📚</h6>

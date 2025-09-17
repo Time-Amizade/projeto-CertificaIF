@@ -20,7 +20,7 @@ class CursoAtiv implements JsonSerializable {
             'equivalencia' => $this->equivalencia,
             'codigo' => $this->codigo,
             'curso' => $this->curso,
-            'tipoAtiv' => $this->tipoAtiv,
+            'tipoAtiv' => $this->tipoAtiv?->jsonSerialize(),
         ];
     }
     
