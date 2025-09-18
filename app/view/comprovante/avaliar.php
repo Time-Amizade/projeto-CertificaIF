@@ -92,9 +92,9 @@ if(isset($dados['comprovante'])) {
             </p>
 
             <p class="card-text">
-                <strong>Artigo PPC: <?= $cursoAtiv->getCodigo() . ')';?> </strong> 
+                <strong>Artigo PPC: </strong> 
                 <span id="artigo" data-id="<?= $comprovante->getId(); ?>" data-campo="artigo" onclick="ativarEdicaoArtigo(this)">
-                    <?= $cursoAtiv->getTipoAtiv()->getNomeAtiv(); ?>
+                    <strong><?= $cursoAtiv->getCodigo() . ')';?> </strong> <?= $cursoAtiv->getTipoAtiv()->getNomeAtiv(); ?>
                 </span>
             </p>
             
@@ -122,7 +122,6 @@ if(isset($dados['comprovante'])) {
     }, $dados['ativs']);
     ?>
     const BASEURL = "<?= BASEURL ?>";
-    
 
     const ativs = <?= json_encode($ativsSimplificado) ?>;
 
@@ -162,41 +161,42 @@ if(isset($dados['comprovante'])) {
         let select = document.createElement("select");
         ativs.forEach((artigo) => {
             let option = document.createElement("option");
-            option.value = artigo.nomeAtiv;
+            
+            const limpaTexto = (texto) => texto.replace(/^\d+\)/, "").trim();
+            const textoSpan = limpaTexto(span.innerText.trim());
+
+            if (artigo.nomeAtiv === textoSpan) {
+                option.selected = true;
+            }
+
+            option.value = artigo.codigo;
             option.textContent = artigo.nomeAtiv;
             select.appendChild(option);
-            
         });
 
         span.replaceWith(select);
         select.focus();
 
         select.addEventListener("blur", function() {
-            salvarEdicao(select, span, valorAtual, "artigo");
+            salvarEdicao(select, span, valorAtual, "CursoAtividade_id");
         });
 
         select.addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
-                salvarEdicao(select, span, valorAtual, "artigo");
+                salvarEdicao(select, span, valorAtual, "CursoAtividade_id");
             }
         });
     }
 
     function salvarEdicao(input, spanOriginal, valorAtual, campo) {
-        let novoValor = input.value.trim(); // Para select ou input
+        let novoValor = input.value.trim();
         let id = spanOriginal.getAttribute("data-id");
 
         // Validação do novo valor
         if (novoValor === "") {
-            novoValor = valorAtual; // Se o novo valor estiver vazio, mantém o valor atual
+            novoValor = valorAtual;
         }
-
-        // Se o campo for "horas", adicionar " horas" no final
-        if (campo === "horas") {
-            novoValor += " horas";
-        }
-
-        // Enviar a atualização para o servidor
+        
         var xhttp = new XMLHttpRequest();
         var url = BASEURL + "/controller/ComprovanteController.php?action=updateCampo";
         xhttp.open("POST", url, true);
@@ -207,8 +207,20 @@ if(isset($dados['comprovante'])) {
                 let novoSpan = spanOriginal.cloneNode();
                 novoSpan.setAttribute("data-id", id);
                 novoSpan.setAttribute("data-campo", campo);
-                novoSpan.innerText = novoValor;
-                novoSpan.onclick = function() { ativarEdicao(novoSpan); };
+                if (campo === "horas") {
+                    novoValor += " horas";
+                }
+                
+                if (campo === "CursoAtividade_id") {
+                    ativs.forEach(ativ => {
+                        if(ativ.codigo == input.value){
+                            novoValor = '<strong>' + ativ.codigo + ') </strong>' + ativ.nomeAtiv;
+                        }
+                    });
+                }
+                
+                novoSpan.innerHTML = novoValor;
+                novoSpan.onclick = function() { ativarEdicaoArtigo(novoSpan); };
 
                 input.replaceWith(novoSpan);
             }
