@@ -30,6 +30,27 @@ class PerfilController extends Controller {
         $this->loadView("perfil/perfil.php", $dados);    
     }
 
+    protected function listJson(){
+        $id = $_GET["id"];
+        $dados = [];
+        $comprovantes = [];
+        $usuarioFunc = null;
+        $sl = null;
+        
+        if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
+            $usuarioFunc = $_SESSION[SESSAO_USUARIO_PAPEL];
+            
+            if ($usuarioFunc == UsuarioFuncao::ALUNO) {
+               $sl = $this->usuarioDao->findById($id);
+            } else if ($usuarioFunc == UsuarioFuncao::COORDENADOR) {
+                $dados = $this->usuarioDao->findByFilters(UsuarioStatus::PENDENTE, $_SESSION[SESSAO_USUARIO_CURSO], UsuarioFuncao::ALUNO);
+                $comprovantes = $this->comprovanteDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
+            }else{
+                $comprovantes = $this->comprovanteDao->listByUserId($_SESSION[SESSAO_USUARIO_ID]);
+            }
+        }
+    }
+ 
     protected function update() {
         $foto = $_FILES["foto"];
         $fotoAnterior = $_POST['fotoAnterior'];

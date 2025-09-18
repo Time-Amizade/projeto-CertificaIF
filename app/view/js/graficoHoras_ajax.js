@@ -1,6 +1,6 @@
   var xhttp = new XMLHttpRequest();
 
-    var url = BASEURL + "/controller/HomeController.php?action=listJson";
+    var url = BASEURL + "/controller/PerfilController.php?action=listJson "+ $id;
     xhttp.open('GET', url, true);
     xhttp.onload = function() {
         if(xhttp.status === 200){
