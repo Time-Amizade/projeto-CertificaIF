@@ -15,14 +15,14 @@
 }
 
 .expand-button-content {
-  width: 50px;
+  width: 50px;  /* Largura inicial da barra lateral */
   height: auto;
   overflow: hidden;
   background-color: #0dcaf0;
   color: white;
   border-radius: 0 8px 8px 0; /* padrão para o lado esquerdo */
   cursor: pointer;
-  transition: width 0.4s ease 0.5s;
+  transition: width 0.4s ease 0.5s, max-height 0.5s ease;  /* Transição da largura e conteúdo */
   box-shadow: 0 0 8px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
@@ -38,19 +38,10 @@
   border-radius: 0 8px 8px 0;
 }
 
-/* Expansão da caixa */
-.expand-button-box:hover .expand-button-content {
-  width: 600px;
-  transition: width 0.4s ease 0s;
-}
-
-/* Rótulo vertical */
-.expand-label {
-  writing-mode: vertical-lr;
-  text-align: center;
-  padding: 10px;
-  font-weight: bold;
-  font-size: 20px;
+/* Barra lateral fixa (no estado expandido) */
+.expand-button-box.opened .expand-button-content {
+  width: 600px !important;  /* Largura final da barra lateral */
+  transition: width 0.4s ease 0s;  /* Transição para a largura */
 }
 
 /* Detalhes expansíveis */
@@ -62,9 +53,36 @@
   padding: 0 10px;
 }
 
+/* Expansão do conteúdo após a barra lateral expandir */
+.expand-button-box.opened .expand-button-content .expand-details {
+  max-height: 500px;
+  transition: max-height 0.5s ease 0.5s;  /* Atraso para a expansão vertical */
+}
+
+/* Rótulo vertical */
+.expand-label {
+  writing-mode: vertical-lr;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* Ao passar o mouse, a largura da barra lateral expande */
+.expand-button-box:hover .expand-button-content {
+  width: 600px;
+  transition: width 0.4s ease 0s;
+}
+
+/* Expansão do conteúdo ao passar o mouse */
 .expand-button-content:hover .expand-details {
   max-height: 500px;
   transition: max-height 0.5s ease 0.4s;
+}
+
+/* Alteração do estado da barra lateral quando clicada (fixa a expansão) */
+.expand-button-box.opened .expand-button-content:hover {
+  width: 600px !important;
 }
 
 /* Tabela */

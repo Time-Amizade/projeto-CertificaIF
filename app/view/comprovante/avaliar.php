@@ -19,7 +19,7 @@ if(isset($dados['comprovante'])) {
 
 <div class="expand-button-box right-box">
     <div class="expand-button-content">
-        <div class="expand-label">🛈</div>
+        <div class="expand-label" onclick="toggleSidebar('right')">🛈</div>
         <div class="expand-details">
             <h6 class="text-center mb-3">Normas do PPC</h6>
             <div class="table-responsive">
@@ -50,7 +50,7 @@ if(isset($dados['comprovante'])) {
 
 <div class="expand-button-box left-box">
     <div class="expand-button-content green-panel">
-        <div class="expand-label">🛈</div>
+        <div class="expand-label" onclick="toggleSidebar('left')">🛈</div>
         <div class="expand-details">
             <h6 class="text-center mb-3 text-white">Comprovantes Enviados Anteriormente</h6>
             <div class="scroll-container">
@@ -79,6 +79,7 @@ if(isset($dados['comprovante'])) {
         </div>
     </div>
 </div>
+
 <div class="container mt-4">
     <h2 class="text-center">Informações do comprovante</h2>
     <hr>
@@ -161,7 +162,7 @@ if(isset($dados['comprovante'])) {
         let select = document.createElement("select");
         ativs.forEach((artigo) => {
             let option = document.createElement("option");
-            
+
             const limpaTexto = (texto) => texto.replace(/^\d+\)/, "").trim();
             const textoSpan = limpaTexto(span.innerText.trim());
 
@@ -238,6 +239,18 @@ if(isset($dados['comprovante'])) {
         }
 
         window.location.href = BASEURL + "/controller/ComprovanteController.php?action=refuse&id=" + id + "&comentario=" + encodeURIComponent(comentario);
+    }
+
+    function toggleSidebar(side) {
+        const sidebar = document.querySelector(`.expand-button-box.${side}-box`); // Seleciona a barra lateral (direita ou esquerda)
+        
+        if (sidebar.classList.contains('opened')) {
+            // Se já estiver aberta, apenas restaura o estado inicial
+            sidebar.classList.remove('opened');
+        } else {
+            // Caso contrário, expande a largura e o conteúdo
+            sidebar.classList.add('opened');
+        }
     }
 </script>
 
