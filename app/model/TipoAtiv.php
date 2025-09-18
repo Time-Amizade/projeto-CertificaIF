@@ -4,7 +4,7 @@ class TipoAtiv implements JsonSerializable{
 
     private ?int $id;
     private ?string $nomeAtiv;
-    private ?string $descAtiv;
+    private ?string $descAtiv = '';
 
     public function jsonSerialize(): array {
         return [

@@ -9,7 +9,12 @@ function carregarDados(BASEURL) {
         if(xhttp.status === 200){
             var listaDados = document.getElementById("listaDados");
             listaDados.innerHTML = "";
-            var resultado = JSON.parse(xhttp.responseText);
+            try {
+                var resultado = JSON.parse(xhttp.responseText);
+            } catch (e) {
+                console.error('Erro ao processar JSON:', e);
+                console.error(xhttp.responseText);
+            }
             var tipoUser = resultado.tipo
             if(tipoUser === 'ADMINISTRADOR'){
                 var dados = resultado.dados
