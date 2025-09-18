@@ -12,7 +12,7 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
     $isAdmin = true; 
 
 ?>
-<nav class="navbar navbar-expand-md navbar-dark bg-success px-3 mb-3">
+<nav class="navbar navbar-expand-md navbar-dark px-3 mb-3" style="background-color: rgb(14, 76, 16);">
     <button class="navbar-toggler" type="button"
         data-bs-toggle="collapse" data-bs-target="#navSite">
         <span class="navbar-toggler-icon"></span>
@@ -44,6 +44,11 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
             </li>
 
         </ul>
+        
+
+        <div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center" >
+             <img src="<?= BASEURL . '/view/img/LogoMenu.png'?>" style="height: 55px; width: 130px;">
+         </div>
 
 
         <ul class="navbar-nav ms-auto mr-3">

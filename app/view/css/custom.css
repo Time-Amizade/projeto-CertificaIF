@@ -11,3 +11,7 @@ body.cadastro {
   background-size: cover; /* ou 'contain', se quiser mostrar toda a imagem */
   background-position: center center;
 }
+
+body.editar {
+  background-color: rgb(58, 58, 58);
+}
