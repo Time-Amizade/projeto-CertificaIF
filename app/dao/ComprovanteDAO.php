@@ -19,14 +19,28 @@ class ComprovanteDAO{
         return $this->mapComp($result);
     }
 
-    public function listByIdFilter($id, $status1, $status2){
+    public function listByIdFilter($id, $status1, $status2 = null){
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM Comprovante WHERE Usuario_id = :usuario_id AND status IN (:status1, :status2)";
-        $stm = $conn->prepare($sql);
-        $stm->bindValue(":usuario_id", $id);
-        $stm->bindValue(":status1", $status1);
-        $stm->bindValue(":status2", $status2);
+        if ($status2 === null) {
+            // só um status
+            $sql = "SELECT * FROM Comprovante 
+                    WHERE Usuario_id = :usuario_id 
+                    AND status = :status1";
+            $stm = $conn->prepare($sql);
+            $stm->bindValue(":usuario_id", $id);
+            $stm->bindValue(":status1", $status1);
+        } else {
+            // dois status
+            $sql = "SELECT * FROM Comprovante 
+                    WHERE Usuario_id = :usuario_id 
+                    AND status IN (:status1, :status2)";
+            $stm = $conn->prepare($sql);
+            $stm->bindValue(":usuario_id", $id);
+            $stm->bindValue(":status1", $status1);
+            $stm->bindValue(":status2", $status2);
+        }
+
         $stm->execute();
 
         return $this->mapComp($stm->fetchAll());

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/CursoAtiv.php");
@@ -48,6 +49,18 @@ class CursoAtivDAO{
 
         $cursos = $this->mapAtivs($result);
         return $cursos[0];
+    }
+
+    public function findByIdCurso(int $curso_id){
+        $conn = Connection::getConn();
+        $sql = "SELECT ca.*, ta.nomeAtividade FROM CursoAtividade ca JOIN TipoAtividade ta ON ca.TipoAtividade_id = ta.id WHERE ca.Curso_id = ? ORDER BY ca.codigoAtividade;
+";
+        $stm = $conn->prepare($sql);
+        $stm->execute([$curso_id]);
+        $result = $stm->fetchAll();
+        $cursoAtiv = $this->mapAtivs($result);
+        return $cursoAtiv;
+
     }
 
     public function deleteById(int $id) {

@@ -2,14 +2,19 @@
 
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
+require_once(__DIR__ . "/../dao/CursoDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
+require_once(__DIR__ . "/../dao/CursoAtivDAO.php");
 
 class PerfilController extends Controller {
 
     private UsuarioDAO $usuarioDao;
     private UsuarioService $usuarioService;
     private ArquivoService $arquivoService;
+    private CursoDao $cursoDao;
+    private CursoAtivDAO $cursoAtivDao;
+    private ComprovantesDAO $comprovanteDao;
 
     public function __construct() {
         if(! $this->usuarioEstaLogado())
@@ -18,6 +23,10 @@ class PerfilController extends Controller {
         $this->usuarioDao = new UsuarioDAO();
         $this->usuarioService = new UsuarioService();
         $this->arquivoService = new ArquivoService();
+        $this->cursoDao = new CursoDAO();
+        $this->cursoAtivDao = new CursoAtivDAO();
+        $this->comprovanteDao = new ComprovanteDAO();
+        
 
         $this->handleAction();    
     }
@@ -42,11 +51,33 @@ class PerfilController extends Controller {
             
             if ($usuarioFunc == UsuarioFuncao::ALUNO) {
                $sl = $this->usuarioDao->findById($id);
-            } else if ($usuarioFunc == UsuarioFuncao::COORDENADOR) {
-                $dados = $this->usuarioDao->findByFilters(UsuarioStatus::PENDENTE, $_SESSION[SESSAO_USUARIO_CURSO], UsuarioFuncao::ALUNO);
-                $comprovantes = $this->comprovanteDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
-            }else{
-                $comprovantes = $this->comprovanteDao->listByUserId($_SESSION[SESSAO_USUARIO_ID]);
+               $dados["curso"] = $this->cursoDao->findById($sl->getCursoId()->getId());
+               $dados["CursoAtiv"] = $this->cursoAtivDao->findById($sl->getCursoId()->getId());
+               $dados["Comprovantes"] = $this->comprovanteDao->listByIdFilter($id, "aprovado");
+
+                    $json = json_encode([
+                'tipo' => $usuarioFunc,
+                'aluno' => $sl->jsonSerialize(),
+                'curso' => $dados["curso"]->jsonSerialize(),
+                'comprovantes' => array_map(function($comprovante) {
+                    return [
+                        'comprovante' => $comprovante->jsonSerialize(),
+                        'cursoAtiv' => $comprovante->getCursoAtiv()->jsonSerialize(),
+                        'aluno' => $comprovante->getUsuario()->jsonSerialize()
+                    ];
+                }, $comprovantes)
+            ], JSON_PRETTY_PRINT);
+
+            if ($json === false) {
+                echo "Erro ao gerar JSON: " . json_last_error_msg();
+                return;
+            }
+            
+            echo $json;
+
+                 
+        }else{
+                
             }
         }
     }
