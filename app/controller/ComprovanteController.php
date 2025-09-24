@@ -121,6 +121,7 @@ class ComprovanteController extends Controller{
     protected function approve(){
         $id = $_GET['id'];
         $this->compDao->approveById($id);
+        $this->usuarioDao->addHours($id);
 
         header("location: " . BASEURL . "/controller/HomeController.php?action=home");
     }

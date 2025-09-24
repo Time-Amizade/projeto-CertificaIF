@@ -2,6 +2,8 @@
 #Nome do arquivo: UsuarioDAO.php
 #Objetivo: classe DAO para o model de Usuario
 
+use PSpell\Config;
+
 include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Usuario.php");
 include_once(__DIR__ . "/../dao/CursoDAO.php");
@@ -177,6 +179,29 @@ class UsuarioDAO {
         $result = $stm->fetchAll();
 
         return $result[0]["qtd_usuarios"];
+    }
+
+    public function addHours($id){
+        // Obtém a conexão
+        $conn = Connection::getConn();
+
+        // Seleciona as horas e o ID do usuário
+        $sql = "SELECT horas, Usuario_id FROM Comprovante WHERE id = ?";
+        $stm = $conn->prepare($sql);
+        $stm->execute([$id]);
+        
+        // Verifica se o resultado foi encontrado
+        $result = $stm->fetchObject();
+        
+        if ($result) {
+            // Atualiza a quantidade de horas validadas para o usuário
+            $sql = "UPDATE Usuario SET horasValidadas = horasValidadas + ? WHERE id = ?";
+            $stm = $conn->prepare($sql);
+            $stm->execute([$result->horas, $result->Usuario_id]);
+            
+        } else {
+            echo "Comprovante não encontrado!";
+        }
     }
 
     //Método para converter um registro da base de dados em um objeto Usuario
