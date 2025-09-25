@@ -2,8 +2,8 @@
 
 class Curso implements JsonSerializable {
     private ?int $id;
-    private ?string $nomeCurso;
-    private ?int $cargaHorariaAtivComplement;
+    private ?string $nomeCurso = '';
+    private ?int $cargaHorariaAtivComplement = null;
 
     // Implementação do JsonSerializable
     public function jsonSerialize(): array

@@ -1,9 +1,40 @@
+function addFilter(dados) {
+    let titulo = document.getElementById("titulo").value.toLowerCase();
+    const horas = document.getElementById("horas").value;
+    const status = document.getElementById("status").value;
+
+    // Filtrar os dados carregados com base nos filtros
+    const dadosFiltrados = dados.filter(item => {
+        let pass = true;
+
+        // Filtro pelo título (caso seja informado)
+        if (titulo && !item.comprovante.titulo.toLowerCase().includes(titulo)) {
+            pass = false;
+        }
+
+        // Filtro pelas horas (maior que o informado)
+        if (horas && item.comprovante.horas <= parseInt(horas)) {
+            pass = false;
+        }
+
+        // Filtro pelo status
+        if (status && item.comprovante.status !== status) {
+            pass = false;
+        }
+
+        return pass;
+    });
+
+    // Renderizar os dados filtrados
+    return dadosFiltrados;
+}
+
 function carregarDados(BASEURL) {
-    //Requisição AJAX para buscar os usuários 
-    // cadastrados em formato JSON
     var xhttp = new XMLHttpRequest();
 
+    // URL com os parâmetros do filtro
     var url = BASEURL + "/controller/HomeController.php?action=listJson";
+
     xhttp.open('GET', url, true);
     xhttp.onload = function() {
         if(xhttp.status === 200){
@@ -15,25 +46,25 @@ function carregarDados(BASEURL) {
                 console.error('Erro ao processar JSON:', e);
                 console.error(xhttp.responseText);
             }
-            var tipoUser = resultado.tipo
+            var tipoUser = resultado.tipo;
+            var dados = resultado.dados
+            var dadosComp = resultado.comprovantes;
             if(tipoUser === 'ADMINISTRADOR'){
-                var dados = resultado.dados
                 dadosAdmin(BASEURL, dados);
-            }else if(tipoUser === 'COORDENADOR'){
-                var dados = resultado.dados;
-                var dados2 = resultado.comprovantes;
-                dadosCoord(BASEURL, dados, dados2, listaDados);
-            }else if(tipoUser === 'ALUNO'){
-                var dados = resultado.comprovantes
-                dadosAluno(BASEURL, dados, listaDados);
-            }         
-        }else{
-            console.error("Erro ao carregar os usuários:", xhttp.status);
+            } else if(tipoUser === 'COORDENADOR'){
+                dadosCoord(BASEURL, dados, dadosComp, listaDados);
+            } else if(tipoUser === 'ALUNO'){
+                dadosComp = addFilter(dadosComp);
+                dadosAluno(BASEURL, dadosComp, listaDados);
+            }
+        } else {
+            console.error("Erro ao carregar os dados:", xhttp.status);
         }
     }
     xhttp.send();
 }
 
+// Função de renderização para ADMINISTRADOR
 function dadosAdmin(BASEURL, dados){
     dados.forEach(function (user) {
         let card = `
@@ -57,6 +88,7 @@ function dadosAdmin(BASEURL, dados){
     });
 }
 
+// Função de renderização para COORDENADOR
 function dadosCoord(BASEURL, dados, dados2, listaDados){
     var containerAlunos = document.createElement("div");
     containerAlunos.id = "containerAlunos";
@@ -94,7 +126,7 @@ function dadosCoord(BASEURL, dados, dados2, listaDados){
         containerAlunos.innerHTML += '<h5><p>Não há nenhuma solicitação de cadastro no momento!</p></h5>';
         listaDados.appendChild(containerAlunos);
     }
-    
+
     listaDados.innerHTML += "<h3>Comprovantes</h3>";
     // Renderizar comprovantes (se existirem)
     if (dados2.length > 0){
@@ -123,7 +155,9 @@ function dadosCoord(BASEURL, dados, dados2, listaDados){
     }
 }
 
+// Função de renderização para ALUNO
 function dadosAluno(BASEURL, dados, listaDados){
+    listaDados.innerHTML = '';
     dados.forEach(function(dado){
         let card = `
             <div class="col-md-3 mb-3">
@@ -156,8 +190,6 @@ function dadosAluno(BASEURL, dados, listaDados){
         listaDados.innerHTML += card;
     });
 }
-
-
 
 function recusarComprovante(id) {
     let comentario = prompt("Digite o motivo da recusa:");
