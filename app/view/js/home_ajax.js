@@ -54,6 +54,7 @@ function carregarDados(BASEURL) {
             } else if(tipoUser === 'COORDENADOR'){
                 dadosCoord(BASEURL, dados, dadosComp, listaDados);
             } else if(tipoUser === 'ALUNO'){
+                filtroContainer.classList.remove('d-none');
                 dadosComp = addFilter(dadosComp);
                 dadosAluno(BASEURL, dadosComp, listaDados);
             }
@@ -103,8 +104,7 @@ function dadosCoord(BASEURL, dados, dados2, listaDados){
     if(dados.length > 0){
         dados.forEach(function (user) {
             let cardAluno = `
-            <div class="col-md-4 mb-3">
-                <div class="card shadow-sm border-0">
+            <div class="col-md-3 mb-3"> <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="card-title">${user.nome}</h5>
                         <p><strong>Código de Matrícula:</strong> ${user.codigoMatricula}</p>
