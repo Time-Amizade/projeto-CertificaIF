@@ -51,6 +51,21 @@ class CursoAtivDAO{
         return $cursos[0];
     }
 
+    public function findByCodigo($codigo) : ?CursoAtiv{
+        $conn = Connection::getConn();
+
+        $sql = "SELECT * FROM CursoAtividade WHERE codigoAtividade = ?";
+        $stm = $conn->prepare($sql);    
+        $stm->execute([$codigo]);
+        $result = $stm->fetchAll();
+        
+        if(empty($result))
+            return null;
+
+        $cursos = $this->mapAtivs($result);
+        return $cursos[0];
+    }
+
     public function findByIdCurso(int $curso_id){
         $conn = Connection::getConn();
         $sql = "SELECT ca.*, ta.nomeAtividade FROM CursoAtividade ca JOIN TipoAtividade ta ON ca.TipoAtividade_id = ta.id WHERE ca.Curso_id = ? ORDER BY ca.codigoAtividade;
