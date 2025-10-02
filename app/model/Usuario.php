@@ -17,7 +17,7 @@ class Usuario implements JsonSerializable{
     private ?string $endereco;
     private ?string $codigoMatricula;
     private ?string $funcao;
-    private ?string $horasValidadas;
+    private ?int $horasValidadas;
     private ?string $status;
     private ?Curso $Cursoid;
     private ?string $fotoPerfil;
@@ -228,7 +228,7 @@ class Usuario implements JsonSerializable{
     /**
      * Get the value of horasValidadas
      */
-    public function getHorasValidadas(): ?string
+    public function getHorasValidadas(): ?int
     {
         return $this->horasValidadas;
     }
@@ -236,7 +236,7 @@ class Usuario implements JsonSerializable{
     /**
      * Set the value of horasValidadas
      */
-    public function setHorasValidadas(?string $horasValidadas): self
+    public function setHorasValidadas(?int $horasValidadas): self
     {
         $this->horasValidadas = $horasValidadas;
 

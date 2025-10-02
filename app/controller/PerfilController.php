@@ -6,6 +6,7 @@ require_once(__DIR__ . "/../dao/CursoDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 require_once(__DIR__ . "/../dao/CursoAtivDAO.php");
+require_once(__DIR__ . "/../dao/ComprovanteDAO.php");
 
 class PerfilController extends Controller {
 
@@ -14,7 +15,7 @@ class PerfilController extends Controller {
     private ArquivoService $arquivoService;
     private CursoDao $cursoDao;
     private CursoAtivDAO $cursoAtivDao;
-    private ComprovantesDAO $comprovanteDao;
+    private ComprovanteDAO $comprovanteDao;
 
     public function __construct() {
         if(! $this->usuarioEstaLogado())
@@ -40,30 +41,31 @@ class PerfilController extends Controller {
     }
 
     protected function listJson(){
-        $id = $_GET["id"];
-        $dados = [];
-        $comprovantes = [];
-        $usuarioFunc = null;
-        $sl = null;
+    $id = $_GET["id"];
+    $dados = [];
+    $usuarioFunc = null;
+    $sl = null;
+    
+    if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
+        $usuarioFunc = $_SESSION[SESSAO_USUARIO_PAPEL];
         
-        if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
-            $usuarioFunc = $_SESSION[SESSAO_USUARIO_PAPEL];
-            
-            if ($usuarioFunc == UsuarioFuncao::ALUNO) {
-               $sl = $this->usuarioDao->findById($id);
-               $dados["curso"] = $this->cursoDao->findById($sl->getCursoId()->getId());
-               $dados["CursoAtiv"] = $this->cursoAtivDao->findById($sl->getCursoId()->getId());
-               $dados["Comprovantes"] = $this->comprovanteDao->listByIdFilter($id, "aprovado");
+        if ($usuarioFunc == UsuarioFuncao::ALUNO) {
+            $aluno = $this->usuarioDao->findById($id);
+            $dados["curso"] = $this->cursoDao->findById($aluno->getCursoId()->getId());
+            $dados["CursoAtiv"] = $this->cursoAtivDao->findById($aluno->getCursoId()->getId());
 
-                    $json = json_encode([
+            // pega os comprovantes (se não houver, vira array vazio)
+            $comprovantes = $this->comprovanteDao->listByIdFilter($id, "aprovado") ?? [];
+
+            $json = json_encode([
                 'tipo' => $usuarioFunc,
-                'aluno' => $sl->jsonSerialize(),
+                'aluno' => $aluno->jsonSerialize(),
                 'curso' => $dados["curso"]->jsonSerialize(),
                 'comprovantes' => array_map(function($comprovante) {
                     return [
                         'comprovante' => $comprovante->jsonSerialize(),
                         'cursoAtiv' => $comprovante->getCursoAtiv()->jsonSerialize(),
-                        'aluno' => $comprovante->getUsuario()->jsonSerialize()
+                        
                     ];
                 }, $comprovantes)
             ], JSON_PRETTY_PRINT);
@@ -72,15 +74,13 @@ class PerfilController extends Controller {
                 echo "Erro ao gerar JSON: " . json_last_error_msg();
                 return;
             }
-            
-            echo $json;
 
-                 
-        }else{
-                
-            }
+            header('Content-Type: application/json; charset=utf-8');
+            echo $json;
         }
     }
+}
+
  
     protected function update() {
         $foto = $_FILES["foto"];

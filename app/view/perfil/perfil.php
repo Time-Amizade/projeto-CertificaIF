@@ -113,7 +113,11 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
             <div id="legenda" style="margin-top: 15px;"></div>
         
         </div>
+        <script>
+            const ID_USUARIO = <?= $dados['usuario']->getId() ?>;
+        </script>
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="<?= BASEURL ?>/view/js/graficoHoras_ajax.js"> </script> 
 
 
