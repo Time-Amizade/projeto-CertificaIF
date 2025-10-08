@@ -22,36 +22,44 @@ function carregarDados(BASEURL) {
                 resultado.comprovantes.forEach(function(comp) {
                     let idCurso = comp.cursoAtiv.id;
                     let horas = comp.comprovante.horas || 0;
-                    horasValidadas[idCurso] = (horasValidadas[idCurso] || 0) + horas;
+
+                    // Soma incremental com limite
+                    let atual = horasValidadas[idCurso] || 0;
+                    let novaSoma = atual + horas;
+
+                    // Se a soma parcial passar do totalMaximo, corta o excesso
+                    horasValidadas[idCurso] = (novaSoma + totalHorasValidadas(horasValidadas) - atual) > totalMaximo
+                        ? totalMaximo - totalHorasValidadas(horasValidadas)
+                        : novaSoma;
 
                     const titulo = comp.comprovante.titulo || "Sem título";
-
-                    if (!titulosPorAtividade[idCurso]) {
-                        titulosPorAtividade[idCurso] = [];
-                    }
+                    if (!titulosPorAtividade[idCurso]) titulosPorAtividade[idCurso] = [];
                     titulosPorAtividade[idCurso].push(titulo);
                 });
 
-                // soma das horas validadas calculada manualmente
-                const somaHoras = Object.values(horasValidadas).reduce((a, b) => a + b, 0);
+                // ======= FUNÇÃO AUXILIAR =======
+                function totalHorasValidadas(obj) {
+                    return Object.values(obj).reduce((a, b) => a + b, 0);
+                }
+
+                // Garante que a soma final não passe do total máximo
+                let somaHoras = totalHorasValidadas(horasValidadas);
+                if (somaHoras > totalMaximo) somaHoras = totalMaximo;
 
                 const faltando = totalMaximo - somaHoras;
 
-                // valores para desenhar
-                const valores = faltando > 0 
-                ? [...Object.values(horasValidadas), faltando] 
-                : Object.values(horasValidadas);
+                const valores = Object.values(horasValidadas);
 
                 // cores
                 const paleta = [
-                    "#4CAF50", // verde
-                    "#2196F3", // azul
-                    "#FFC107", // amarelo
-                    "#F44336", // vermelho
-                    "#9C27B0", // roxo
-                    "#FF9800", // laranja
-                    "#00BCD4", // ciano
-                    "#795548"  // marrom
+                    "#4CAF50",
+                    "#2196F3",
+                    "#FFC107",
+                    "#F44336",
+                    "#9C27B0",
+                    "#FF9800",
+                    "#00BCD4",
+                    "#795548"
                 ];
 
                 const coresAleatorias = Object.values(horasValidadas).map((_, i) => paleta[i % paleta.length]);
@@ -66,42 +74,10 @@ function carregarDados(BASEURL) {
                 if (faltando > 0) {
                     valores.push(faltando);
                     labels.push(`Horas a validar (${faltando}h)`);
-                    idsAtividades.push(null); // null para a fatia “faltando”
+                    idsAtividades.push(null);
                 }
 
-                // ====== DESENHA O GRÁFICO ======
-                // ==== Primeira Versão ====
-                // let anguloInicial = 0;
-
-                // valores.forEach((valor, i) => {
-                //     const angulo = (valor / totalMaximo) * 2 * Math.PI;
-
-                //     ctx.beginPath();
-                //     ctx.moveTo(150, 150);
-                //     ctx.arc(150, 150, 100, anguloInicial, anguloInicial + angulo);
-                //     ctx.closePath();
-                //     ctx.fillStyle = cores[i];
-                //     ctx.fill();
-
-                //     // Texto no meio da fatia
-                //     const anguloMeio = anguloInicial + angulo / 2;
-                //     const x = 150 + Math.cos(anguloMeio) * 60;
-                //     const y = 150 + Math.sin(anguloMeio) * 60;
-
-                //     ctx.fillStyle = "black";
-                //     ctx.font = "12px Arial";
-                //     ctx.textAlign = "center";
-                //     ctx.textBaseline = "middle";
-
-                //     const porcentagem = totalMaximo > 0 ? ((valor / totalMaximo) * 100).toFixed(1) + "%" : "0%";
-                //     ctx.fillText(porcentagem, x, y);
-
-                //     anguloInicial += angulo;
-                // });
-
-
                 // ===== CHART.JS =====
-
                 const data = {
                     labels: labels,
                     datasets: [{
@@ -109,7 +85,9 @@ function carregarDados(BASEURL) {
                         data: valores,
                         backgroundColor: cores,
                         borderColor: "#fff",
-                        borderWidth: 2
+                        borderWidth: 2,
+                        hoverBorderColor: "#000",
+                        hoverOffset: 20
                     }]
                 };
 
@@ -128,18 +106,15 @@ function carregarDados(BASEURL) {
                                         const valor = context.parsed;
                                         const porcent = ((valor / totalMaximo) * 100).toFixed(1) + "%";
 
-                                        // Array para o tooltip: primeira linha = label + porcentagem
                                         let linhas = [`${context.label} — ${porcent}`];
 
                                         if (idCurso) {
-                                            // Adiciona cada título em uma linha separada
                                             titulosPorAtividade[idCurso].forEach(titulo => {
                                                 linhas.push(titulo);
                                             });
                                         } else {
                                             linhas.push('Horas restantes');
                                         }
-
                                         return linhas;
                                     }
                                 }
@@ -153,30 +128,6 @@ function carregarDados(BASEURL) {
                 };
 
                 const graficoPizza = new Chart(ctx, config);
-
-                // ====== LEGENDA PARA A 1° VERSÃO   ======
-                // const legendaDiv = document.getElementById("legenda");
-                // legendaDiv.innerHTML = ""; // limpa antes de recriar
-                // labels.forEach((label, i) => {
-                //     const item = document.createElement("div");
-                //     item.style.display = "flex";
-                //     item.style.alignItems = "center";
-                //     item.style.marginBottom = "5px";
-
-                //     const corBox = document.createElement("span");
-                //     corBox.style.display = "inline-block";
-                //     corBox.style.width = "15px";
-                //     corBox.style.height = "15px";
-                //     corBox.style.backgroundColor = cores[i];
-                //     corBox.style.marginRight = "8px";
-
-                //     const texto = document.createElement("span");
-                //     texto.innerText = label;
-
-                //     item.appendChild(corBox);
-                //     item.appendChild(texto);
-                //     legendaDiv.appendChild(item);
-                // });
             } catch (e) {
                 console.error('Erro ao processar JSON:', e);
                 console.error(xhttp.responseText);
