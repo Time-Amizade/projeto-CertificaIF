@@ -1,6 +1,7 @@
 <?php
 #Nome do arquivo: perfil/perfil.php
 #Objetivo: interface para perfil dos usuários do sistema
+$pagina = 'perfil';
 
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
@@ -13,6 +14,7 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
     $papel = "aluno";
 }
 ?>
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/perfil.css">
 
 <div class="container"> 
     <div class="row">
