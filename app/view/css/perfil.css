@@ -1,121 +1,99 @@
 /* =============================== */
-/* 🎨 VARIÁVEIS GERAIS DE COR E TEMA */
+/* 🎨 CORES DO TEMA */
 /* =============================== */
-:root{
-  --accent-2: #10b981; /* Verde principal (botões, destaques) */
-  --muted: #3b3b3b;    /* Cor de texto secundário */
+:root {
+  --accent-2: #10b981; /* Verde principal */
+  --text-dark: #0b1220;
+  --text-muted: #3b3b3b;
 }
 
 /* =============================== */
-/* 🔧 CONFIGURAÇÕES GERAIS DO CONTAINER */
+/* 🌑 FUNDO GERAL DA PÁGINA */
 /* =============================== */
-.container{
-  margin:36px auto;   /* Centraliza na página */
-  padding:18px;       /* Espaçamento interno */
+body {
+  background-color: #2f2f2f; /* preto/cinza escuro */
+  color: var(--text-dark);
 }
 
 /* =============================== */
-/* 📐 LINHA PRINCIPAL (DIV ROW) */
+/* 📦 CONTAINER PRINCIPAL */
 /* =============================== */
-.container > .row{
-  display:flex;
-  gap:20px;                /* Espaço entre colunas */
-  align-items:flex-start;  /* Alinha itens no topo */
-  flex-wrap:wrap;          /* Quebra em linha nas telas pequenas */
+.container {
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  max-width: 1100px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* =============================== */
-/* 🧩 COLUNAS (cada .col-6 é metade da largura) */
+/* 👤 BLOCO ESQUERDO (PERFIL) */
 /* =============================== */
-.container > .row > .col-6{
-  flex:1 1 520px;   /* Flexível e responsivo */
-  min-width:500px;  /* Largura mínima antes de quebrar */
-  box-sizing:border-box;
+.perfil-info {
+  flex: 1 1 420px;
 }
 
-/* =============================== */
-/* 👤 COLUNA ESQUERDA - PERFIL */
-/* =============================== */
-.container > .row > .col-6:first-child{
-  background: linear-gradient(90deg, #ffffff 0%, #595a59 400%);
-  border-radius:16px;
-  padding:22px;
-  box-shadow:var(--shadow);
-  border:1px solid rgba(16,24,40,0.04);
-  
-}
-
-/* 🧾 Título do perfil */
-.container > .row > .col-6:first-child h3{
-  font-size: 30px;
-  margin:0;
-  padding:6px 0 12px 0;
-  letter-spacing:0.2px;
-  color: #0f172a;
+.perfil-info h3 {
   text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
-/* 🖼️ IMAGEM DO PERFIL */
-.container > .row > .col-6:first-child img{
- 
+.perfil-info img {
+  display: block;
+  margin: 0 auto 20px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   
-
-  border-radius:150px;
-  object-fit:cover; /* Mantém proporção cortando se necessário */
-  margin:8px auto 14px auto; /* Centraliza horizontalmente */
-  box-shadow: 0 8px 30px rgba(16,24,40,0.12);
-  border: 4px solid rgba(255,255,255,0.8);
 }
+
+/* Informações de texto */
+.info-item {
+  margin-bottom: 18px;
+}
+
+.info-item span:first-child {
+  font-weight: 600;
+  color: var(--text-dark);
+  display: inline-block;
+  min-width: 160px;
+}
+
+
 
 /* =============================== */
-/* 📋 BLOCOS DE INFORMAÇÃO */
+/* 📊 BLOCO DIREITO (GRÁFICO) */
 /* =============================== */
-
-
-.container > .row > .col-6:first-child .col-12{
-  
-  padding:8px 12px;
-  margin-bottom:6px;
-  display:flex;
-  gap:px;
+.grafico-area {
+  flex: 1 1 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.container > .row > .col-6:first-child .fw-bold{
-  min-width:160px;
-  color:#0b1220;
-  font-weight:600;
-}
 
-.container > .row > .col-6:first-child span{
-  color:var(--muted);
-  font-weight:500;
-}
+
 
 /* =============================== */
 /* 🔘 BOTÕES */
 /* =============================== */
-.container > .row > .col-6:first-child .btn{
-  padding:8px 14px;
-  border-radius:10px;
-  border:1px solid rgba(2,6,23,0.04);
-  font-weight:600;
+.botoes {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
 }
 
-
-
-
-
-
-/* Canvas do gráfico (pizza, barras, etc.) */
-#graficoPizza{
-  width:100% !important;
-  
-
-  padding:6px;
+.botoes a {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
 }
-
-
-
-
-
-
