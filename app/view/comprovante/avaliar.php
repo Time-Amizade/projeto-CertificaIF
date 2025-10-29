@@ -1,4 +1,6 @@
 <?php
+$pagina = 'comprovante';
+
 
 require_once(__DIR__.'/../include/header.php');
 require_once(__DIR__.'/../include/menu.php');
@@ -16,6 +18,7 @@ if(isset($dados['comprovante'])) {
 
 ?>
 <link rel="stylesheet" href="<?= BASEURL ?>/view/css/sidebar.css">
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/avaliar.css">
 
 <div class="expand-button-box right-box">
     <div class="expand-button-content">

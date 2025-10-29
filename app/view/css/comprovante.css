@@ -1,0 +1,162 @@
+/* ====== Título principal ====== */
+h3.text-center {
+    color: #f8fafc; /* Branco para contraste com o fundo escuro */
+    font-weight: 600;
+    margin: 40px; /* Mais margem para espaço */
+   
+}
+
+/* ====== Container do formulário ====== */
+.container {
+    max-width: 10000px; /* Aumentado para um card maior */
+    margin: 0 auto; /* Centraliza */
+   padding-left: 840px;
+    flex: 1; /* Faz o container ocupar o espaço disponível */
+}
+
+/* ====== Row e colunas ====== */
+
+
+
+/* ====== Formulário como card ====== */
+form {
+    background-color: #ffffff; /* Fundo branco para o card */
+    color: #1e293b; /* Texto escuro dentro do card */
+    padding: 3rem; /* Aumentado para mais espaço interno */
+    border-radius: 20px; /* Bordas mais arredondadas para um card moderno */
+    
+    
+    
+    display: flex;
+    flex-direction: column;
+    
+}
+
+
+
+
+
+.form-control, .form-select {
+    
+    padding: 1rem; /* Padding aumentado para mais espaço interno */
+    border: 1px solid #cbd5e1; /* Borda sutil */
+    border-radius: 10px; /* Bordas arredondadas */
+    
+    background-color: #f8fafc; /* Fundo claro para inputs */
+
+ 
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #10b981; /* Destaque verde no foco */
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); /* Sombra sutil no foco */
+    outline: none;
+}
+
+
+
+/* Input de arquivo */
+input[type="file"] {
+    padding: 0.5rem; /* Ajuste para o botão de upload */
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background-color: #10b981;
+    color: #fff;
+   
+}
+
+
+
+
+/* ====== Botões ====== */
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.75rem 1.5rem; /* Padding aumentado para botões maiores */
+    flex: 0 0 auto; /* Não estica */
+    max-width: 150px;
+    text-align: center;
+}
+
+.btn-success {
+    border: none;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #059669;
+    transform: translateY(-2px); /* Efeito de hover */
+}
+
+.btn-secondary {
+    color: #ffffff;
+
+    border: none;
+}
+
+.btn-secondary:hover {
+ background-color: #2e3bab;
+    transform: translateY(-2px);
+}
+
+/* ====== Responsividade ====== */
+@media (max-width: 2000px) {
+    .container {
+        padding-left: 400px; /* Reduz padding-left para telas médias */
+    }
+}
+
+@media (max-width: 1580px) {
+    .container {
+        padding-left: 300px; /* Reduz ainda mais */
+    }
+}
+
+@media (max-width: 1370px) {
+    .container {
+        width: 100%; /* Permite ocupar toda a largura */
+        padding-left: 20px; /* Padding lateral mínimo para evitar bordas coladas */
+    }
+
+    .form-control, .form-select {
+        padding: 1rem; /* Reduz padding dos inputs */
+        font-size: 1rem; /* Ajusta tamanho da fonte para telas pequenas */
+    }
+
+    .btn {
+        padding: 0.6rem 1.2rem; /* Botões menores */
+        width: 100%; /* Botões ocupam largura total se necessário */
+    }
+
+    h3.text-center {
+        margin: 20px; /* Reduz margem do título */
+        font-size: 1.5rem; /* Ajusta tamanho da fonte */
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        padding-left: 10px; /* Padding mínimo para telas muito pequenas */
+        padding-right: 10px;
+    }
+
+    form {
+        padding: 1.5rem; /* Ainda mais reduzido */
+    }
+
+    .form-control, .form-select {
+        padding: 0.6rem; /* Padding ainda menor */
+        font-size: 0.8rem; /* Fonte menor */
+    }
+
+    .btn {
+        padding: 0.5rem 1rem; /* Botões ainda menores */
+    }
+
+    h3.text-center {
+        font-size: 1.3rem; /* Título menor */
+        margin: 15px;
+    }
+}

@@ -1,17 +1,18 @@
 <?php
 #Nome do arquivo: usuario/list.php
 #Objetivo: interface para listagem dos usuários do sistema
+$pagina = 'home';
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
 <link rel="stylesheet" href="<?= BASEURL ?>/view/css/home.css">
 
-<h3 class="text-center">Página inicial do sistema</h3>
+<h3 class="text-center">Bem Vindo <?= $nome ?> ! 👋</h3>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 d-none" id="filtroContainer">
-            <div class="bg-primary p-3 rounded">
+            <div class="bg-success p-3 rounded">
                 <h2 class="mb-4 text-white">Filtro</h2>
                 
                 <div class="mb-3">

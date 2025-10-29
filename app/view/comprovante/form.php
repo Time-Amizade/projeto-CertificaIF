@@ -1,10 +1,12 @@
 <?php
 #Nome do arquivo: comprovante/form.php
 #Objetivo: interface para cadastros os cursos do sistema
+$pagina = 'comprovante';
 
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/comprovante.css">
 
 <h3 class="text-center">
     <?php if($dados['idComp'] == 0) echo "Inserir"; else echo "Alterar"; ?> 
@@ -57,8 +59,10 @@ require_once(__DIR__ . "/../include/menu.php");
                 <input type="hidden" id="hddId" name="id" 
                     value="<?= $dados['idComp'] ?>" />
 
-                <div class="mt-3">
+                <!-- Alteração: Agrupar botões lado a lado -->
+                <div class="button-group mt-3">
                     <button type="submit" class="btn btn-success">Gravar</button>
+                    <a class="btn btn-secondary" href="<?= BASEURL ?>/controller/HomeController.php?action=home">Voltar</a>
                 </div>
             </form>            
         </div>
@@ -68,11 +72,12 @@ require_once(__DIR__ . "/../include/menu.php");
         </div>
     </div>
 
-    <div class="row" style="margin-top: 30px;">
+    <!-- Alteração: Remover esta row inteira, pois o "Voltar" agora está dentro do form -->
+    <!-- <div class="row" style="margin-top: 30px;">
         <div class="col-12">
         <a class="btn btn-secondary" href="<?= BASEURL ?>/controller/HomeController.php?action=home">Voltar</a>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <?php  

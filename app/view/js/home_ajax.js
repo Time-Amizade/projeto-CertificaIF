@@ -113,7 +113,7 @@ function dadosCoord(BASEURL, dados, dados2, listaDados){
                         <p><strong>CPF:</strong> ${user.cpf}</p>
                         <div class="d-flex justify-content-between">
                             <a href="` + BASEURL + `/controller/UsuarioController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
-                            <a href="` + BASEURL + `/controller/UsuarioController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
+                            <a href="` + BASEURL + `/controller/UsuarioController.php?action=refuse&id=${user.id}" class="btn btn-danger">Recusar usuário</a>
                         </div>
                     </div>
                 </div>
@@ -172,7 +172,7 @@ function dadosAluno(BASEURL, dados, listaDados){
                         }
                         card += `
                         <p><strong>Código da atividade:</strong> ${dado.cursoAtiv.codigo}</p>
-                        <a href="` + BASEURL + `/../arquivos/${dado.comprovante.arquivo}" target="_blank">
+                        <a href="` + BASEURL + `/../arquivos/${dado.comprovante.arquivo}" target="_blank" class=" btn btn-primary" >
                             Visualizar arquivo
                         </a>
                         `; 

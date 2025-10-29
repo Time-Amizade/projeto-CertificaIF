@@ -1,4 +1,143 @@
-.fonteBonita {
-    color: red; 
-    font-weight: bold;
+/* ================================================
+   home.css — Estilo da página inicial (Home)
+   ================================================= */
+
+/* ====== Reset básico ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ====== Estilo geral ====== */
+body {
+    background-color: #0f172a; /* fundo escuro */
+    color: #e2e8f0;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ====== Título principal ====== */
+h3.text-center {
+    color: #f8fafc;
+    font-weight: 600;
+    margin: 30px 0 20px;
+}
+
+/* ====== Container geral ====== */
+.container-fluid {
+    padding: 0 2rem;
+}
+
+/* ====== Filtro lateral ====== */
+
+
+#filtroContainer h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#filtroContainer .form-label {
+    font-weight: 500;
+}
+
+
+
+#filtroContainer input:focus,
+#filtroContainer select:focus {
+    border-color: #10b981;
+    outline: none;
+}
+
+/* ====== Cards ====== */
+.card {
+    background-color: #f8fafc;
+    border-radius: 16px;
+    transition: all 0.25s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+
+.card-title {
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-body p {
+    color: #1e293b;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+}
+
+/* ====== Botões ====== */
+ .btn {
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    
+}
+
+
+.btn-primary:hover {
+    background-color: #3679c1;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    border: none;
+    margin-left: 100px;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+} */
+
+/* ====== Seções e espaçamentos ====== */
+#listaDados h3 {
+    color: #e2e8f0;
+    border-left: 4px solid #10b981;
+    padding-left: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+#listaDados p {
+    line-height: 1.4;
+}
+
+/* ====== Card de comprovante (visual do aluno e coordenador) ====== */
+#listaDados .card {
+    border: none;
+    background-color: #ffffff;
+    color: #1e293b;
+}
+
+
+
+/* ====== Responsividade ====== */
+@media (max-width: 992px) {
+    #filtroContainer {
+        margin-bottom: 2rem;
+    }
+
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-body p {
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.7rem;
+    }
 }

@@ -1,0 +1,167 @@
+
+
+/* ====== Container principal ====== */
+.container {
+    
+    margin: 20px auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+h2.text-center {
+    color: #f8fafc; /* Cor clara para texto fora do card */
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+hr {
+    border-color: #64748b; /* Cor clara para hr */
+}
+
+.card {
+    background-color: #ffffff;
+    color: #1e293b;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-title {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.card-text {
+    margin-bottom: 1rem;
+}
+
+
+
+/* Botões */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.btn-success {
+    background-color: #10b981;
+    border: none;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    border: none;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+}
+
+.btn-info {
+    background-color: #3b82f6;
+    border: none;
+    color: #fff;
+}
+
+.btn-info:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #6b7280;
+    border: none;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #4b5563;
+    transform: translateY(-2px);
+}
+
+.btn-light {
+    background-color: #f3f4f6;
+    color: #1e293b;
+    border: 1px solid #d1d5db;
+}
+
+.btn-light:hover {
+    background-color: #e5e7eb;
+}
+
+/* Alert */
+.alert {
+    border-radius: 10px;
+}
+
+/* ====== Responsividade ====== */
+@media (max-width: 768px) {
+    .expand-button-box.opened {
+        width: 280px; /* Largura menor em telas pequenas */
+    }
+
+    .container {
+        padding: 0 15px;
+        margin-top: 10px;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+
+    .table {
+        font-size: 0.8rem;
+    }
+
+    .comprovante-card {
+        padding: 8px;
+    }
+
+    .scroll-container {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .expand-button-box.opened {
+        width: 250px;
+    }
+
+    h2.text-center {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .table th, .table td {
+        padding: 0.3rem;
+        font-size: 0.75rem;
+    }
+
+    .comprovante-card p {
+        font-size: 0.8rem;
+    }
+}
