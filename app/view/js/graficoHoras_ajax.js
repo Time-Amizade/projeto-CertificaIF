@@ -27,13 +27,11 @@ function carregarDados(BASEURL) {
                         }
                     }
 
-                    // Adicionando o certificado à lista
                     compPPC[comp.cursoAtiv.codigo]['certificados'].push({
                         'titulo': comp.comprovante.titulo,
                         'horas': comp.comprovante.horas
                     });
 
-                    // Verificando se a quantidade de horas não ultrapassou o máximo
                     if(compPPC[comp.cursoAtiv.codigo]['horas'] + comp.comprovante.horas <= compPPC[comp.cursoAtiv.codigo]['max']){
                         compPPC[comp.cursoAtiv.codigo]['horas'] += comp.comprovante.horas;
                     } else {
@@ -44,8 +42,8 @@ function carregarDados(BASEURL) {
                 
                 let totalConsiderado = 0
 
-                let valores = { 'excedentes': [], 'validadas': [] };
-                let labels = { 'excedentes': [], 'validadas': [] };
+                let valores = { 'excedentes': {}, 'validadas': {} };
+                let labels = { 'excedentes': {}, 'validadas': {} };
                 const idsAtividades = [];
                 const titulosPorAtividade = {};
 
@@ -59,47 +57,44 @@ function carregarDados(BASEURL) {
 
                 for (let codigo in compPPC) {
                     let grupo = compPPC[codigo];
-
-                    // Inicializamos as variáveis para as horas válidas e excedentes desta atividade
+                    
                     let horasValidas = 0;
                     let horasExcedentes = 0;
 
-                    // Caso o total de horas válidas somadas ainda não tenha ultrapassado o total máximo
                     if (totalConsiderado < totalMaximo) {
-                        // Calcular as horas válidas dentro do limite
                         let horasRestantes = totalMaximo - totalConsiderado;
-                        horasValidas = Math.min(grupo.horas, horasRestantes); // Pode adicionar até o totalMaximo
+                        horasValidas = Math.min(grupo.horas, horasRestantes);
                         totalConsiderado += horasValidas;
                     }
 
-                    // Caso o total de horas válidas já tenha ultrapassado o total máximo
-                    if (totalConsiderado >= totalMaximo) {
-                        // As horas excedentes são a diferença entre as horas da atividade e o máximo
+                    if (totalConsiderado >= totalMaximo){  
                         horasExcedentes = grupo.horas - (totalMaximo - (totalConsiderado - horasValidas));
-                        valores['excedentes'].push(horasExcedentes);
-                        labels['excedentes'].push(`Atividade ${codigo}`);
+                        valores['excedentes']['exc'] = horasExcedentes;
                     }
 
+                    if(grupo.excedentes > 0){
+                        valores['excedentes'][codigo] = grupo.excedentes;
+                    }
+                    
                     // Adiciona as horas válidas caso o total máximo não tenha sido ultrapassado
                     if (horasValidas > 0) {
-                        valores['validadas'].push(horasValidas);
-                        labels['validadas'].push(`Atividade ${codigo}`);
+                        valores['validadas'][codigo] = horasValidas;
+                        labels['validadas'][codigo] = `Atividade ${codigo}`;
+                        cores.push(coresBase[corIndex % coresBase.length]);
                     }
 
                     // Preenche o título das atividades para os tooltips
                     idsAtividades.push(codigo);
                     titulosPorAtividade[codigo] = grupo.certificados.map(c => `• ${c.titulo} (${c.horas}h)`);
 
-                    // Adiciona uma cor para cada fatia
-                    cores.push(coresBase[corIndex % coresBase.length]);
                     corIndex++;
                 }
-                console.log(valores)
+                console.log('Valores:', valores)
+                console.log('Labels:', labels)
 
                 faltando = totalMaximo - totalConsiderado
                 faltando = Math.max(0, faltando)
 
-                console.log('Teste', compPPC)
 
                 if (faltando > 0) {
                     labels.push('Horas Restantes');
@@ -111,11 +106,11 @@ function carregarDados(BASEURL) {
 
                 // ===== CHART.JS =====
                 const data = {
-                    labels: [...labels['validadas'], ...labels['excedentes']], // Concatenando as labels
+                    labels: [...Object.values(labels['validadas']), ...Object.values(labels['excedentes'])], // Concatenando as labels
                     datasets: [
                         {
                             label: 'Horas Validadas',
-                            data: valores['validadas'],
+                            data: Object.values(valores['validadas']),
                             backgroundColor: cores,
                             borderColor: "#fff",
                             borderWidth: 2,
@@ -123,7 +118,7 @@ function carregarDados(BASEURL) {
                         },
                         {
                             label: 'Horas Excedentes',
-                            data: valores['excedentes'],
+                            data: Object.values(valores['excedentes']),
                             backgroundColor: '#FF5722', // Cor para os excedentes
                             borderColor: "#fff",
                             borderWidth: 2,
@@ -131,21 +126,7 @@ function carregarDados(BASEURL) {
                         }
                     ]
                 };
-                // if(somaExcesso > 0){
-                //     const labelsExcesso = Object.keys(horasExcedentes).map(id => `Excesso Atividade ${id} (${horasExcedentes[id].toFixed(1)}h)`);
-    
-                //     const valoresExcesso = Object.values(horasExcedentes);
-                //     console.log(valoresExcesso, labelsExcesso);
-                //     data.datasets.push({
-                //         label: 'Horas Excedentes',
-                //         data: valoresExcesso,
-                //         backgroundColor: cores,
-                //         borderColor: "#fff",
-                //         borderWidth: 2,
-                //         hoverOffset: 20
-                //     })
-                // }
-
+                
                 const config = {
                     type: 'doughnut', // Tipo de gráfico (pizza)
                     data: data,
@@ -160,8 +141,11 @@ function carregarDados(BASEURL) {
                                         const idCursoAtivAtiv = idsAtividades[index];
                                         const valor = context.parsed;
                                         const porcent = ((valor / totalMaximo) * 100).toFixed(1) + "%";
-
                                         let linhas = [`${context.label} — ${porcent}`];
+
+                                        // Exibindo o valor total de horas na fatia
+                                        const horasTotais = valor; // Total de horas desta fatia (validadas ou excedentes)
+                                        linhas.push(`Total: ${horasTotais}h`);
                                         
                                         // Adiciona os títulos de cada atividade para detalhamento no tooltip
                                         if (idCursoAtivAtiv) {
