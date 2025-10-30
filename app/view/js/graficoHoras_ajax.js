@@ -8,7 +8,6 @@ function carregarDados(BASEURL) {
             console.error("Erro ao carregar os dados:", xhttp.status);
             return;
         }
-
         try {
             const resultado = JSON.parse(xhttp.responseText);
             const canvas = document.getElementById("graficoPizza");
@@ -20,10 +19,14 @@ function carregarDados(BASEURL) {
             let totalHorasValidadas = 0;
             let totalHorasExcedentes = 0;
 
+            // Mapeamento de cores para PPC
+            const ppcCores = {};
+            const coresBase = ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0', '#E91E63', '#00BCD4', '#8BC34A'];
+            let corIndex = 0;
+
             resultado.comprovantes.forEach(comp => {
                 const codigo = comp.cursoAtiv.codigo;
                 const horasCertificado = comp.comprovante.horas;
-                
                 if (!compPPC[codigo]) {
                     compPPC[codigo] = {
                         max: comp.cursoAtiv.cargaHorariaMax,
@@ -32,16 +35,16 @@ function carregarDados(BASEURL) {
                         certificadosValidos: [],
                         certificadosExcedentes: []
                     };
+                    ppcCores[codigo] = coresBase[corIndex % coresBase.length];
+                    corIndex++;
                 }
                 const grupo = compPPC[codigo];
                 const horasDisponiveisPPC = grupo.max - grupo.horasValidadas;
                 const horasDisponiveisTotal = totalMaximo - totalHorasValidadas;
                 
-                
-                console.log(totalHorasExcedentes)
+                console.log(totalHorasExcedentes);
                 if (horasDisponiveisPPC > 0 && horasDisponiveisTotal > 0) {
                     const horasParaValidar = Math.min(horasCertificado, horasDisponiveisPPC, horasDisponiveisTotal);
-                    
                     if (horasParaValidar > 0) {
                         grupo.horasValidadas += horasParaValidar;
                         totalHorasValidadas += horasParaValidar;
@@ -70,11 +73,9 @@ function carregarDados(BASEURL) {
             });
 
             // ===== PREPARAÇÃO DOS DADOS PARA O GRÁFICO =====
-            const coresBase = ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0', '#E91E63', '#00BCD4', '#8BC34A'];
             const datasets = [];
             const labels = [];
             const tooltipData = [];
-            let corIndex = 0;
 
             // Dataset 1: Horas Validadas
             const dadosValidadas = [];
@@ -83,7 +84,7 @@ function carregarDados(BASEURL) {
             // Adiciona horas validadas por PPC
             Object.entries(compPPC).forEach(([codigo, grupo]) => {
                 if (grupo.horasValidadas > 0) {
-                    const cor = coresBase[corIndex % coresBase.length];
+                    const cor = ppcCores[codigo]; // Usa a cor do PPC armazenada
                     dadosValidadas.push(grupo.horasValidadas);
                     labels.push(`PPC CÓD: ${codigo}`);
                     coresValidadas.push(cor);
@@ -95,12 +96,9 @@ function carregarDados(BASEURL) {
                         certificados: grupo.certificadosValidos,
                         cor: cor
                     });
-                    
-                    corIndex++;
                 }
             });
 
-            // Horas faltantes
             const horasFaltando = Math.max(0, totalMaximo - totalHorasValidadas);
             if (horasFaltando > 0) {
                 dadosValidadas.push(horasFaltando);
@@ -130,9 +128,7 @@ function carregarDados(BASEURL) {
             Object.entries(compPPC).forEach(([codigo, grupo]) => {
                 if (grupo.horasExcedentes > 0) {
                     // Usa a mesma cor do PPC correspondente
-                    const corIndexAtual = labels.indexOf(`Atividade ${codigo}`);
-                    const cor = corIndexAtual !== -1 ? coresValidadas[corIndexAtual] : coresBase[corIndex++ % coresBase.length];
-                    
+                    const cor = ppcCores[codigo];
                     dadosExcedentes.push(grupo.horasExcedentes);
                     coresExcedentes.push(cor);
                     
@@ -270,13 +266,7 @@ function carregarDados(BASEURL) {
                     }
                 }
             };
-
-            if (window.graficoPizzaInstance) {
-                window.graficoPizzaInstance.destroy();
-            }
-            
-            window.graficoPizzaInstance = new Chart(ctx, config);
-
+            graficoPizzaInstance = new Chart(ctx, config);
         } catch (e) {
             console.error('Erro ao processar JSON:', e);
             console.error(xhttp.responseText);
