@@ -3,15 +3,18 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../service/LoginService.php");
+require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 
 class LoginController extends Controller {
 
     private LoginService $loginService;
+    private UsuarioService $usuarioService;
     private UsuarioDAO $usuarioDao;
 
     public function __construct() {
         $this->loginService = new LoginService();
+        $this->usuarioService = new UsuarioService();
         $this->usuarioDao = new UsuarioDAO();
         
         $this->handleAction();
@@ -61,8 +64,33 @@ class LoginController extends Controller {
         $this->loadView("login/login.php", [], "", "Usuário deslogado com suscesso!");
     }
 
+    protected function changePassForm(){
+        $this->loadView("login/passwordForm.php", []);
+    }
+
+    protected function changePass(){
+        $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : null;
+        $senha = isset($_POST['senha']) ? $_POST['senha'] : null;
+        $confSenha = isset($_POST['conf_senha']) ? $_POST['conf_senha'] : null;
+
+        $erros = $this->usuarioService->ValidarMudarSenha($cpf, $confSenha, $senha);
+        if ($cpf && empty($erros)) { 
+            $usuario = $this->usuarioDao->findByCPF($cpf);
+            if (!$usuario) {
+                array_push($erros, "Nenhum usuário foi encontrado com o CPF informado!");
+            }
+        }
+        
+        if(empty($erros)){
+            $this->usuarioDao->changePassword($cpf, $senha);
+            header("location: ". HOME_PAGE);
+            exit;
+        }
+
+        $msg = implode("<br>", $erros);
+        $dados["cpf"] = $cpf;
+        $this->loadView("login/passwordForm.php", $dados, $msg);
+    }
+
 }
-
-
-#Criar objeto da classe para assim executar o construtor
 new LoginController();

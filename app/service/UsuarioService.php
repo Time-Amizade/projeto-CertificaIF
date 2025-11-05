@@ -54,25 +54,47 @@ class UsuarioService {
     }
 
     public function ValidarEdicao(Usuario $usuario, ?string $confSenha, ?string $senha) {
-    $erros = array();
+        $erros = array();
 
-    if (!$usuario->getNome())
-        array_push($erros, "O campo [Nome] é obrigatório.");
+        if (!$usuario->getNome())
+            array_push($erros, "O campo [Nome] é obrigatório.");
 
-    if (!$usuario->getEmail())
-        array_push($erros, "O campo [Email] é obrigatório.");
+        if (!$usuario->getEmail())
+            array_push($erros, "O campo [Email] é obrigatório.");
 
-    // Verifica se os campos de senha estão preenchidos
-    if ($senha && $confSenha) {
-        if ($usuario->getSenha() != $confSenha) {
-            array_push($erros, "O campo [Senha] deve ser igual ao [Confirmação da senha].");
+        // Verifica se os campos de senha estão preenchidos
+        if ($senha && $confSenha) {
+            if ($usuario->getSenha() != $confSenha) {
+                array_push($erros, "O campo [Senha] deve ser igual ao [Confirmação da senha].");
+            }
+        } elseif ($senha || $confSenha) {
+            // Um dos campos está preenchido, mas o outro não
+            array_push($erros, "Ambos os campos [Senha] e [Confirmação da senha] devem ser preenchidos.");
         }
-    } elseif ($senha || $confSenha) {
-        // Um dos campos está preenchido, mas o outro não
-        array_push($erros, "Ambos os campos [Senha] e [Confirmação da senha] devem ser preenchidos.");
+
+        return $erros;
     }
 
-    return $erros;
-}
+    public function ValidarMudarSenha(?string $cpf, ?string $confSenha, ?string $senha) {
+        $erros = array();
 
+        if(!$cpf){
+            array_push($erros, "O campo [Cpf] é obrigatório.");
+        }
+        
+        if (!$senha) {
+            array_push($erros, "O campo [Senha] é obrigatório.");
+        }
+        if (!$confSenha) {
+            array_push($erros, "O campo [Confirmação da senha] é obrigatório.");
+        }
+        
+        if ($senha && $confSenha) {
+            if ($senha != $confSenha) {
+                array_push($erros, "O campo [Senha] deve ser igual ao [Confirmação da senha].");
+            }
+        }
+
+        return $erros;
+    }
 }

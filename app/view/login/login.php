@@ -32,6 +32,8 @@ require_once(__DIR__ . "/../include/header.php");
                             value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
                     </div>
                     
+                    <a href="<?= BASEURL . '/controller/LoginController.php?action=changePassForm' ?>" class="mb-3" style="padding-left: 85px;" >Esqueceu sua senha?</a>
+
                     <div class="mb-3" style="padding-left: 85px;">
 
                         <button type="submit" class="btn btn-success mt-3">Acessar</button>

@@ -43,6 +43,22 @@ class UsuarioDAO {
             " - Erro: mais de um usuário encontrado.");
     }
 
+    public function findByCPF($cpf){
+        $conn = Connection::getConn();
+
+        $sql = "SELECT * FROM Usuario u WHERE u.cpf = ?";
+        $stm = $conn->prepare($sql);    
+        $stm->execute([$cpf]);
+        $result = $stm->fetchAll();
+
+        $usuarios = $this->mapUsuarios($result);
+
+        if(count($usuarios) == 1)
+            return $usuarios[0];
+        elseif(count($usuarios) == 0)
+            return null;
+    }
+
     public function findByFilters($status = null, $cursoId = null, $funcao = null){
         $conn = Connection::getConn();
 
@@ -166,6 +182,19 @@ class UsuarioDAO {
 
         $stm = $conn->prepare($sql);
         $stm->execute(array($usuario->getFotoPerfil(), $usuario->getId()));
+    }
+
+    public function changePassword($cpf, $senha){
+        $conn = Connection::getConn();
+
+        $sql = "UPDATE Usuario SET senha = :senha WHERE cpf = :cpf";
+
+        $senhaCripto = password_hash($senha, PASSWORD_DEFAULT);
+
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("senha", $senhaCripto);    
+        $stm->bindValue("cpf", $cpf);
+        $stm->execute();
     }
 
     //Método para retornar a quantidade de usuários salvos na base
