@@ -13,17 +13,29 @@ body.cadastro {
 }
 
 body.editar {
-  background-color: rgb(58, 58, 58);
+  background-color:#1e1e1e;
 }
 
 body.perfil{
-   background-color: rgb(58, 58, 58);
+   background-color:#1e1e1e;
 }
 body.home{
-   background-color:  rgb(58, 58, 58);
+   background-color:  #1e1e1e;
 }
 
 body.comprovante{
-   background-color:  rgb(58, 58, 58);
+   background-color: #1e1e1e;
 }
-/* #1e293b; */
+
+body.list{
+   background-color:  #1e1e1e;
+}
+
+body.cursoList{
+   background-color:  #1e1e1e;
+}
+
+body.cursoForm{
+   background-color:  #1e1e1e;
+}
+/* #1e293b;  rgb(58, 58, 58)*/

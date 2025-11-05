@@ -1,11 +1,11 @@
 <?php
 #Nome do arquivo: curso/form.php
 #Objetivo: interface para cadastros os cursos do sistema
-
+$pagina = 'cursoForm';
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
-
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/formCurso.css">
 <h3 class="text-center">
     <?php if($dados['id'] == 0) echo "Inserir"; else echo "Alterar"; ?> 
     Curso

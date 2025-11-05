@@ -1,0 +1,107 @@
+/* ======================================================
+   listPpc.css — Estilo para a página de listagem de atividades do curso
+   ====================================================== */
+
+/* ====== Layout geral ====== */
+body.list {
+    background-color: #1e1e1e; /* fundo escuro elegante */
+    color: #eaeaea; /* texto claro para contraste */
+    
+   
+}
+
+/* ====== Cabeçalhos ====== */
+h3.text-center {
+    color: #00d084; /* tom verde-água em destaque */
+    margin-top: 30px;
+    font-weight: 600;
+}
+
+/* ====== Linhas divisórias ====== */
+hr {
+    
+    border-top: 1px solid #00d084;
+    
+}
+
+/* ====== Containers ====== */
+.container {
+    background-color: #272727; /* leve contraste com o fundo */
+    padding: 20px 25px;
+    border-radius: 12px;
+    
+   
+}
+
+/* ====== Texto dentro do container ====== */
+
+.container b {
+    color: #00b8d9; /* destaque azul */
+}
+
+/* ====== Tabela ====== */
+.table {
+    margin-top: 10px;
+    color: #eaeaea;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Cabeçalho da tabela */
+.table thead th {
+    background-color: #00b8d9;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+
+
+
+/* ====== Botões ====== */
+
+
+.btn-success {
+    background-color: #00d084;
+    color: #000000;
+}
+
+
+.btn-secondary {
+    background-color: #555;
+    color: #fff;
+}
+.btn-secondary:hover {
+    background-color: #666;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* ====== Responsividade ====== */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+        padding: 5px 10px;
+    }
+}

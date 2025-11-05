@@ -1,8 +1,10 @@
 <?php 
+$pagina = 'list';
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
-?>
 
+?>
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/listPpc.css">
 <h3 class="text-center">Curso: <?= $dados['curso']->getNomeCurso(); ?></h3> 
 <hr><hr>
 <div class="container">

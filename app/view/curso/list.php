@@ -1,16 +1,16 @@
 <?php
 #Nome do arquivo: usuario/list.php
 #Objetivo: interface para listagem dos usuários do sistema
-
+$pagina = 'cursoList';
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
-
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/list.css">
 <h3 class="text-center">Cursos</h3>
 
 <div class="container">
     <div class="row">
-        <div class="col-3">
+        <div class="col-6">
             <a class="btn btn-success" 
                 href="<?= BASEURL ?>/controller/CursoController.php?action=create">
                 Inserir</a>
