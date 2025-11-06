@@ -4,7 +4,7 @@
 <form action="./LoginController.php?action=changePass" method="POST">
      <div class="mb-3">
         <label  class="form-label" for="cpf">CPF:</label>
-        <input class="form-control" type="number" id="cpf" name="cpf" 
+        <input class="form-control" type="tel" id="cpf" name="cpf" 
             maxlength="14" placeholder="Informe número de cpf" value="<?php echo isset($dados['cpf']) ? $dados['cpf'] : '' ?>" />
     </div>
     
@@ -21,3 +21,13 @@
     </div>
     <button type="submit">Mudar senha</button>
 </form>
+
+<script>
+    cpf.oninput = () => {
+    cpf.value = cpf.value
+        .replace(/\D/g, '')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    };
+</script>

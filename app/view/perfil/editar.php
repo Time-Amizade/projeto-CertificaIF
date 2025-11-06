@@ -60,7 +60,7 @@ require_once(__DIR__."/../include/menu.php");
 
                 <div class="mb-3">
                     <label class="form-label" for="cpf">CPF:</label>
-                    <input class="form-control" type="number" id="cpf" name="cpf" 
+                    <input class="form-control" type="tel" id="cpf" name="cpf" 
                         maxlength="14" placeholder="Informe número de cpf"
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getCpf() : ''); ?>">
                 </div>
@@ -74,14 +74,14 @@ require_once(__DIR__."/../include/menu.php");
 
                 <div class="mb-3">
                     <label class="form-label" for="txtTelefone">Telefone:</label>
-                    <input class="form-control" type="number" id="txtTelefone" name="telefone" 
+                    <input class="form-control" type="tel" id="txtTelefone" name="telefone" 
                         maxlength="45" placeholder="Informe o Telefone"
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getTelefone() : ''); ?>"/>
                 </div>
 
                  <div class="mb-3">
-                    <label class="form-label" for="txtTelefone">Endereço:</label>
-                    <input class="form-control" type="text" id="txtTelefone" name="endereco" 
+                    <label class="form-label" for="txtEndereco">Endereço:</label>
+                    <input class="form-control" type="text" id="txtEndereco" name="endereco" 
                         maxlength="45" placeholder="Informe o Endereço"
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEndereco() : ''); ?>"/>
                 </div>
@@ -133,6 +133,22 @@ require_once(__DIR__."/../include/menu.php");
     window.addEventListener('DOMContentLoaded', toggleMatriculaField);
     // Executa ao mudar a seleção
     if(selectFuncao) selectFuncao.addEventListener('change', toggleMatriculaField);
+
+    cpf.oninput = () => {
+    cpf.value = cpf.value
+        .replace(/\D/g, '')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    };
+
+    txtTelefone.oninput = () => {
+    txtTelefone.value = txtTelefone.value
+        .replace(/\D/g, '')                      // remove tudo que não é número
+        .replace(/^(\d{2})(\d)/, '($1) $2')      // adiciona parênteses em volta dos dois primeiros dígitos
+        .replace(/(\d{5})(\d{4})$/, '$1-$2');    // adiciona o traço antes dos 4 últimos dígitos
+    };
+    
 </script>
 
 <?php  

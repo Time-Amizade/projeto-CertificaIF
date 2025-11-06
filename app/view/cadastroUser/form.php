@@ -40,7 +40,7 @@ require_once(__DIR__ . "/../include/header.php");
                     
                     <div class="mb-3">
                         <label  class="form-label" for="cpf">CPF:</label>
-                        <input class="form-control" type="number" id="cpf" name="cpf" 
+                        <input class="form-control" type="tel" id="cpf" name="cpf" 
                             maxlength="14" placeholder="Informe número de cpf"
                             value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getCpf() : ''); ?>">
                     </div>
@@ -142,6 +142,14 @@ require_once(__DIR__ . "/../include/header.php");
     window.addEventListener('DOMContentLoaded', toggleMatriculaField);
     // Executa ao mudar a seleção
     selectFuncao.addEventListener('change', toggleMatriculaField);
+
+    cpf.oninput = () => {
+    cpf.value = cpf.value
+        .replace(/\D/g, '')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    };
 </script>
 
 <?php  
