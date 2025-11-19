@@ -51,12 +51,13 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
         </div>
     </div>
 
+  <?php if ($papel == "aluno"): ?>
     <!-- BLOCO DIREITO - GRÁFICO -->
     <div class="grafico-area">
         <canvas id="graficoPizza" width="300" height="300"></canvas>
         <div id="legenda"></div>
     </div>
-</div>
+<?php endif; ?>
 
 <!-- SCRIPTS DO GRÁFICO -->
 <script>

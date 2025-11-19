@@ -5,7 +5,7 @@ $pagina = 'cursoList';
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
-<link rel="stylesheet" href="<?= BASEURL ?>/view/css/list.css">
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/listCurso.css">
 <h3 class="text-center">Cursos</h3>
 
 <div class="container">
