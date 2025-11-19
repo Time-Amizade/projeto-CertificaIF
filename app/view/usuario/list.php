@@ -29,9 +29,7 @@ require_once(__DIR__ . "/../include/menu.php");
                         <th>ID</th>
                         <th>Foto</th>
                         <th>Nome</th>
-                        <th>Login</th>
-                        <th>Papel</th>
-                        <th>Alterar</th>
+                        <th>Visualizar</th>
                         <th>Excluir</th>
                     </tr>
                 </thead>
@@ -41,16 +39,14 @@ require_once(__DIR__ . "/../include/menu.php");
                             <td><?php echo $usu->getId(); ?></td>
                             <td>
                                 <?php if($usu->getFotoPerfil()): ?>
-                                    <img src="<?= BASEURL_ARQUIVOS . "/" . $usu->getFotoPerfil() ?>"
+                                    <img src="<?= BASEURL_ARQUIVOS . "/" . $usu->getFotoPerfil()?>"
                                         height="80px" width='auto'>
                                 <?php endif; ?>
                             </td>
                             <td><?= $usu->getNome(); ?></td>
-                            <td><?= $usu->getLogin(); ?></td>
-                            <td><?= $usu->getPapel(); ?></td>
                             <td><a class="btn btn-primary" 
-                                href="<?= BASEURL ?>/controller/UsuarioController.php?action=edit&id=<?= $usu->getId() ?>">
-                                Alterar</a> 
+                                href="<?= BASEURL ?>/controller/PerfilController.php?action=view&id=<?= $usu->getId() ?>">
+                                Visualizar</a> 
                             </td>
                             <td><a class="btn btn-danger" 
                                 onclick="return confirm('Confirma a exclusão do usuário?');"

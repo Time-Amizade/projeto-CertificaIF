@@ -8,7 +8,7 @@ function carregarDados(BASEURL) {
             console.error("Erro ao carregar os dados:", xhttp.status);
             return;
         }
-        try {
+        try{
             const resultado = JSON.parse(xhttp.responseText);
             const canvas = document.getElementById("graficoPizza");
             const ctx = canvas.getContext("2d");

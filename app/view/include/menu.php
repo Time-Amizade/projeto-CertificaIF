@@ -39,12 +39,13 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
                         <a class="dropdown-item"
                             href="<?= BASEURL . '/controller/ComprovanteController.php?action=create' ?>">Comprovantes</a>
                     <?php endif; ?>
-                
+                    <?php if($_SESSION[SESSAO_USUARIO_PAPEL] === 'COORDENADOR'): ?>
+                        <a class="dropdown-item"
+                            href="<?= BASEURL . '/controller/UsuarioController.php?action=list'?>">Alunos</a>
+                    <?php endif; ?>
                 </div>
             </li>
-
         </ul>
-        
 
         <div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center" >
              <img src="<?= BASEURL . '/view/img/LogoMenu.png'?>" style="height: 55px; width: 130px;">
@@ -60,7 +61,7 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
 
                 <div class="dropdown-menu">
                     <a class="dropdown-item"
-                        href="<?= BASEURL . '/controller/PerfilController.php?action=view' ?>">Perfil</a>
+                        href="<?= BASEURL . '/controller/PerfilController.php?action=view'?>">Perfil</a>
                     <a class="dropdown-item" href="<?= LOGOUT_PAGE ?>">Sair</a>
                 </div>
             </li>

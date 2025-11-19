@@ -32,56 +32,55 @@ class PerfilController extends Controller {
         $this->handleAction();    
     }
 
-    protected function view() {
-        $idUsuarioLogado = $this->getIdUsuarioLogado();
-        $usuario = $this->usuarioDao->findById($idUsuarioLogado);
+    protected function view($id = null) {
+        $id = isset($_GET["id"]) ? $_GET["id"] : $this->getIdUsuarioLogado();
+        $usuario = $this->usuarioDao->findById($id);
         $dados['usuario'] = $usuario;
 
         $this->loadView("perfil/perfil.php", $dados);    
     }
 
     protected function listJson(){
-    $id = $_GET["id"];
-    $dados = [];
-    $usuarioFunc = null;
-    $sl = null;
-    
-    if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
-        $usuarioFunc = $_SESSION[SESSAO_USUARIO_PAPEL];
+        $id = $_GET["id"];
+        $dados = [];
+        $usuarioFunc = null;
+        $sl = null;
         
-        if ($usuarioFunc == UsuarioFuncao::ALUNO) {
-            $aluno = $this->usuarioDao->findById($id);
-            $dados["curso"] = $this->cursoDao->findById($aluno->getCursoId()->getId());
-            $dados["CursoAtiv"] = $this->cursoAtivDao->findById($aluno->getCursoId()->getId());
+        if (isset($_SESSION[SESSAO_USUARIO_PAPEL])) {
+            $usuarioFunc = $_SESSION[SESSAO_USUARIO_PAPEL];
+            
+            if ($usuarioFunc == UsuarioFuncao::ALUNO) {
+                $aluno = $this->usuarioDao->findById($id);
+                $dados["curso"] = $this->cursoDao->findById($aluno->getCursoId()->getId());
+                $dados["CursoAtiv"] = $this->cursoAtivDao->findById($aluno->getCursoId()->getId());
 
-            // pega os comprovantes (se não houver, vira array vazio)
-            $comprovantes = $this->comprovanteDao->listByIdFilter($id, "aprovado") ?? [];
+                // pega os comprovantes (se não houver, vira array vazio)
+                $comprovantes = $this->comprovanteDao->listByIdFilter($id, "aprovado") ?? [];
 
-            $json = json_encode([
-                'tipo' => $usuarioFunc,
-                'aluno' => $aluno->jsonSerialize(),
-                'curso' => $dados["curso"]->jsonSerialize(),
-                'comprovantes' => array_map(function($comprovante) {
-                    return [
-                        'comprovante' => $comprovante->jsonSerialize(),
-                        'cursoAtiv' => $comprovante->getCursoAtiv()->jsonSerialize(),
-                        
-                    ];
-                }, $comprovantes)
-            ], JSON_PRETTY_PRINT);
+                $json = json_encode([
+                    'tipo' => $usuarioFunc,
+                    'aluno' => $aluno->jsonSerialize(),
+                    'curso' => $dados["curso"]->jsonSerialize(),
+                    'comprovantes' => array_map(function($comprovante) {
+                        return [
+                            'comprovante' => $comprovante->jsonSerialize(),
+                            'cursoAtiv' => $comprovante->getCursoAtiv()->jsonSerialize(),
+                            
+                        ];
+                    }, $comprovantes)
+                ], JSON_PRETTY_PRINT);
 
-            if ($json === false) {
-                echo "Erro ao gerar JSON: " . json_last_error_msg();
-                return;
+                if ($json === false) {
+                    echo "Erro ao gerar JSON: " . json_last_error_msg();
+                    return;
+                }
+
+                header('Content-Type: application/json; charset=utf-8');
+                echo $json;
             }
-
-            header('Content-Type: application/json; charset=utf-8');
-            echo $json;
         }
     }
-}
 
- 
     protected function update() {
         $foto = $_FILES["foto"];
         $fotoAnterior = $_POST['fotoAnterior'];
