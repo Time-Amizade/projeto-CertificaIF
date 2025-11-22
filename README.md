@@ -1,15 +1,15 @@
 INSTITUTO FEDERAL DO PARANÁ - FOZ DO IGUAÇU
 
 Orientadores:
-  Ana Carla Arruda de Holanda
-  Daniel Di Domenico
+  Ana Carla Arruda de Holanda;
+  Daniel Di Domenico;
   Jefferson de Oliveira Chaves 
 
 Integrantes:
-  Erik Dias Paulinio
-  João Arthur Gonçalves de Amorim
-  Lucas Conradi de Jesus Paulo
-  Miriã Rocha Brizola
+  Erik Dias Paulinio; 
+  João Arthur Gonçalves de Amorim;
+  Lucas Conradi de Jesus Paulo;
+  Miriã Rocha Brizola;
   Vinícius Gonçalves da Paz
 
 RESUMO
