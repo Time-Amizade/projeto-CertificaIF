@@ -48,8 +48,8 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
         </ul>
 
         <div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center" >
-             <img src="<?= BASEURL . '/view/img/LogoMenu.png'?>" style="height: 55px; width: 130px;">
-         </div>
+            <img src="<?= BASEURL . '/view/img/LogoMenu.png'?>" style="height: 55px; width: 130px;">
+        </div>
 
 
         <ul class="navbar-nav ms-auto mr-3">

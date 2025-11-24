@@ -51,7 +51,20 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
         </div>
     </div>
 
-  <?php if ($papel == "aluno"): ?>
+<?php
+$mostrarGrafico = false;
+
+if ($papel == "aluno") {
+    $mostrarGrafico = true;
+} else if ($papel == "coordenador") {
+    // Coordenador só vê gráfico se estiver visualizando um aluno
+    $usuarioVisualizado = $dados['usuario'];
+    if ($usuarioVisualizado->getFuncao() == UsuarioFuncao::ALUNO) {
+        $mostrarGrafico = true;
+    }
+}
+
+if ($mostrarGrafico): ?>
     <!-- BLOCO DIREITO - GRÁFICO -->
     <div class="grafico-area">
         <canvas id="graficoPizza" width="300" height="300"></canvas>

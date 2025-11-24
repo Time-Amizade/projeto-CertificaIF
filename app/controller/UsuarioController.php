@@ -29,7 +29,12 @@ class UsuarioController extends Controller {
     }
     
     protected function list(string $msgErro = "", string $msgSucesso = "") {
-        $dados["lista"] = $this->usuarioDao->list();
+        if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::COORDENADOR){
+            $dados["lista"] = $this->usuarioDao->listCoord($_SESSION[SESSAO_USUARIO_CURSO]);
+        }
+        else{
+            $dados["lista"] = $this->usuarioDao->list();
+        }
         
         $this->loadView("usuario/list.php", $dados,  $msgErro, $msgSucesso);
     }

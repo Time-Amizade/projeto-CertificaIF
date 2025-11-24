@@ -42,7 +42,6 @@ function carregarDados(BASEURL) {
                 const horasDisponiveisPPC = grupo.max - grupo.horasValidadas;
                 const horasDisponiveisTotal = totalMaximo - totalHorasValidadas;
                 
-                console.log(totalHorasExcedentes);
                 if (horasDisponiveisPPC > 0 && horasDisponiveisTotal > 0) {
                     const horasParaValidar = Math.min(horasCertificado, horasDisponiveisPPC, horasDisponiveisTotal);
                     if (horasParaValidar > 0) {

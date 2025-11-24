@@ -23,6 +23,18 @@ class UsuarioDAO {
         return $this->mapUsuarios($result);
     }
 
+    public function listCoord($curso) {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT * FROM Usuario u WHERE u.Curso_id = ? AND u.funcao = 'ALUNO' ORDER BY u.nomeUsuario";  // WHERE vem antes de ORDER BY
+
+        $stm = $conn->prepare($sql);    
+        $stm->execute([$curso]);
+        $result = $stm->fetchAll();
+        
+        return $this->mapUsuarios($result);
+    }
+
     //Método para buscar um usuário por seu ID
     public function findById(int $id) {
         $conn = Connection::getConn();
