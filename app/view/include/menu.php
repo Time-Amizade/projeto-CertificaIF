@@ -24,27 +24,27 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
                 <a class="nav-link" href="<?= HOME_PAGE ?>">Home</a>
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                    data-bs-toggle="dropdown">
-                    Cadastros
-                </a>
+            <?php if($isAdmin): ?>
+                <li class="nav-item active">
+                        <a class="nav-link" href="<?= BASEURL . '/controller/CursoController.php?action=list'?>">Cursos</a>
+                </li>
+                <li class="nav-item active">
+                        <a class="nav-link" href="<?= BASEURL . '/controller/UsuarioController.php?action=list'?>">Coordenadores</a>
+                </li>
+            <?php endif; ?>
 
-                <div class="dropdown-menu">
-                    <?php if($isAdmin): ?>
-                        <a class="dropdown-item"
-                            href="<?= BASEURL . '/controller/CursoController.php?action=list' ?>">Cursos</a>
-                    <?php endif; ?>
-                    <?php if($_SESSION[SESSAO_USUARIO_PAPEL] === 'ALUNO'): ?>
-                        <a class="dropdown-item"
-                            href="<?= BASEURL . '/controller/ComprovanteController.php?action=create' ?>">Comprovantes</a>
-                    <?php endif; ?>
-                    <?php if($_SESSION[SESSAO_USUARIO_PAPEL] === 'COORDENADOR'): ?>
-                        <a class="dropdown-item"
-                            href="<?= BASEURL . '/controller/UsuarioController.php?action=list'?>">Alunos</a>
-                    <?php endif; ?>
-                </div>
-            </li>
+            <?php if($_SESSION[SESSAO_USUARIO_PAPEL] === UsuarioFuncao::COORDENADOR): ?>
+                <li class="nav-item active">
+                        <a class="nav-link" href="<?= BASEURL . '/controller/UsuarioController.php?action=list'?>">Alunos</a>
+                </li>
+            <?php endif; ?>
+
+
+            <?php if($_SESSION[SESSAO_USUARIO_PAPEL] === UsuarioFuncao::ALUNO): ?>
+                <li class="nav-item active">
+                        <a class="nav-link" href="<?= BASEURL . '/controller/ComprovanteController.php?action=create' ?>">Comprovantes</a>
+                </li>
+            <?php endif; ?>
         </ul>
 
         <div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center" >

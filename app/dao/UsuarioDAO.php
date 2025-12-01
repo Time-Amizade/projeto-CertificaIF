@@ -15,9 +15,9 @@ class UsuarioDAO {
     public function list() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM Usuario u ORDER BY u.nomeUsuario";
+        $sql = "SELECT * FROM Usuario u WHERE u.status = ? ORDER BY u.nomeUsuario";
         $stm = $conn->prepare($sql);    
-        $stm->execute();
+        $stm->execute([UsuarioStatus::ATIVO]);
         $result = $stm->fetchAll();
         
         return $this->mapUsuarios($result);
@@ -26,10 +26,22 @@ class UsuarioDAO {
     public function listCoord($curso) {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM Usuario u WHERE u.Curso_id = ? AND u.funcao = 'ALUNO' ORDER BY u.nomeUsuario";  // WHERE vem antes de ORDER BY
+        $sql = "SELECT * FROM Usuario u WHERE u.Curso_id = ? AND u.funcao = ? AND u.status = ? ORDER BY u.nomeUsuario";  // WHERE vem antes de ORDER BY
 
         $stm = $conn->prepare($sql);    
-        $stm->execute([$curso]);
+        $stm->execute([$curso, UsuarioFuncao::ALUNO, UsuarioStatus::ATIVO]);
+        $result = $stm->fetchAll();
+        
+        return $this->mapUsuarios($result);
+    }
+
+    public function listAdm() {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT * FROM Usuario u WHERE u.funcao = ? AND u.status != ? ORDER BY u.nomeUsuario";  // WHERE vem antes de ORDER BY
+
+        $stm = $conn->prepare($sql);    
+        $stm->execute([UsuarioFuncao::COORDENADOR, UsuarioStatus::PENDENTE]);
         $result = $stm->fetchAll();
         
         return $this->mapUsuarios($result);
@@ -39,7 +51,7 @@ class UsuarioDAO {
     public function findById(int $id) {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM Usuario u WHERE u.id = ?";
+        $sql = "SELECT * FROM Usuario u WHERE u.id = ? ";
         $stm = $conn->prepare($sql);    
         $stm->execute([$id]);
         $result = $stm->fetchAll();
@@ -119,6 +131,9 @@ class UsuarioDAO {
                 if($usuarios[0]->getStatus() === UsuarioStatus::PENDENTE){
                     return UsuarioStatus::PENDENTE;
                 }
+                else if($usuarios[0]->getStatus() === UsuarioStatus::INATIVO){
+                    return UsuarioStatus::INATIVO;
+                }
                 return $usuarios[0];
             }
             else
@@ -134,7 +149,7 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO Usuario (nomeUsuario, dataNascimento, email, senha, cpf, Curso_id, funcao, codigoMatricula, status) VALUES (:nome, :dataNascimento, :email, :senha, :cpf, :Curso_id, :funcao, :codigoMatricula, :statusUsuario)";
+        $sql = "INSERT INTO Usuario (nomeUsuario, dataNascimento, email, senha, cpf, Curso_id, funcao, codigoMatricula, status, fotoPerfil) VALUES (:nome, :dataNascimento, :email, :senha, :cpf, :Curso_id, :funcao, :codigoMatricula, :statusUsuario, :fotoPerfil)";
         
         $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
         $stm = $conn->prepare($sql);
@@ -147,6 +162,7 @@ class UsuarioDAO {
         $stm->bindValue("funcao", $usuario->getFuncao());
         $stm->bindValue("codigoMatricula", $usuario->getCodigoMatricula());
         $stm->bindValue("statusUsuario", UsuarioStatus::PENDENTE);   
+        $stm->bindValue("fotoPerfil", 'padrao.png');
         $stm->execute();
     }
 
@@ -186,6 +202,40 @@ class UsuarioDAO {
         $stm->execute();
     }
 
+    public function deactivateById(int $id) {
+        $conn = Connection::getConn();
+
+        $sql = "UPDATE Usuario SET status = :status WHERE id = :id";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("status", UsuarioStatus::INATIVO);
+        $stm->bindValue("id", $id);
+        $stm->execute();
+    }
+
+    public function deactivateByCurso(int $idCurso){
+        $conn = Connection::getConn();
+
+        $sql = "UPDATE Usuario SET status = :status  WHERE funcao = :funcao AND Curso_id = :id";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("status", UsuarioStatus::INATIVO);
+        $stm->bindValue("funcao", UsuarioFuncao::COORDENADOR);
+        $stm->bindValue("id", $idCurso);
+        $stm->execute();
+    }
+
+    public function activateById(int $id) {
+        $conn = Connection::getConn();
+
+        $sql = "UPDATE Usuario SET status = :status WHERE id = :id";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("status", UsuarioStatus::ATIVO);
+        $stm->bindValue("id", $id);
+        $stm->execute();
+    }
+
      //Método para alterar a foto de perfil de um usuário
     public function updateFotoPerfil(Usuario $usuario) {
         $conn = Connection::getConn();
@@ -207,19 +257,6 @@ class UsuarioDAO {
         $stm->bindValue("senha", $senhaCripto);    
         $stm->bindValue("cpf", $cpf);
         $stm->execute();
-    }
-
-    //Método para retornar a quantidade de usuários salvos na base
-    public function quantidadeUsuarios() {
-        $conn = Connection::getConn();
-
-        $sql = "SELECT COUNT(*) AS qtd_usuarios FROM Usuario";
-
-        $stm = $conn->prepare($sql);
-        $stm->execute();
-        $result = $stm->fetchAll();
-
-        return $result[0]["qtd_usuarios"];
     }
 
     public function addHours($id){

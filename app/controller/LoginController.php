@@ -42,8 +42,10 @@ class LoginController extends Controller {
 
                 header("location: " . HOME_PAGE);
                 exit;
-            } else if($usuario === 'PENDENTE'){
+            } else if($usuario === UsuarioStatus::PENDENTE){
                 array_push($erros, 'O usuário ainda não foi aceito');
+            } else if($usuario === UsuarioStatus::INATIVO){
+                array_push($erros, 'Este usuário está desativado');
             } else {
                 $erros = ["Email ou senha informados são inválidos!"];
             }
@@ -75,7 +77,7 @@ class LoginController extends Controller {
 
         $erros = $this->usuarioService->ValidarMudarSenha($cpf, $confSenha, $senha);
         if ($cpf && empty($erros)) { 
-            $usuario = $this->usuarioDao->findByCPF($cpf);
+            $usuario = $this->usuarioDao->findByCPF($cpf); //MUDAR AQUI
             if (!$usuario) {
                 array_push($erros, "Nenhum usuário foi encontrado com o CPF informado!");
             }

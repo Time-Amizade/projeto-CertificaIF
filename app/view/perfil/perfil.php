@@ -31,7 +31,9 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
         <div class="info-item"><span>Nome:</span><span><?= $dados['usuario']->getNome() ?></span></div>
         <div class="info-item"><span>Email:</span><span><?= $dados['usuario']->getEmail() ?></span></div>
         <div class="info-item"><span>Data de Nascimento:</span><span><?= $dados['usuario']->getDataNascimento() ?></span></div>
-        <div class="info-item"><span>CPF:</span><span><?= $dados['usuario']->getCPF() ?></span></div>
+        <?php if($dados['usuario']->getId() == $_SESSION[SESSAO_USUARIO_ID]): ?>
+            <div class="info-item"><span>CPF:</span><span><?= $dados['usuario']->getCPF() ?></span></div>
+        <?php endif; ?>
         <div class="info-item"><span>Telefone:</span><span><?= $dados['usuario']->getTelefone() ?></span></div>
         <div class="info-item"><span>Endereço:</span><span><?= $dados['usuario']->getEndereco() ?></span></div>
         <div class="info-item"><span>Função:</span><span><?= $dados['usuario']->getFuncao() ?></span></div>
@@ -47,7 +49,9 @@ if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
 
         <div class="botoes">
             <a class="btn btn-secondary" href="<?= HOME_PAGE ?>">Voltar</a>
-            <a class="btn btn-success" href="<?= BASEURL ?>/controller/PerfilController.php?action=edit&id=<?= $dados['usuario']->getId() ?>">Editar</a>
+            <?php if($dados['usuario']->getId() == $_SESSION[SESSAO_USUARIO_ID]): ?>
+                <a class="btn btn-success" href="<?= BASEURL ?>/controller/PerfilController.php?action=edit&id=<?= $dados['usuario']->getId() ?>">Editar</a>
+            <?php endif; ?>
         </div>
     </div>
 

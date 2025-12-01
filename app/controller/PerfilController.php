@@ -126,7 +126,7 @@ protected function listJson(){
         }
 
 
-         $erros = $this->usuarioService->ValidarEdicao($usuario, $confSenha, $senha); 
+        $erros = $this->usuarioService->ValidarEdicao($usuario, $confSenha, $senha); 
         
 
         if($erros){
@@ -142,7 +142,7 @@ protected function listJson(){
         $this->usuarioDao->updatePerfil($usuario);
 
         header("location: " . BASEURL . "/controller/PerfilController.php?action=view"); 
-     
+    
     }
 
     protected function edit() {

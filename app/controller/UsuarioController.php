@@ -29,11 +29,15 @@ class UsuarioController extends Controller {
     }
     
     protected function list(string $msgErro = "", string $msgSucesso = "") {
-        if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::COORDENADOR){
-            $dados["lista"] = $this->usuarioDao->listCoord($_SESSION[SESSAO_USUARIO_CURSO]);
-        }
-        else{
-            $dados["lista"] = $this->usuarioDao->list();
+
+        switch ($_SESSION[SESSAO_USUARIO_PAPEL]){
+            case UsuarioFuncao::COORDENADOR:
+                $dados["lista"] = $this->usuarioDao->listCoord($_SESSION[SESSAO_USUARIO_CURSO]);
+                break;
+            
+            case UsuarioFuncao::ADMINISTRADOR:
+                $dados["lista"] = $this->usuarioDao->listAdm($_SESSION[SESSAO_USUARIO_CURSO]);
+                break;
         }
         
         $this->loadView("usuario/list.php", $dados,  $msgErro, $msgSucesso);
@@ -41,7 +45,11 @@ class UsuarioController extends Controller {
 
     protected function confirm(){
         $id = $_GET['id'];
-        $this->usuarioDao->confirmSignUp($id);
+
+        $usuario = $this->usuarioDao->findById($id);
+
+        $this->usuarioDao->deactivateByCurso($usuario->getCursoId()->getId());
+        $this->usuarioDao->activateById($usuario->getId());
 
         header("location: " . BASEURL . "/controller/HomeController.php?action=home");
     }
@@ -68,20 +76,36 @@ class UsuarioController extends Controller {
     //         $this->list("Usuário não encontrado!");
     // }
 
-    // protected function delete() {
-    //     //Busca o usuário na base pelo ID    
-    //     $usuario = $this->findUsuarioById();
+    protected function deactivate() {
+        //Busca o usuário na base pelo ID    
+        $usuario = $this->findUsuarioById();
         
-    //     if($usuario) {
-    //         //Excluir
-    //         $this->usuarioDao->deleteById($usuario->getId());
+        if($usuario) {
+            //Excluir
+            $this->usuarioDao->deactivateById($usuario->getId());
 
-    //         header("location: " . BASEURL . "/controller/UsuarioController.php?action=list");
-    //         exit;
-    //     } else {
-    //         $this->list("Usuário não encontrado!");
-    //     }
-    // }
+            header("location: " . BASEURL . "/controller/UsuarioController.php?action=list");
+            exit;
+        } else {
+            $this->list("Usuário não encontrado!");
+        }
+    }
+
+    protected function activate() {
+        //Busca o usuário na base pelo ID    
+        $usuario = $this->findUsuarioById();
+        
+        if($usuario) {
+            //Excluir
+            $this->usuarioDao->deactivateByCurso($usuario->getCursoId()->getId());
+            $this->usuarioDao->activateById($usuario->getId());
+
+            header("location: " . BASEURL . "/controller/UsuarioController.php?action=list");
+            exit;
+        } else {
+            $this->list("Usuário não encontrado!");
+        }
+    }
 
 
     private function findUsuarioById() {
