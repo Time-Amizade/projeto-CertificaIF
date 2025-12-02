@@ -24,9 +24,10 @@ require_once(__DIR__ . "/../include/menu.php");
                         <img src="<?= BASEURL_ARQUIVOS . "/" . $usu->getFotoPerfil()?>"
                              class="card-img-top profile-img">
                     </div>
-
+                    <?= var_dump($usu->getCurso()) ?>
                     <div class="card-body text-center">
                         <h5 class="card-title text-light"><?= $usu->getNome(); ?></h5>
+                        <h5 class="card-title text-light"><?= $usu->getCursoid()->getNomeCurso(); ?></h5>
 
                         <div class="d-flex justify-content-center gap-2 mt-3">
 
