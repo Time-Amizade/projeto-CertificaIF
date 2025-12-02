@@ -48,7 +48,11 @@ if($dados['usuario']->getFuncao() == UsuarioFuncao::ADMINISTRADOR){
         <?php endif; ?>
 
         <div class="botoes">
-            <a class="btn btn-secondary" href="<?= HOME_PAGE ?>">Voltar</a>
+            <?php $linkVoltar = ($dados['usuario']->getId() == $_SESSION[SESSAO_USUARIO_ID]) ? HOME_PAGE : BASEURL . '/controller/UsuarioController.php?action=list'; ?>
+
+            <a class="btn btn-secondary" href="<?= $linkVoltar ?>">
+                Voltar
+            </a>
             <?php if($dados['usuario']->getId() == $_SESSION[SESSAO_USUARIO_ID]): ?>
                 <a class="btn btn-success" href="<?= BASEURL ?>/controller/PerfilController.php?action=edit&id=<?= $dados['usuario']->getId() ?>">Editar</a>
             <?php endif; ?>

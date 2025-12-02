@@ -21,31 +21,28 @@ require_once(__DIR__ . "/../include/menu.php");
                 <div class="card user-card shadow-lg">
 
                     <div class="profile-img-wrapper">
-                        <img src="<?= BASEURL_ARQUIVOS . "/" . $usu->getFotoPerfil()?>"
-                             class="card-img-top profile-img">
+                        <img src="<?= BASEURL_ARQUIVOS . "/" . $usu->getFotoPerfil()?>" class="card-img-top profile-img">
                     </div>
-                    <?= var_dump($usu->getCurso()) ?>
                     <div class="card-body text-center">
                         <h5 class="card-title text-light"><?= $usu->getNome(); ?></h5>
-                        <h5 class="card-title text-light"><?= $usu->getCursoid()->getNomeCurso(); ?></h5>
-
+                        <?php if($usu->getFuncao() === UsuarioFuncao::COORDENADOR): ?>
+                            <h6 class="card-title text-light"><?= $usu->getCursoid()->getNomeCurso(); ?></h6>
+                        <?php endif; ?>
+                        <?php if($usu->getFuncao() === UsuarioFuncao::ALUNO): ?>
+                            <h6 class="card-title text-light"><?= $usu->getEmail(); ?></h6>
+                        <?php endif; ?>
                         <div class="d-flex justify-content-center gap-2 mt-3">
 
-                            <a class="btn btn-view btn-sm" 
-                               href="<?= BASEURL ?>/controller/PerfilController.php?action=view&id=<?= $usu->getId() ?>">
+                            <a class="btn btn-view btn-sm" href="<?= BASEURL ?>/controller/PerfilController.php?action=view&id=<?= $usu->getId() ?>">
                                 Visualizar
                             </a>
 
                             <?php if($usu->getStatus() === UsuarioStatus::ATIVO): ?>
-                                <a class="btn btn-danger-custom btn-sm"
-                                   onclick="return confirm('Confirma a desativação do usuário?');"
-                                   href="<?= BASEURL ?>/controller/UsuarioController.php?action=deactivate&id=<?= $usu->getId() ?>">
+                                <a class="btn btn-danger-custom btn-sm" onclick="return confirm('Confirma a desativação do usuário?');" href="<?= BASEURL ?>/controller/UsuarioController.php?action=deactivate&id=<?= $usu->getId() ?>">
                                     Desativar
                                 </a>
                             <?php else: ?>
-                                <a class="btn btn-success-custom btn-sm"
-                                   onclick="return confirm('Confirma a ativação do usuário?');"
-                                   href="<?= BASEURL ?>/controller/UsuarioController.php?action=activate&id=<?= $usu->getId() ?>">
+                                <a class="btn btn-success-custom btn-sm" onclick="return confirm('Confirma a ativação do usuário?');" href="<?= BASEURL ?>/controller/UsuarioController.php?action=activate&id=<?= $usu->getId() ?>">
                                     Ativar
                                 </a>
                             <?php endif; ?>
