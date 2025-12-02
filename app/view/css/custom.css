@@ -1,15 +1,17 @@
 body.login {
-background-image: url('../img/ImagemBG.png');
+  background-image: url('../img/ImagemBG.png');
   background-repeat: no-repeat;
-  background-size: cover; /* ou 'contain', se quiser mostrar toda a imagem */
+  background-size: cover;        /* <<< AQUI a solução */
   background-position: center center;
+  background-attachment: fixed;  /* opcional, mas deixa igual ao da sua tela com blur */
 }
 
 body.cadastro {
-  background-image: url('../img/ImagemBG.png');
+   background-image: url('../img/ImagemBG.png');
   background-repeat: no-repeat;
-  background-size: cover; /* ou 'contain', se quiser mostrar toda a imagem */
+  background-size: cover;        /* <<< AQUI a solução */
   background-position: center center;
+  background-attachment: fixed;  /* opcional, mas deixa igual ao da sua tela com blur */
 }
 
 body.editar {
@@ -39,3 +41,15 @@ body.cursoForm{
    background-color:  #1e1e1e;
 }
 /* #1e293b;  rgb(58, 58, 58)*/
+
+body.listUsuario{
+   background-color:  #1e1e1e;
+}
+
+body.passwordChange{
+     background-image: url('../img/ImagemBG.png');
+  background-repeat: no-repeat;
+  background-size: cover;        /* <<< AQUI a solução */
+  background-position: center center;
+  background-attachment: fixed;  /* opcional, mas deixa igual ao da sua tela com blur */
+}

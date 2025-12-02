@@ -4,10 +4,24 @@
 $pagina = 'home';
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
-?>
-<link rel="stylesheet" href="<?= BASEURL ?>/view/css/home.css">
 
-<h3 class="text-center">Bem Vindo <?= $nome ?> ! 👋</h3>
+$papel;
+if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ALUNO){
+    $papel = "aluno";
+} else {
+    $papel = "todos";
+}
+?>
+
+<?php
+$css = ($papel == "aluno") ? "home_aluno.css" : "home.css";
+?>
+
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/<?= $css ?>">
+
+
+
+<h3 class="text-center">Bem Vindo, <?= $nome ?> ! 👋</h3>
 
 <div class="container-fluid">
     <div class="row">

@@ -1,55 +1,60 @@
 <?php
-#Nome do arquivo: usuario/list.php
-#Objetivo: interface para listagem dos usuários do sistema
-
+$pagina = "listUsuario";
 require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
 
-<h3 class="text-center">Usuários</h3>
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/listUsuario.css">
 
-<div class="container">
-    <div class="row">
-        
-        <div class="col-9">
+<div class="container mt-4">
+    <h3 class="text-center mb-4 page-title text-light">Usuários</h3>
+
+    <div class="row justify-content-center">
+        <div class="col-10">
             <?php require_once(__DIR__ . "/../include/msg.php"); ?>
         </div>
     </div>
 
-    <div class="row" style="margin-top: 10px;">
-        <div class="col-12">
-            <div class="row">
-    <?php foreach($dados['lista'] as $usu): ?>
-        <div class="col-md-4 mb-4">
-            <div class="card text-center shadow">
+    <div class="row g-4 mt-2">
+        <?php foreach($dados['lista'] as $usu): ?>
+            <div class="col-md-4">
+                <div class="card user-card shadow-lg">
 
-                <img src="<?= BASEURL_ARQUIVOS . "/" . $usu->getFotoPerfil()?>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="profile-img-wrapper">
+                        <img src="<?= BASEURL_ARQUIVOS . "/" . $usu->getFotoPerfil()?>"
+                             class="card-img-top profile-img">
+                    </div>
 
-                <div class="card-body">
-                    <h5 class="card-title"><?= $usu->getNome(); ?></h5>
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-light"><?= $usu->getNome(); ?></h5>
 
-                    <a class="btn btn-primary btn-sm" href="<?= BASEURL ?>/controller/PerfilController.php?action=view&id=<?= $usu->getId() ?>">
-                        Visualizar
-                    </a>
+                        <div class="d-flex justify-content-center gap-2 mt-3">
 
-                    <?php if($usu->getStatus() === UsuarioStatus::ATIVO): ?>
-                        <a class="btn btn-danger btn-sm" onclick="return confirm('Confirma a desativação do usuário?');" href="<?= BASEURL ?>/controller/UsuarioController.php?action=deactivate&id=<?= $usu->getId() ?>">
-                            Desativar
-                        </a>
-                    <?php else: ?>
-                        <a class="btn btn-success btn-sm" onclick="return confirm('Confirma a ativação do usuário?');" href="<?= BASEURL ?>/controller/UsuarioController.php?action=activate&id=<?= $usu->getId() ?>">
-                            Ativar
-                        </a>
-                    <?php endif; ?>
+                            <a class="btn btn-view btn-sm" 
+                               href="<?= BASEURL ?>/controller/PerfilController.php?action=view&id=<?= $usu->getId() ?>">
+                                Visualizar
+                            </a>
+
+                            <?php if($usu->getStatus() === UsuarioStatus::ATIVO): ?>
+                                <a class="btn btn-danger-custom btn-sm"
+                                   onclick="return confirm('Confirma a desativação do usuário?');"
+                                   href="<?= BASEURL ?>/controller/UsuarioController.php?action=deactivate&id=<?= $usu->getId() ?>">
+                                    Desativar
+                                </a>
+                            <?php else: ?>
+                                <a class="btn btn-success-custom btn-sm"
+                                   onclick="return confirm('Confirma a ativação do usuário?');"
+                                   href="<?= BASEURL ?>/controller/UsuarioController.php?action=activate&id=<?= $usu->getId() ?>">
+                                    Ativar
+                                </a>
+                            <?php endif; ?>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php endforeach; ?>
-</div>
-        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
-<?php  
-require_once(__DIR__ . "/../include/footer.php");
-?>
+<?php require_once(__DIR__ . "/../include/footer.php"); ?>

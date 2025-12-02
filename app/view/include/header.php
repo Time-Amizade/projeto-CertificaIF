@@ -10,6 +10,8 @@ include_once(__DIR__ . "/../../util/config.php");
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baseurl" content="<?= BASEURL ?>">
+
     <title><?php echo APP_NAME; ?></title>
     
     <!-- Bootstrap CSS -->
@@ -18,4 +20,4 @@ include_once(__DIR__ . "/../../util/config.php");
 
 </head>
 
-<body class = "<?= $pagina ?>">
+<body class = "<?= $pagina  ?>">

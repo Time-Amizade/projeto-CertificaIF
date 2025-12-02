@@ -40,7 +40,7 @@ require_once(__DIR__ . "/../include/header.php");
                         <a href="<?= BASEURL . '/controller/CadUserController.php?action=create' ?>" class="btn btn-primary mt-3">Cadastrar</a>
                         </div>
                         
-                    <h6 class="mb-4" style="padding-left: 85px; padding-top: 30px">Bora construi um futuro melhor 💪🎓📚</h6>
+                    <h6 class="mb-4" style="padding-left: 85px; padding-top: 30px">Bora construir um futuro melhor 💪🎓📚</h6>
                 </form>
                 
             </div>

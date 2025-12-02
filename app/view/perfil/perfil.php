@@ -7,11 +7,11 @@ require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 
 $papel;
-if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR){
+if($dados['usuario']->getFuncao() == UsuarioFuncao::ADMINISTRADOR){
     $papel = "admin";
-} else if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::COORDENADOR){
+} else if($dados['usuario']->getFuncao() == UsuarioFuncao::COORDENADOR){
     $papel = "coordenador";
-}else if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ALUNO){
+}else if($dados['usuario']->getFuncao() == UsuarioFuncao::ALUNO){
     $papel = "aluno";
 }
 ?>

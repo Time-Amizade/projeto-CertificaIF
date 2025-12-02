@@ -1,0 +1,76 @@
+/* ======== ESTILO GLOBAL ======== */
+body {
+    background: #0c0c0f; /* quase preto */
+    color: #e6e6e6;
+}
+
+/* ======== TÍTULO ======== */
+.page-title {
+    font-weight: 600;
+    color: #cfe9ff; /* azul clarinho */
+    letter-spacing: 1px;
+}
+
+/* ======== CARD ======== */
+.user-card {
+    background: #111218; /* preto com leve azul */
+    border: 1px solid #1a1f26;
+    border-radius: 14px;
+    transition: 0.3s;
+}
+
+.user-card:hover {
+    transform: translateY(-4px);
+    border-color: #3cd07a; /* verde suave */
+    box-shadow: 0 0 14px rgba(60, 208, 122, 0.4);
+}
+
+/* ======== FOTO DE PERFIL ======== */
+.profile-img-wrapper {
+    height: 200px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+}
+
+.profile-img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* ======== BOTÕES ======== */
+.btn-view {
+    background: #2b9dfc; /* azulzinho */
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    transition: .2s;
+}
+.btn-view:hover {
+    background: #1f83d6;
+}
+
+/* verde ativar */
+.btn-success-custom {
+    background: #34c86a;  /* verde padrão do sistema */
+    border: none;
+    color: #fff;
+}
+.btn-success-custom:hover {
+    background: #2eb85f;
+}
+
+/* vermelho desativar */
+.btn-danger-custom {
+    background: #e03a3a;
+    border: none;
+    color: #fff;
+}
+.btn-danger-custom:hover {
+    background: #c93030;
+}
+
+/* ======== TEXTO ======== */
+.card-title {
+    color: #eaffea;
+}
