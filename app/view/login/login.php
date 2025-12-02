@@ -5,11 +5,12 @@ $pagina = 'login';
 
 require_once(__DIR__ . "/../include/header.php");
 ?>
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/login.css">
 <div class="container d-flex justify-content-center" style="padding-top: 50px; max-height: 600px;">
     <div class="row w-100" style="max-width: 800px;">
         <!-- CARD DO FORMULÁRIO -->
         <div class="col-md-6">
-            <div class="card shadow p-1 rounded-lg" style="width: 700px; height: 750px; background-color: rgba(255, 255, 255, 0.33); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
+            <div class="card shadow p-1 rounded-lg" style="width: 700px; height: 800px; background-color: rgba(255, 255, 255, 0.33); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
                 <img src="<?= BASEURL . '/view/img/Logo.png'?>" style="display: block; margin: 0 auto 10px auto; height: 400px; width: 400px;">
 
                 <h3 class="mb-3"  style="text-align: center;" ><B>LOGIN</B></h3>
@@ -18,19 +19,23 @@ require_once(__DIR__ . "/../include/header.php");
                     <h11  style="text-align: center;"><?php include_once(__DIR__ . "/../include/msg.php") ?></h11>
                 </div>
                 <form id="frmLogin" action="./LoginController.php?action=logon" method="POST">
-                    <div class="mb-3" style="max-width: 600px; padding-left: 85px ;" >
-                        <!--<label class="form-label" for="txtEmail">Login:</label>-->
-                        <input type="text" class="form-control" name="email" id="txtEmail"
+                    
+                    <div style="padding-left: 50px">
+                        <div class="mb-3 form-floating" style="max-width: 600px; " >
+                            <input type="text" class="form-control" name="email" id="txtEmail"
                             maxlength="255" placeholder="Email"
                             value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
-                    </div>
+                            <label  for="txtEmail">Login</label>
+                        </div>
 
-                    <div class="mb-3" style="max-width: 600px; padding-left: 85px ;">
-                        <!--<label class="form-label" for="txtSenha">Senha:</label>-->
-                        <input type="password" class="form-control" name="senha" id="txtSenha"
+                        <div class="mb-3 form-floating" style="max-width: 600px; ">
+                            <input type="password" class="form-control" name="senha" id="txtSenha"
                             maxlength="255" placeholder="Senha"
                             value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
+                            <label  for="txtSenha">Senha</label>
+                        </div>
                     </div>
+                    
                     
                     <a href="<?= BASEURL . '/controller/LoginController.php?action=changePassForm' ?>" class="mb-3" style="padding-left: 85px;" >Esqueceu sua senha?</a>
 

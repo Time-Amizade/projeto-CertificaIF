@@ -1,0 +1,4 @@
+/* garante que o body/login ocupe toda a altura */
+html, body {
+  height: 100%;
+}
