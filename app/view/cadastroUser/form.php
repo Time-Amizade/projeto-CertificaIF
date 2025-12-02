@@ -87,7 +87,7 @@ require_once(__DIR__ . "/../include/header.php");
                     
                     <div class="mb-3">
                         <label class="form-label" for="selfuncao">Função:</label>
-                       <select class="form-select" name="funcao" id="selfuncao">
+                        <select class="form-select" name="funcao" id="selfuncao">
                             <option value="">Selecione sua função</option>
                             <?php foreach ($dados["papeis"] as $funcao): ?>
                                 <?php if ($funcao !== "ADMINISTRADOR"): ?>

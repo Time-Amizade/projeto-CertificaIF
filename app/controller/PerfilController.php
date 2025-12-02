@@ -106,27 +106,27 @@ protected function listJson(){
         $id = $_POST['id'];
         $nome = trim($_POST['nome']) != "" ? trim($_POST['nome']) : NULL;
         $dataNascimento = trim($_POST['dataNascimento']) != "" ? trim($_POST['dataNascimento']) : NULL;
-        $cpf = trim($_POST['cpf']) != "" ? trim($_POST['cpf']) : NULL;
+        // $cpf = trim($_POST['cpf']) != "" ? trim($_POST['cpf']) : NULL;
         $email = trim($_POST['email']) != "" ? trim($_POST['email']) : NULL;
         $telefone = trim($_POST['telefone']) != "" ? trim($_POST['telefone']) : NULL;
         $endereco = trim($_POST['endereco']) != "" ? trim($_POST['endereco']) : NULL;
-        $senha = trim($_POST['senha'] ?? '') ?: null;
-        $confSenha = trim($_POST['confSenha'] ?? '') ?: null;
+        // $senha = trim($_POST['senha'] ?? '') ?: null;
+        // $confSenha = trim($_POST['confSenha'] ?? '') ?: null;
 
         $usuario = new Usuario();
         $usuario->setId($id);
         $usuario->setNome($nome);
         $usuario->setDataNascimento($dataNascimento);
-        $usuario->setCpf($cpf);
+        // $usuario->setCpf($cpf);
         $usuario->setEmail($email);
         $usuario->setTelefone($telefone);
         $usuario->setEndereco($endereco);
-        if($senha){
-        $usuario->setSenha($senha);
-        }
+        // if($senha){
+        // $usuario->setSenha($senha);
+        // }
 
 
-        $erros = $this->usuarioService->ValidarEdicao($usuario, $confSenha, $senha); 
+        $erros = $this->usuarioService->ValidarEdicao($usuario, $confSenha = null, $senha = null); 
         
 
         if($erros){

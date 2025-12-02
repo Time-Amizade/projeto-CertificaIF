@@ -18,9 +18,7 @@ require_once(__DIR__."/../include/menu.php");
             </div>
 
             <!-- Formulario único -->
-            <form id="frmUsuario" method="POST" 
-                  action="<?= BASEURL ?>/controller/PerfilController.php?action=update"
-                  enctype="multipart/form-data" >
+            <form id="frmUsuario" method="POST" action="<?= BASEURL ?>/controller/PerfilController.php?action=update" enctype="multipart/form-data" >
 
                 <!-- Foto de perfil -->
                 <div class="mb-3 text-center">
@@ -42,7 +40,7 @@ require_once(__DIR__."/../include/menu.php");
                 <input type="hidden" name="fotoAnterior" value="<?= $dados['usuario']->getFotoPerfil() ?>">
 
                 <!-- Campos de edição do perfil -->
-                  <div class=" align-items-center" style="max-width: 600px; padding-left: 85px ;">
+                <div class=" align-items-center" style="max-width: 600px; padding-left: 85px ;">
                     <h11  style="text-align: center;"><?php include_once(__DIR__ . "/../include/msg.php") ?></h11>
                 </div>
                 <div class="mb-3">
@@ -57,13 +55,13 @@ require_once(__DIR__."/../include/menu.php");
                     <input class="form-control" type="date" id="txtData" name="dataNascimento" 
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getDataNascimento() : ''); ?>">
                 </div>
-
+<!-- 
                 <div class="mb-3">
                     <label class="form-label" for="cpf">CPF:</label>
                     <input class="form-control" type="tel" id="cpf" name="cpf" 
                         maxlength="14" placeholder="Informe número de cpf"
-                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getCpf() : ''); ?>">
-                </div>
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getCpf() : ''); ?>" >
+                </div> -->
 
                 <div class="mb-3">
                     <label class="form-label" for="txtEmail">Email:</label>
@@ -79,15 +77,15 @@ require_once(__DIR__."/../include/menu.php");
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getTelefone() : ''); ?>"/>
                 </div>
 
-                 <div class="mb-3">
+                <div class="mb-3">
                     <label class="form-label" for="txtEndereco">Endereço:</label>
                     <input class="form-control" type="text" id="txtEndereco" name="endereco" 
                         maxlength="45" placeholder="Informe o Endereço"
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEndereco() : ''); ?>"/>
                 </div>
 
-                <div>
-                     <div class="mb-3">
+                <!-- <div>
+                    <div class="mb-3">
                     <label class="form-label" for="senha">Senha:</label>
                     <input class="form-control" type="password" id="senha" name="senha" 
                     maxlength="45" placeholder="Informe a Senha"
@@ -100,10 +98,10 @@ require_once(__DIR__."/../include/menu.php");
                     <input class="form-control" type="password" id="confSenha" name="confSenha" 
                     maxlength="45" placeholder="confira a Senha"
                     />
-                </div>
+                </div> -->
 
-              
-               <input type="hidden" id="hddId" name="id" value="<?= isset($dados['id']) ? $dados['id'] : ($dados['usuario']->getId() ?? ''); ?>">
+            
+            <input type="hidden" id="hddId" name="id" value="<?= isset($dados['id']) ? $dados['id'] : ($dados['usuario']->getId() ?? ''); ?>">
 
 
                 <div class="mt-3 d-flex gap-2">

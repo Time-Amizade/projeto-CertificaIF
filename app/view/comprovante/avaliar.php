@@ -83,10 +83,10 @@ if(isset($dados['comprovante'])) {
     </div>
 </div>
 
-<div class="container mt-4">
+<div class="container mt-4 ">
     <h2 class="text-center">Informações do comprovante</h2>
     <hr>
-    <div class="card">
+    <div class="card w-50 mx-auto">
         <div class="card-body">
             <h4 class="card-title"><?= $comprovante->getTitulo(); ?></h4>
             <p class="card-text"><strong>Aluno:</strong> <?= $aluno->getNome(); ?></p>

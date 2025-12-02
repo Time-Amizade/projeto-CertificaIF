@@ -237,7 +237,8 @@ function carregarDados(BASEURL) {
                                             linhas.push(`• ${cert.titulo} (${cert.horas}h)`);
                                         });
                                     } else if (tooltipItem.tipo === 'excedente') {
-                                        linhas.push(`PPC ${tooltipItem.codigo} - ${valor}h (${porcent})`);
+                                        // ALTERAÇÃO: Adiciona "(Excedente)" apenas no tooltip
+                                        linhas.push(`PPC ${tooltipItem.codigo} (Excedente) - ${valor}h (${porcent})`);
                                         tooltipItem.certificados.forEach(cert => {
                                             linhas.push(`• ${cert.titulo} (${cert.horas}h)`);
                                         });
