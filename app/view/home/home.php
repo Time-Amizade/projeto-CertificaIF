@@ -51,11 +51,27 @@ $css = ($papel == "aluno") ? "home_aluno.css" : "home.css";
             </div>
         </div>
         
-        <div class="col-md-9" id='listaDadosContainer'> 
+        <div class="col-md-8 bg-suc" id='listaDadosContainer'> 
+            <?php if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR): ?>
+                <h3>Cadastros de coordenadores</h3>
+            <?php endif; ?>
             <div class="row" id="listaDados">
-                </div>
+            </div>
+            
         </div>
-        
+        <?php if($_SESSION[SESSAO_USUARIO_PAPEL] == UsuarioFuncao::ADMINISTRADOR): ?>
+    <div id="botaoFixoGerenciar">
+        <div class="card shadow-lg d-flex justify-content-center align-items-center text-center" 
+            onclick="window.location.href='<?= BASEURL . '/controller/CursoController.php?action=list' ?>'">
+            
+            <div class="card-body justify-content-center align-items-center text-center">
+                <h1 style="font-size: 110px;">📚</h1>
+                <h4>Gerenciar Cursos</h4>
+            </div>
+
+        </div>
+    </div>
+<?php endif; ?>
     </div>
 </div>
 

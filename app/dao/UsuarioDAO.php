@@ -216,11 +216,12 @@ class UsuarioDAO {
     public function deactivateByCurso(int $idCurso){
         $conn = Connection::getConn();
 
-        $sql = "UPDATE Usuario SET status = :status  WHERE funcao = :funcao AND Curso_id = :id";
+        $sql = "UPDATE Usuario SET status = :status  WHERE funcao = :funcao AND Curso_id = :id AND status = :status2";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("status", UsuarioStatus::INATIVO);
         $stm->bindValue("funcao", UsuarioFuncao::COORDENADOR);
+        $stm->bindValue("status2", UsuarioStatus::ATIVO);
         $stm->bindValue("id", $idCurso);
         $stm->execute();
     }

@@ -67,26 +67,30 @@ function carregarDados(BASEURL) {
 
 // Função de renderização para ADMINISTRADOR
 function dadosAdmin(BASEURL, dados){
-    dados.forEach(function (user) {
-        let card = `
-            <div class="col-md-4 mb-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h5 class="card-title">${user.nome}</h5>
-                        <p><strong>CPF:</strong> ${user.cpf}</p>
-                        <p><strong>Email:</strong> ${user.email}</p>
-                        <p><strong>Status:</strong> ${user.status}</p>
-                        <p><strong>Curso:</strong> ${user.Cursoid.nome}</p>
-                        <div class="d-flex justify-content-between">
-                            <a href="` + BASEURL + `/controller/UsuarioController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
-                            <a href="` + BASEURL + `/controller/UsuarioController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
+    if(dados.length > 0){
+        dados.forEach(function (user) {
+            let card = `
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title">${user.nome}</h5>
+                            <p><strong>CPF:</strong> ${user.cpf}</p>
+                            <p><strong>Email:</strong> ${user.email}</p>
+                            <p><strong>Status:</strong> ${user.status}</p>
+                            <p><strong>Curso:</strong> ${user.Cursoid.nome}</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="` + BASEURL + `/controller/UsuarioController.php?action=confirm&id=${user.id}" class="btn btn-primary">Aceitar usuário</a>
+                                <a href="` + BASEURL + `/controller/UsuarioController.php?action=refuse&id=${user.id}" class="btn btn-primary">Recusar usuário</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
-        listaDados.innerHTML += card;
-    });
+            `;
+            listaDados.innerHTML += card;
+        });
+    }else{
+        listaDados.innerHTML += '<h5><p>Não há nenhuma solicitação de cadastro no momento!</p></h5>';
+    } 
 }
 
 // Função de renderização para COORDENADOR
