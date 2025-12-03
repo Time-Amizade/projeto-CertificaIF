@@ -65,13 +65,14 @@ class ComprovanteController extends Controller{
         $comprovante->setCursoAtiv($cursoAtiv);
 
         $erros = $this->compService->validarDados($comprovante);
+       
         if(!$erros){
             try{
                 if($comprovante->getId() == 0)
                     $this->compDao->insert($comprovante);
                 else
                     exit;
-                    //$this->compDao->update($comprovante);
+                    
                 
                 header("location: " . BASEURL . "/controller/HomeController.php?action=home");
                 exit;
@@ -82,6 +83,7 @@ class ComprovanteController extends Controller{
             }
         }
         //Mostrar os erros
+        
         $dados['idComp'] = 0;
         $dados['cursoAtivs'] = $this->cursoAtivDao->listByCurso($_SESSION[SESSAO_USUARIO_CURSO]);
         $dados["comprovante"] = $comprovante;

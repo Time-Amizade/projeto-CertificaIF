@@ -40,7 +40,8 @@ require_once(__DIR__ . "/../include/menu.php");
                         <?php foreach($dados["cursoAtivs"] as $tipo): ?>
                             <option value="<?= $tipo->getId(); ?>" 
                                 <?php 
-                                    if(isset($dados["comprovante"]) && $dados["comprovante"]->getCursoAtiv()->getId() == $tipo->getId()) 
+                                    if(isset($dados["comprovante"]) && $dados["comprovante"]->getCursoAtiv() !== null &&
+                                    $dados["comprovante"]->getCursoAtiv()->getId() == $tipo->getId()) 
                                         echo "selected";
                                 ?>    
                             >
@@ -72,12 +73,7 @@ require_once(__DIR__ . "/../include/menu.php");
         </div>
     </div>
 
-    <!-- Alteração: Remover esta row inteira, pois o "Voltar" agora está dentro do form -->
-    <!-- <div class="row" style="margin-top: 30px;">
-        <div class="col-12">
-        <a class="btn btn-secondary" href="<?= BASEURL ?>/controller/HomeController.php?action=home">Voltar</a>
-        </div>
-    </div> -->
+   
 </div>
 
 <?php  

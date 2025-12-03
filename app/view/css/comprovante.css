@@ -10,11 +10,11 @@ h3.text-center {
 .container {
     max-width: 10000px; /* Aumentado para um card maior */
     margin: 0 auto; /* Centraliza */
-   padding-left: 840px;
+  
     flex: 1; /* Faz o container ocupar o espaço disponível */
 }
 
-/* ====== Row e colunas ====== */
+
 
 
 
@@ -22,7 +22,7 @@ h3.text-center {
 form {
     background-color: #ffffff; /* Fundo branco para o card */
     color: #1e293b; /* Texto escuro dentro do card */
-    padding: 3rem; /* Aumentado para mais espaço interno */
+    padding: 4rem; /* Aumentado para mais espaço interno */
     border-radius: 20px; /* Bordas mais arredondadas para um card moderno */
     
     
