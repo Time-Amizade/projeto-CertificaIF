@@ -25,9 +25,9 @@ if(isset($_SESSION[SESSAO_USUARIO_PAPEL])
             </li>
 
             <?php if($isAdmin): ?>
-                <li class="nav-item active">
+                <!-- <li class="nav-item active">
                         <a class="nav-link" href="<?= BASEURL . '/controller/CursoController.php?action=list'?>">Cursos</a>
-                </li>
+                </li> -->
                 <li class="nav-item active">
                         <a class="nav-link" href="<?= BASEURL . '/controller/UsuarioController.php?action=list'?>">Coordenadores</a>
                 </li>

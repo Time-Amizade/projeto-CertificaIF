@@ -25,7 +25,7 @@ require_once(__DIR__ . "/../include/header.php");
                             <input type="text" class="form-control" name="email" id="txtEmail"
                             maxlength="255" placeholder="Email"
                             value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
-                            <label  for="txtEmail">Login</label>
+                            <label  for="txtEmail">Email</label>
                         </div>
 
                         <div class="mb-3 form-floating" style="max-width: 600px; ">
