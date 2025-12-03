@@ -18,8 +18,28 @@ class UsuarioService {
         if (! $usuario->getEmail())
             array_push($erros, "O campo [Email] é obrigatório.");
 
-        if (! $usuario->getSenha())
-            array_push($erros, "O campo [Senha] é obrigatório.");
+        if (! $usuario->getSenha()){
+             array_push($erros, "O campo [Senha] é obrigatório.");
+        } else{
+          
+            switch ($this->validarSenha($usuario->getSenha())){
+                case 1:
+                    array_push($erros, 'A senha deve ter pelo menos 6 caracteres');
+                    break;
+
+                case 2:
+                    array_push($erros, 'A senha deve ter pelo menos uma letra maiúscula');
+                    break;
+
+                case 3:
+                    array_push($erros, 'A senha deve ter pelo menos um número');
+                    break;
+
+                default:
+                    break;
+            }
+        }
+           
 
         if (! $confSenha)
             array_push($erros, "O campo [Confirmação da Senha] é obrigatório.");
@@ -62,15 +82,15 @@ class UsuarioService {
         if (!$usuario->getEmail())
             array_push($erros, "O campo [Email] é obrigatório.");
 
-        // Verifica se os campos de senha estão preenchidos
-        if ($senha && $confSenha) {
-            if ($usuario->getSenha() != $confSenha) {
-                array_push($erros, "O campo [Senha] deve ser igual ao [Confirmação da senha].");
-            }
-        } elseif ($senha || $confSenha) {
-            // Um dos campos está preenchido, mas o outro não
-            array_push($erros, "Ambos os campos [Senha] e [Confirmação da senha] devem ser preenchidos.");
-        }
+        // // Verifica se os campos de senha estão preenchidos
+        // if ($senha && $confSenha) {
+        //     if ($usuario->getSenha() != $confSenha) {
+        //         array_push($erros, "O campo [Senha] deve ser igual ao [Confirmação da senha].");
+        //     }
+        // } elseif ($senha || $confSenha) {
+        //     // Um dos campos está preenchido, mas o outro não
+        //     array_push($erros, "Ambos os campos [Senha] e [Confirmação da senha] devem ser preenchidos.");
+        // }
 
         return $erros;
     }
@@ -84,7 +104,27 @@ class UsuarioService {
         
         if (!$senha) {
             array_push($erros, "O campo [Senha] é obrigatório.");
+
+        } else{
+          
+            switch ($this->validarSenha($senha)){
+                case 1:
+                    array_push($erros, 'A senha deve ter pelo menos 6 caracteres');
+                    break;
+
+                case 2:
+                    array_push($erros, 'A senha deve ter pelo menos uma letra maiúscula');
+                    break;
+
+                case 3:
+                    array_push($erros, 'A senha deve ter pelo menos um número');
+                    break;
+
+                default:
+                    break;
+            }
         }
+
         if (!$confSenha) {
             array_push($erros, "O campo [Confirmação da senha] é obrigatório.");
         }
@@ -97,4 +137,25 @@ class UsuarioService {
 
         return $erros;
     }
+
+   function validarSenha($senha) {
+    // Pelo menos 6 caracteres
+    if (strlen($senha) < 6) {
+        return 1;
+    }
+
+    // Pelo menos uma letra maiúscula
+    if (!preg_match('/[A-Z]/', $senha)) {
+        return 2;
+    }
+
+    // Pelo menos um número
+    if (!preg_match('/[0-9]/', $senha)) {
+        return 3;
+    }
+
+    return 0;
+}
+
+   
 }
